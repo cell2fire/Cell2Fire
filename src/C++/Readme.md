@@ -1,6 +1,5 @@
 # Cell2Fire: A Cell Based Forest Fire Growth Model  C++/Python
 ## Cristobal Pais, Jaime Carrasco, David Martell, David L. Woodruff, Andres Weintraub
-```
 This project includes the C++ core implementation of Cell2Fire simulator.
 
 # Requirements (libraries)
