@@ -43,6 +43,7 @@ $ python main.py --input-instance-folder /mnt/c/Users/Lenovo/documents/GitHub/Ce
 ```
 
 # Output examples
+![Dogrib Instance](outputs/Example4.png)
 ![Dogrib Fire Propagation and ROS map](outputs/Example1.png)
 ![Dogrib Fire Propagation map](outputs/Example2.png)
 ![Dogrib BP map](outputs/Example3.png)
