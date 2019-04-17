@@ -43,7 +43,14 @@ $ python main.py --input-instance-folder /mnt/c/Users/Lenovo/documents/GitHub/Ce
 ```
 
 # Output examples
+## Dogrib forest (Canadian instance)
 ![Dogrib Instance](outputs/Example4.png)
+
+## Visualize shortest paths propagation
 ![Dogrib Fire Propagation and ROS map](outputs/Example1.png)
+
+## Shortest paths propagation and ROS intensity
 ![Dogrib Fire Propagation map](outputs/Example2.png)
+
+## Burn-Probability maps
 ![Dogrib BP map](outputs/Example3.png)
