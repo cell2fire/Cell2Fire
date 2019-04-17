@@ -7,8 +7,8 @@ Cell2Fire exploits parallel computation methods which allows users to run large-
 It includes powerful statistical, graphical output, and spatial analysis features to facilitate the display and analysis of projected fire growth.
 
 # Requirements
-- Boost
-- Eigen
+- Boost (C++)
+- Eigen (C++)
 - Python 3.6
 - numpy
 - pandas
@@ -30,6 +30,7 @@ $ python main.py -h
 In addition, both the C++ core and Python scripts can be used separately:
 ## C ++
 Only simulation and generate evolution grids (no stats or plots).
+Parallel-ready version will be uploaded soon.
 ```
 $ ./Cell2Fire --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --ignitions --sim-years 1 --nsims 1 --grids --final-grid --Fire-Period-Length 1.0 --weather rows --nweathers 1 --output-messages --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --HFactor 1.0 --FFactor 1.0 --BFactor 1.0 --EFactor 1.0
 ```
