@@ -3,8 +3,8 @@
 Main program 
 
 # Requirements
-- Boost
-- Eigen
+- Boost (C++)
+- Eigen (C++)
 - Python 3.6
 - numpy
 - pandas
@@ -12,7 +12,6 @@ Main program
 - seaborn
 - tqdm
 - networkx (for stats module)
-- nlopt (for DFO module)
 
 # Usage
 In order to run the simulator and process the results, the following command can be used:
