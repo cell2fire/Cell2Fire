@@ -3,10 +3,10 @@
 This project includes the Parallel C++ core implementation of Cell2Fire simulator.
 
 # Version: Beta OpenMP ready
-Experimental parallel version after the adaptation to new sim structure. 
-Known bug: new manageFire() function (CellsFBP.cpp) modifies df_ptr (solved) and FSCell (not solved) values. Thus, although very unlikely, we can have memory access problems when having a large number of threads.
-Potential solution: local copy of FSCell, return it, and then update the global variable in the main.
-Current solution: run it AS-IS and "normally" it will not have an error. If needed, uncomment the omp critical section (Cell2Fire line 721) or run the serial version.
+-Experimental parallel version after the adaptation to new sim structure. 
+-Known bug: new manageFire() function (CellsFBP.cpp) modifies df_ptr (solved) and FSCell (not solved) values. Thus, although very unlikely, we can have memory access problems when having a large number of threads.
+-Potential solution: local copy of FSCell, return it, and then update the global variable in the main.
+-Current solution: run it AS-IS and "normally" it will not have an error. If needed, uncomment the omp critical section (Cell2Fire line 721) or run the serial version.
 
 # Requirements (libraries)
 - Boost
