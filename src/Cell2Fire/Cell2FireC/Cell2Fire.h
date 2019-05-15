@@ -30,10 +30,6 @@ using namespace std;
 class Cell2Fire {
 	// DFs 
 	private:
-		inputs * df_ptr;
-		weatherDF * wdf_ptr;
-		weatherDF wdf[10];
-		inputs df[80000];
 		CSVReader CSVWeather;
 		CSVReader CSVForest;
 			
@@ -53,12 +49,14 @@ class Cell2Fire {
 		 int gridNumber = 0;
 		 int weatherperiod = 0;
 		 long int nCells;
+		 int nIgnitions = 0;
 		 
 		 // Booleans
 		 bool noIgnition = true;  		//  None = -1
 		 bool messagesSent = false;
 		 bool repeatFire = false;
 		 bool done = false;
+		 bool noMessages = false;
 		 
 		 // Doubles
 		 double cellSide;

@@ -33,6 +33,15 @@ __maintainer__ = "Jaime Carrasco, Cristobal Pais, David Woodruff"
 
 using namespace std;
 
+// Global Variables (DFs with cells and weather info)
+inputs * df_ptr;
+weatherDF * wdf_ptr;
+weatherDF wdf[25];
+inputs df [560000];
+std::unordered_map<int, std::vector<float>> BBOFactors;
+std::unordered_map<int, std::vector<int>> HarvestedCells;   
+std::vector<int> NFTypesCells;
+
 /******************************************************************************
 																Utils
 *******************************************************************************/
@@ -133,11 +142,12 @@ Cell2Fire::Cell2Fire(arguments _args) : CSVWeather(_args.InFolder + "Weather.csv
 	********************************************************************/
 	// Create forest structure 
 	forestDF frdf;
-	
+	//DEBUGstd::cout << "------------------Forest Data ----------------------\n" << std::endl;
 	std::vector<std::vector<std::string>> FDF = this->CSVForest.getData();
 	//DEBUGthis->CSVForest.printData(FDF);
 	this->CSVForest.parseForestDF(&frdf, FDF);
 		
+	//DEBUGstd::cout << "------------------Detailed Data ----------------------\n" << std::endl;
 	this->rows = frdf.rows;
 	this->cols = frdf.cols;
 	this->nCells = rows * cols; 
@@ -165,10 +175,10 @@ Cell2Fire::Cell2Fire(arguments _args) : CSVWeather(_args.InFolder + "Weather.csv
 	//DEBUGstd::cout << "Number of cells: " <<  this->nCells  << std::endl;
 	
 	// Create empty df with size of NCells
-	this->df_ptr = & this->df[0];
+	df_ptr = & df[0];
 	
 	// Populate the df [nCells] objects
-	CSVParser.parseDF(this->df_ptr, DF, this->nCells);
+	CSVParser.parseDF(df_ptr, DF, this->nCells);
 	
 	// Initialize and populate relevant vectors 
 	this->fTypeCells = std::vector<int> (this->nCells, 1); 
@@ -178,15 +188,44 @@ Cell2Fire::Cell2Fire(arguments _args) : CSVWeather(_args.InFolder + "Weather.csv
 	// Non burnable types: populate relevant fields such as status and ftype
 	std::string NoFuel = "NF ";
 	std::string NoData = "ND ";
+	std::string Empty = "";
 	const char * NF = NoFuel.c_str();
 	const char * ND = NoData.c_str();
+	const char * EM = Empty.c_str();
 	
-	for(int l=0; l< nCells; l++){
+	for(int l=0; l< this->nCells; l++){
 		if (strcmp(df[l].fueltype,NF) == 0 || strcmp(df[l].fueltype, ND) == 0) {
 			this->fTypeCells[l] = 0;
 			this->fTypeCells2[l] = "NonBurnable";
 			this->statusCells[l] = 4;
 		}
+	}
+	
+	// Harvested cells
+	if(strcmp(this->args.HarvestPlan.c_str(), EM) != 0){
+		std::string sep = ",";
+		CSVReader CSVHPlan(this->args.HarvestPlan, sep);
+						
+		// Populate Ignitions vector 
+		std::vector<std::vector<std::string>> HarvestedDF  = CSVHPlan.getData();
+		//CSVHPlan.printData(HarvestedDF);
+		
+		// Cells
+		int HCellsP = HarvestedDF.size() - 1;
+		CSVHPlan.parseHarvestedDF(HarvestedCells, HarvestedDF, HCellsP);
+		
+		// Print-out
+		std::cout << "\nTo Harvest Cells :" << std::endl;
+		for (auto it = HarvestedCells.begin(); it != HarvestedCells.end(); it++ ){
+			std::cout << " " << it->first << ": ";
+				for (auto & it2 : it->second){
+					std::cout << it2 <<  " ";
+					this->fTypeCells[it2-1] = 0;
+					this->fTypeCells2[it2-1] = "NonBurnable";
+					this->statusCells[it2-1] = 3;
+				}  
+		}
+		std::cout << std::endl;
 	}
 	
 	// Relevant sets: Initialization
@@ -196,20 +235,21 @@ Cell2Fire::Cell2Fire(arguments _args) : CSVWeather(_args.InFolder + "Weather.csv
 	this->burntCells.clear();
 	this->harvestCells.clear();
 	for (i=0; i < this->statusCells.size(); i++){
-		if(this->statusCells[i] != 4) this->availCells.insert (i+1);
-		else this->nonBurnableCells.insert(i+1);
-	}
-		
+		if(this->statusCells[i] < 3) this->availCells.insert (i+1);
+		else if (this->statusCells[i] == 4)  this->nonBurnableCells.insert(i+1);
+		else if (this->statusCells[i] == 3)  this->harvestCells.insert(i+1);
+	}	
+	
 	/* Weather DataFrame */
 	this->WeatherDF = this->CSVWeather.getData();
-	//DEBUGstd::cout << "\nWeather DataFrame from instance " << this->CSVWeather.fileName << std::endl;
+	std::cout << "\nWeather DataFrame from instance " << this->CSVWeather.fileName << std::endl;
 	
 	// Populate WDF 
 	int WPeriods = WeatherDF.size() - 1;  // -1 due to header
-	this->wdf_ptr = &this->wdf[0];
+	wdf_ptr = &wdf[0];
 	
 	// Populate the wdf objects
-	this->CSVWeather.parseWeatherDF(this->wdf_ptr, this->WeatherDF, WPeriods);
+	this->CSVWeather.parseWeatherDF(wdf_ptr, this->WeatherDF, WPeriods);
 	//DEBUGthis->CSVWeather.printData(this->WeatherDF);
 	
 	/*  Ignitions */
@@ -321,6 +361,32 @@ Cell2Fire::Cell2Fire(arguments _args) : CSVWeather(_args.InFolder + "Weather.csv
 		}
 	}
 	
+	/* BBO Tuning factors (only the ones present in the instances*/
+	if(this->args.BBOTuning){
+		// Get fuel types numbers
+		CSVParser.parseNDF(NFTypesCells, DF, this->nCells);
+		
+		// BBO File
+		std::string BBOFile = args.InFolder + "BBOFuels.csv";
+		std::string sep = ",";
+		CSVReader CSVBBO(BBOFile, sep);
+		
+		// Populate BBO vector 
+		std::vector<std::vector<std::string>> BBODF = CSVBBO.getData();
+		int BBONTypes = BBODF.size() - 1;
+		CSVBBO.parseBBODF(BBOFactors, BBODF, BBONTypes);
+		
+		// Print-out
+		std::cout << "BBO Factors:" << std::endl;
+		for (auto it = BBOFactors.begin(); it != BBOFactors.end(); it++ ){
+			std::cout << " " << it->first << ": ";
+				for (auto & it2 : it->second){
+					std::cout << it2 <<  " ";
+				}  
+		}
+		std::cout << std::endl;
+			
+	}
 	/********************************************************************
 	*
 	*											Global Parameters for loop 
@@ -383,6 +449,7 @@ void Cell2Fire::reset(int rnumber, double rnumber2){
 	this->year = 1;
 	this->weatherPeriod = 0;
 	this->noIgnition = true;  		//  None = -1
+	this->nIgnitions = 0;
 	this->gridNumber = 0;
 	this->done = false;
 	this->fire_period = vector<int>(this->args.TotalYears, 0);
@@ -420,10 +487,10 @@ void Cell2Fire::reset(int rnumber, double rnumber2){
 		
 		// Populate WDF 
 		int WPeriods = this->WeatherDF.size() - 1;  // -1 due to header
-		this->wdf_ptr = &this->wdf[0];
+		wdf_ptr = &wdf[0];
 		
 		// Populate the wdf objects
-		this->CSVWeather.parseWeatherDF(this->wdf_ptr, this->WeatherDF, WPeriods);
+		this->CSVWeather.parseWeatherDF(wdf_ptr, this->WeatherDF, WPeriods);
 	}
 	
 	// Random ROS-CV
@@ -449,7 +516,7 @@ void Cell2Fire::reset(int rnumber, double rnumber2){
 	const char * ND = NoData.c_str();	
 	
 	for(i=0; i < this->nCells; i++){
-		if (strcmp(this->df[i].fueltype, NF) == 0 || strcmp(this->df[i].fueltype, ND) == 0) {
+		if (strcmp(df[i].fueltype, NF) == 0 || strcmp(df[i].fueltype, ND) == 0) {
 			this->fTypeCells[i] = 0;
 			this->fTypeCells2[i] = "NonBurnable";
 			this->statusCells[i] = 4;
@@ -462,9 +529,20 @@ void Cell2Fire::reset(int rnumber, double rnumber2){
 	this->burningCells.clear();
 	this->burntCells.clear();
 	this->harvestCells.clear();
+	
+	// Harvest Cells
+	for (auto it = HarvestedCells.begin(); it != HarvestedCells.end(); it++ ){
+		for (auto & it2 : it->second){
+				this->fTypeCells[it2-1] = 0;
+				this->fTypeCells2[it2-1] = "NonBurnable";
+				this->statusCells[it2-1] = 3;
+		}  
+	}	
+	
 	for (i=0; i < this->statusCells.size(); i++){
-		if(this->statusCells[i] != 4) this->availCells.insert (i+1);
-		else this->nonBurnableCells.insert(i+1);
+		if(this->statusCells[i] < 3) this->availCells.insert (i+1);
+		else if (this->statusCells[i] == 4)  this->nonBurnableCells.insert(i+1);
+		else if (this->statusCells[i] == 3)  this->harvestCells.insert(i+1);
 	}
 	
 	// Print-out sets information
@@ -490,7 +568,7 @@ bool Cell2Fire::RunIgnition(std::default_random_engine generator){
 	int loops = 0;
 	this->noIgnition = false;
 	std::unordered_map<int, CellsFBP>::iterator it;
-	std::uniform_int_distribution<int> distribution(0, this->nCells-1);
+	std::uniform_int_distribution<int> distribution(1, this->nCells);
 	
 	// No Ignitions provided
 	if (this->args.Ignitions == 0) { 
@@ -504,21 +582,25 @@ bool Cell2Fire::RunIgnition(std::default_random_engine generator){
 			}
 			
 			// If cell is available and not initialized, initialize it 
-			if (this->statusCells[aux] != 4 && this->burntCells.find(aux+1) == this->burntCells.end()) {
-				if (this->Cells_Obj.find(aux+1) == this->Cells_Obj.end()) {
-					InitCell(aux+1);
-					it = this->Cells_Obj.find(aux+1);
+			if (this->statusCells[aux - 1] < 3 && this->burntCells.find(aux) == this->burntCells.end()) {
+				if (this->Cells_Obj.find(aux) == this->Cells_Obj.end()) {
+					InitCell(aux);
+					it = this->Cells_Obj.find(aux);
 				}
 				
 				if (it->second.getStatus() == "Available" && it->second.fType != 0) {
-					std::vector<int> ignPts = {};
-					if (it->second.ignition(this->fire_period[year - 1], this->year, ignPts, & this->df[aux], this->coef_ptr, this->args_ptr, & this->wdf[this->weatherPeriod])) {
+					std::cout << "\nSelected (Random) ignition point for Year " << this->year <<  ", sim " <<  this->sim << ": "<< aux;
+					std::vector<int> ignPts = {aux};
+					if (it->second.ignition(this->fire_period[year - 1], this->year, ignPts, & df[aux - 1], this->coef_ptr, this->args_ptr, & wdf[this->weatherPeriod])) {
 															
 						//Printing info about ignitions        
 						if (this->args.verbose){
 							std::cout << "Cell " <<  it->second.realId <<  " Ignites" << std::endl;
 							std::cout << "Cell " <<  it->second.realId << " Status: "<< it->second.getStatus() << std::endl;
 						}
+						
+						// Status 
+						this->statusCells[it->second.realId - 1] = 1;
 						
 						// Plotter placeholder
 						if (this->args.OutputGrids){
@@ -531,7 +613,7 @@ bool Cell2Fire::RunIgnition(std::default_random_engine generator){
 			}
 			
 			loops++;
-			if (loops > this->nCells) {
+			if (loops > this->nCells * 100) {
 				this->noIgnition = true;
 				break;
 			}
@@ -544,18 +626,17 @@ bool Cell2Fire::RunIgnition(std::default_random_engine generator){
 	else {
 		int temp = IgnitionPoints[this->year-1];
 		
+		// If ignition Radius != 0, sample from the Radius set
 		if (this->args.IgnitionRadius > 0){
 			// Pick any at random and set temp with that cell
 			std::uniform_int_distribution<int> udistribution(0, this->IgnitionSets[this->year - 1].size()-1);
             temp = this->IgnitionSets[this->year - 1][udistribution(generator)];          
 		}
 		
-		if (!this->args.verbose){
-			std::cout << "\nSelected ignition point for Year " << this->year <<  ", sim " <<  this->sim << ": "<< temp;
-		}
+		std::cout << "\nSelected ignition point for Year " << this->year <<  ", sim " <<  this->sim << ": "<< temp;
 	
 		// If cell is available 
-		if (this->burntCells.find(temp) == this->burntCells.end() && this->statusCells[temp - 1] != 4) {
+		if (this->burntCells.find(temp) == this->burntCells.end() && this->statusCells[temp - 1] < 3) {
 			if (this->Cells_Obj.find(temp) == this->Cells_Obj.end()) {
 				// Initialize cell, insert it inside the unordered map
 				InitCell(temp);
@@ -572,7 +653,7 @@ bool Cell2Fire::RunIgnition(std::default_random_engine generator){
 			// Available and Burnable: ignition
 			if (it->second.getStatus() == "Available" && it->second.fType != 0) {
 				std::vector<int> ignPts = {temp};
-				if (it->second.ignition(this->fire_period[year - 1], this->year, ignPts, & this->df[temp-1], this->coef_ptr, this->args_ptr, &this->wdf[this->weatherPeriod])) {
+				if (it->second.ignition(this->fire_period[year - 1], this->year, ignPts, & df[temp-1], this->coef_ptr, this->args_ptr, &wdf[this->weatherPeriod])) {
 						
 						//Printing info about ignitions        
 						if (this->args.verbose){
@@ -606,6 +687,7 @@ bool Cell2Fire::RunIgnition(std::default_random_engine generator){
 		int newId = it->second.realId;
 		if (this->args.verbose) std:cout << "New ID for burning cell: " << newId << std::endl;
 		
+		this->nIgnitions++;
 		this->burningCells.insert(newId);
 		this->burntCells.insert(newId);
 		this->availCells.erase(newId);
@@ -636,7 +718,7 @@ bool Cell2Fire::RunIgnition(std::default_random_engine generator){
 	if (this->args.verbose){
 		std::cout << "Fire Period Starts: " <<  this->fire_period[year-1] << std::endl;
 		std::cout << "\nCurrent weather conditions:" << std::endl;
-		this->CSVWeather.printWeatherDF(this->wdf[this->weatherPeriod]);
+		this->CSVWeather.printWeatherDF(wdf[this->weatherPeriod]);
 		
 		if (this->args.WeatherOpt.compare("constant") == 0)
 			std::cout << "(NOTE: current weather is not used for ROS with constant option)" << std::endl;
@@ -705,15 +787,25 @@ std::unordered_map<int, std::vector<int>> Cell2Fire::SendMessages(){
 		if (this->args.verbose) {
 			it->second.print_info();
 		}
-		
+				
 		/*
 				Manage Fire method main step
 		*/
 		if (it->second.ROSAngleDir.size() > 0) {
 			//std::cout << "Entra a Manage Fire" << std::endl;
-			aux_list = it->second.manageFire(this->fire_period[this->year-1], this->availCells,  & this->df[cell-1], this->coef_ptr, 
-														   this->coordCells, this->Cells_Obj, this->args_ptr, &this->wdf[this->weatherPeriod],
-														   &this->FSCell, this->ROSRV);								
+			if (!this->args.BBOTuning){
+				aux_list = it->second.manageFire(this->fire_period[this->year-1], this->availCells,  & df[cell-1], this->coef_ptr, 
+															   this->coordCells, this->Cells_Obj, this->args_ptr, &wdf[this->weatherPeriod],
+															   &this->FSCell, this->ROSRV);								
+			}
+												
+			
+			else{
+				auto factors = BBOFactors.find(NFTypesCells[cell-1]);
+				aux_list = it->second.manageFireBBO(this->fire_period[this->year-1], this->availCells,  & df[cell-1], this->coef_ptr, 
+																		this->coordCells, this->Cells_Obj, this->args_ptr, &wdf[this->weatherPeriod],
+																		&this->FSCell, this->ROSRV, factors->second);								
+			}
 			//std::cout << "Sale de Manage Fire" << std::endl;
 		} 
 
@@ -807,7 +899,8 @@ void Cell2Fire::GetMessages(std::unordered_map<int, std::vector<int>> sendMessag
 		
 		// Next year, reset weeks, weather period, and update burnt cells from burning cells
 		this->year += 1;
-		this->weatherperiod = 0;
+		this->weatherPeriod = 0;
+		this->noMessages = true;
 			
 		// Update sets
 		for(auto &bc : this->burningCells){
@@ -875,8 +968,8 @@ void Cell2Fire::GetMessages(std::unordered_map<int, std::vector<int>> sendMessag
 					
 				// Check if burnable, then check potential ignition
 				if (it->second.fType != 0) {
-					checkBurnt = it->second.get_burned(this->fire_period[this->year-1], 1, this->year, this->df, 
-																			this->coef_ptr, this->args_ptr, &this->wdf[this->weatherPeriod]);
+					checkBurnt = it->second.get_burned(this->fire_period[this->year-1], 1, this->year, df, 
+																			this->coef_ptr, this->args_ptr, &wdf[this->weatherPeriod]);
 
 				} else {
 					checkBurnt = false;
@@ -988,11 +1081,13 @@ void Cell2Fire::Results(){
 	float ACells = this->availCells.size();
 	float BCells = this->burntCells.size();
 	float NBCells = this->nonBurnableCells.size();
+	float HCells = this->harvestCells.size();
 	
 	std::cout <<"\n----------------------------- Results -----------------------------" << std::endl;
 	std::cout << "Total Available Cells:    " << ACells << " - % of the Forest: " <<  ACells/nCells*100.0 << "%" << std::endl;
 	std::cout << "Total Burnt Cells:        " << BCells << " - % of the Forest: " <<  BCells/nCells*100.0 <<"%" << std::endl;
 	std::cout << "Total Non-Burnable Cells: " << NBCells << " - % of the Forest: " <<  NBCells/nCells*100.0 <<"%"<< std::endl;
+	std::cout << "Total Harvested Cells: " << HCells << " - % of the Forest: " <<  HCells/nCells*100.0 <<"%"<< std::endl;
 
 	// Final Grid 
 	if(this->args.FinalGrid){
@@ -1049,7 +1144,7 @@ void Cell2Fire::Results(){
 			std::cout  << "We are generating the network messages to a csv file " << messagesName << std::endl;
 		}
 		CSVWriter CSVPloter(messagesName, ",");
-		CSVPloter.printCSVDouble(this->burntCells.size() - 1, 4, this->FSCell);
+		CSVPloter.printCSVDouble(this->burntCells.size() - this->nIgnitions, 4, this->FSCell);
 	}
 
 	
@@ -1069,6 +1164,9 @@ void Cell2Fire::outputGrid(){
 	}
 	for (auto & ac : this->burntCells){
 			statusCells2[ac-1] = 1;
+	}
+	for (auto & hc : this->harvestCells){
+			statusCells2[hc-1] = -1;
 	}
 		
 	if (this->gridNumber < 10){
@@ -1100,7 +1198,7 @@ void Cell2Fire::updateWeather(){
 			
 			if (this->args.verbose){
 				std::cout  << "\nWeather has been updated" << std::endl;
-				this->CSVWeather.printWeatherDF(this->wdf[this->weatherPeriod]);
+				this->CSVWeather.printWeatherDF(wdf[this->weatherPeriod]);
 			}
 	}
 }
@@ -1112,6 +1210,7 @@ void Cell2Fire::Step(std::default_random_engine generator){
 	// Declare an iterator to unordered_map
 	std::unordered_map<int, CellsFBP>::iterator it;	
 	bool auxC = false;
+	this->noMessages = false;
 	
 	// Conditions entering the step
 	if (this->args.verbose){
@@ -1155,13 +1254,13 @@ void Cell2Fire::Step(std::default_random_engine generator){
 	}
 	
 	// Operational dynamic
-	// Ignition if we are in the first period                     
-	if (this->fire_period[this->year - 1] == 0 && !this->done){
+	// Ignition if we are in the first period (added workaround for no Messages)
+	if (this->fire_period[this->year - 1] == 0 && !this->done && !this->noMessages){
 		//std::cout << "Entra a Ignition step 0" << std::endl;
 		// Continue only if ignition  - No ignition (True): done
 		if(this->RunIgnition(generator)){
 			// Next year
-			this->weatherperiod = 0;
+			this->weatherPeriod = 0;
 			
 			// If more than planning horizon, next sim
 			if (this->year > this->args.TotalYears){
@@ -1192,19 +1291,19 @@ void Cell2Fire::Step(std::default_random_engine generator){
 
 
 	// Ending conditions 
-	if (this->year - 1 >= this->fire_period.size()){
-		this->year = this->fire_period.size();
-	}
+	//if (this->year - 1 >= this->fire_period.size()){
+	//	this->year = this->fire_period.size();
+	//}
 	
-	if (this->fire_period[this->year - 1] >= this->args.MaxFirePeriods){
+	if (this->fire_period[std::min(this->year , int(fire_period.size())) - 1] >= this->args.MaxFirePeriods){
 		// Extra breaking condition: Max fire periods then go to next year
 		if (this->args.verbose){
 			printf("\nNext year due to max periods...\n");
 		}
 
 		// Next Year/Season update
-		this->year += 1;
-		this->weatherperiod = 0;
+		//if(this->year < this->year += 1;
+		this->weatherPeriod = 0;
 		auxC = true;
 		
 		for(auto &bc : burningCells){
@@ -1229,9 +1328,8 @@ void Cell2Fire::Step(std::default_random_engine generator){
 	}
 	
 	// Done flag (extra condition: no available cells or death of the team)
-	if ((this->availCells.size() == 0 || this->burningCells.size() == 0) && !this->done && !auxC){
+	if ((this->availCells.size() == 0) || (this->burningCells.size() == 0 && !this->noMessages) && !this->done && !auxC){
 		// Done
-		printf("\nEntra aqui...\n");
 		this->done = true;
 		
 		// Print-out results to folder
@@ -1296,22 +1394,28 @@ int main(int argc, char * argv[]){
 	std::uniform_int_distribution<int> udistribution(1, args.NWeatherFiles);		// Get random weather
 	std::normal_distribution<double> ndistribution(0.0,1.0);  							// ROSRV
 	
-	int rnumber = udistribution(generator);
-	double rnumber2 = ndistribution(generator);
+	// Random numbers (weather file and ROS-CV)
+	int rnumber;
+	double rnumber2;
 	
 	// Initialize Instance
 	Cell2Fire Forest(args);
+	
+	// Random ignition 
+	std::uniform_int_distribution<int> udistributionIgnition(1, Forest.nCells);		// Get random ignition point
 	
 	// Episodes
 	int ep = 0;
 	int tstep = 0;
 		
-	// Episodes loop (episode = replication)	
-	for(ep = 1; ep <= args.TotalSims; ep++){
-		// Reset environment (passing new random number)
+	// Episodes loop (episode = replication)
+	// CP: Modified to account the case when no ignition occurs and no grids are generated (currently we are not generating grid when no ignition happened, TODO)
+	for(ep = 1; ep <= args.TotalSims * 10; ep++){
+		// Reset environment (passing new random numbers)
 		rnumber = udistribution(generator);
 		rnumber2 = ndistribution(generator);
 		
+		// Reset
 		Forest.reset(rnumber, rnumber2);
 	
 		// Time steps during horizon (or until we break it)
@@ -1326,15 +1430,12 @@ int main(int argc, char * argv[]){
 			}
 		
 		}
+		// Enforces to satisfy the total number of simulations (if no ignition, find another cell until we obtain the TotalSim asked)
+		if (Forest.sim > args.TotalSims){
+			break;
+		}
+		
 	}
 	
 	return 0;
 }
-
-
-
-
-
-
-
-

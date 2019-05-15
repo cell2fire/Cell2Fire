@@ -49,13 +49,19 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
     }
 	else output_folder = &empty;
 	
-		//--weather
+	//--weather
 	char * input_weather = getCmdOption(argv, argv + argc, "--weather");
     if (input_weather){
         printf("WeatherOpt: %s \n", input_weather);
     }
 	else input_weather = &empty;
 	
+	//--HarvestPlan
+	char * input_hplan = getCmdOption(argv, argv + argc, "--HarvestPlan");
+    if (input_hplan){
+        printf("HarvestPlan: %s \n", input_hplan);
+    }
+	else input_hplan = &empty;
 		
 	// Booleans
 	bool out_messages = false;
@@ -67,6 +73,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	bool out_finalgrid = false;
 	bool prom_tuned = false;
 	bool out_stats = false;	
+	bool bbo_tuning = false;
 	
 	//--out-messages
     if(cmdOptionExists(argv, argv+argc, "--output-messages")){
@@ -122,13 +129,20 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 		printf("Statistics: %d \n", out_stats);
     }
 	
+	//--bbo
+	if(cmdOptionExists(argv, argv+argc, "--bbo")){
+        bbo_tuning = true;
+		printf("BBOTuning: %d \n", out_stats);
+    }
+
+	
 	// Floats and ints
 	// defaults
 	int dsim_years = 1;
 	int dnsims = 1;
 	int dweather_period_len= 60;
 	int dweather_files = 1;
-	int dmax_fire_periods= 1000;
+	int dmax_fire_periods= 10000000;
 	int dseed = 123;
 	int diradius = 0;
 	float dROS_Threshold= 0.1;
@@ -290,6 +304,11 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	else{
 		args_ptr->WeatherOpt = input_weather;
 	}
+	
+	if (input_hplan == &empty){
+		args_ptr->HarvestPlan = ""; 
+	}
+	else args_ptr->HarvestPlan = input_hplan; 
 		
 	// booleans
 	args_ptr->OutMessages = out_messages;
@@ -301,6 +320,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	args_ptr->FinalGrid = out_finalgrid;
 	args_ptr->PromTuned = prom_tuned;
 	args_ptr->Stats = out_stats;   
+	args_ptr->BBOTuning = bbo_tuning;   
 	
 }
 
@@ -313,6 +333,7 @@ void printArgs(arguments args){
 	std::cout << "MinutesPerWP: " << args.MinutesPerWP << std::endl; 
 	std::cout << "MaxFirePeriods: " << args.MaxFirePeriods << std::endl; 
 	std::cout << "Messages: " << args.OutMessages << std::endl; 
+	std::cout << "HarvestPlan: " << args.HarvestPlan << std::endl; 
 	std::cout << "TotalYears: " << args.TotalYears << std::endl; 
 	std::cout << "TotalSims: " << args.TotalSims << std::endl; 
 	std::cout << "FirePeriodLen: " << args.FirePeriodLen << std::endl; 
@@ -321,6 +342,7 @@ void printArgs(arguments args){
 	std::cout << "OutputGrid: " << args.OutputGrids << std::endl; 
 	std::cout << "FinalGrid: " << args.FinalGrid << std::endl; 
 	std::cout << "PromTuned: " << args.PromTuned << std::endl; 
+	std::cout << "BBOTuning: " << args.BBOTuning << std::endl; 
 	std::cout << "Statistics: " << args.Stats << std::endl; 
 	std::cout << "noOutput: " << args.NoOutput << std::endl; 
 	std::cout << "verbose: " << args.verbose << std::endl; 

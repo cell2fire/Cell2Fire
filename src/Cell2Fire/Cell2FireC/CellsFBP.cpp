@@ -439,6 +439,10 @@ std::vector<int> CellsFBP::manageFire(int period, std::unordered_set<int> & Avai
             int nb = angleToNb[angle];
             double ros = (1 + args->ROSCV * ROSRV) * _angle.second;
 			
+			if(std::isnan(ros)){
+				ros = 1e-4;
+			}
+			
             if (args->verbose) {
                 std::cout << "     (angle, realized ros in m/min): (" << angle << ", " << ros << ")" << std::endl;
             }
@@ -500,6 +504,246 @@ std::vector<int> CellsFBP::manageFire(int period, std::unordered_set<int> & Avai
 }
     
 		
+
+/*
+
+	Manage fire for BBO tuning version 
+	
+*/
+
+std::vector<int> CellsFBP::manageFireBBO(int period, std::unordered_set<int> & AvailSet,      
+																  inputs * df_ptr, fuel_coefs * coef, 
+																  std::vector<std::vector<int>> & coordCells, std::unordered_map<int, CellsFBP> & Cells_Obj, 
+																  arguments * args, weatherDF * wdf_ptr, std::vector<double> * FSCell,
+																  double randomROS, std::vector<float> & EllipseFactors) 
+	{
+	// Special flag for repetition (False = -99 for the record)
+	int repeat = -99;
+	
+    // msg lists contains integers (True = -100)
+    std::vector<int> msg_list_aux;
+	msg_list_aux.push_back(0);
+    std::vector<int> msg_list;
+
+	df_ptr->waz = wdf_ptr->waz;
+	df_ptr->ws = wdf_ptr->ws;
+	df_ptr->ffmc = wdf_ptr->ffmc;
+	df_ptr->bui = wdf_ptr->bui;	
+	
+	// Compute main angle and ROSs: forward, flanks and back
+    main_outs mainstruct;
+    snd_outs sndstruct;
+    fire_struc headstruct, backstruct, flankstruct;
+
+	// Calculate parameters
+	calculate(df_ptr, coef, &mainstruct, &sndstruct, &headstruct, &flankstruct, &backstruct);
+	
+	/*  ROSs DEBUG!   */
+	if(args->verbose){
+		std::cout << "*********** ROSs debug ************" << std::endl;
+		std::cout <<  "-------Input Structure--------" << std::endl;
+		std::cout <<  "fueltype: " << df_ptr->fueltype << std::endl;
+		std::cout <<  "ffmc: " << df_ptr->ffmc << std::endl;
+		std::cout <<  "ws: " << df_ptr->ws << std::endl;
+		std::cout <<  "gfl: " << df_ptr->gfl << std::endl;
+		std::cout <<  "bui: " << df_ptr->bui << std::endl;
+		std::cout <<  "lat: " << df_ptr->lat << std::endl;
+		std::cout <<  "lon: " << df_ptr->lon << std::endl;
+		std::cout <<  "time: " << df_ptr->time << std::endl;
+		std::cout <<  "pattern: " << df_ptr->pattern << std::endl;
+		std::cout <<  "mon: " << df_ptr->mon << std::endl;
+		std::cout <<  "jd: " << df_ptr->jd << std::endl;
+		std::cout <<  "jd_min: " << df_ptr->jd_min << std::endl;
+		std::cout <<  "waz: " << df_ptr->waz << std::endl;
+		std::cout <<  "ps: " << df_ptr->ps << std::endl;
+		std::cout <<  "saz: " << df_ptr->saz << std::endl;
+		std::cout <<  "pc: " << df_ptr->pc << std::endl;
+		std::cout <<  "pdf: " << df_ptr->pdf << std::endl;
+		std::cout <<  "cur: " << df_ptr->cur << std::endl;
+		std::cout <<  "elev: " << df_ptr->elev << std::endl;
+		std::cout <<  "hour: " << df_ptr->hour << std::endl;
+		std::cout <<  "hourly: " << df_ptr->hourly << std::endl;
+		std::cout <<  "\n-------Mainout Structure--------" << std::endl;
+		std::cout << "hffmc: " << mainstruct.hffmc << std::endl;
+		std::cout << "sfc: " << mainstruct.sfc << std::endl;
+		std::cout << "csi: " << mainstruct.csi << std::endl;
+		std::cout << "rso: " << mainstruct.rso << std::endl;
+		std::cout << "fmc: " << mainstruct.fmc << std::endl;
+		std::cout << "sfi: " << mainstruct.sfi << std::endl;
+		std::cout << "rss: " << mainstruct.rss << std::endl;
+		std::cout << "isi:" << mainstruct.isi << std::endl;
+		std::cout << "be:" << mainstruct.be << std::endl;
+		std::cout << "sf:" << mainstruct.sf << std::endl;
+		std::cout << "raz: " << mainstruct.raz << std::endl;
+		std::cout << "wsv:" << mainstruct.wsv << std::endl;
+		std::cout << "ff: " << mainstruct.ff << std::endl;
+		std::cout << "jd_min:" << mainstruct.jd_min << std::endl;
+		std::cout << "jd:" << mainstruct.jd << std::endl;
+		std::cout << "covertype: " << mainstruct.covertype << std::endl;
+		std::cout <<  "\n-------Headout Structure--------" << std::endl;
+		std::cout <<  "ros: " << headstruct.ros * args->HFactor << std::endl;
+		std::cout <<  "dist: " << headstruct.dist << std::endl;
+		std::cout <<  "rost: " << headstruct.rost << std::endl;
+		std::cout <<  "cfb: " << headstruct.cfb << std::endl;
+		std::cout <<  "fc: " << headstruct.fc << std::endl;
+		std::cout <<  "cfc: "<< headstruct.cfc << std::endl;
+		std::cout <<  "time: " << headstruct.time << std::endl;
+		std::cout <<  "rss: " << headstruct.rss << std::endl;
+		std::cout <<  "isi: " << headstruct.isi << std::endl;
+		std::cout <<  "fd: " << headstruct.fd << std::endl;
+		std::cout <<  "fi: " << headstruct.fi << std::endl;
+		std::cout <<  "\n------- Flank Structure--------" << std::endl;
+		std::cout <<  "ros: " << flankstruct.ros * args->FFactor<< std::endl;
+		std::cout <<  "dist: " << flankstruct.dist << std::endl;
+		std::cout <<  "rost: " << flankstruct.rost << std::endl;
+		std::cout <<  "cfb: " << flankstruct.cfb << std::endl;
+		std::cout <<  "fc: " << flankstruct.fc << std::endl;
+		std::cout <<  "cfc: "<< flankstruct.cfc << std::endl;
+		std::cout <<  "time: " << flankstruct.time << std::endl;
+		std::cout <<  "rss: " << flankstruct.rss << std::endl;
+		std::cout <<  "isi: " << flankstruct.isi << std::endl;
+		std::cout <<  "fd: " << flankstruct.fd << std::endl;
+		std::cout <<  "fi: " << flankstruct.fi << std::endl;
+		std::cout <<  "\n------- Back Structure--------" << std::endl;
+		std::cout <<  "ros: " << backstruct.ros * args->BFactor << std::endl;
+		std::cout <<  "dist: " << backstruct.dist << std::endl;
+		std::cout <<  "rost: " << backstruct.rost << std::endl;
+		std::cout <<  "cfb: " << backstruct.cfb << std::endl;
+		std::cout <<  "fc: " << backstruct.fc << std::endl;
+		std::cout <<  "cfc: "<< backstruct.cfc << std::endl;
+		std::cout <<  "time: " << backstruct.time << std::endl;
+		std::cout <<  "rss: " << backstruct.rss << std::endl;
+		std::cout <<  "isi: " << backstruct.isi << std::endl;
+		std::cout <<  "fd: " << backstruct.fd << std::endl;
+		std::cout <<  "fi: " << backstruct.fi << std::endl;
+		std::cout << "*********** ROSs debug ************" << std::endl;
+	}
+	/*                         */
+	
+    double cartesianAngle = 270 - mainstruct.raz; //                 - 90;   // CHECK!!!!!
+	if (cartesianAngle < 0){
+		cartesianAngle += 360;
+	} 
+	 
+    double ROSRV = 0;
+    if (args->ROSCV > 0) {
+	    //std::srand(args->seed);
+		//std::default_random_engine generator(args->seed);
+		//std::normal_distribution<double> distribution(0.0,1.0);
+		ROSRV = randomROS;
+	}
+	
+
+	// Display if verbose True (FBP ROSs, Main angle, and ROS std (if included))
+    if (args->verbose) {
+        std::cout << "Main Angle (raz): " << mainstruct.raz  << " Cartesian: " << cartesianAngle << std::endl;
+        std::cout << "FBP Front ROS Value: " << headstruct.ros * EllipseFactors[0] << std::endl; 
+        std::cout << "FBP Flanks ROS Value: " << flankstruct.ros * EllipseFactors[1] << std::endl;
+        std::cout <<  "FBP Rear ROS Value: " << backstruct.ros * EllipseFactors[2] << std::endl;
+        std::cout << "Std Normal RV for Stochastic ROS CV: " << ROSRV << std::endl;
+    }
+
+	// If cell cannot send (thresholds), then it will be burned out in the main loop
+    double HROS = (1 + args->ROSCV * ROSRV) * headstruct.ros * EllipseFactors[0];
+    	
+	// Extra debug step for sanity checks
+	if (args->verbose){
+            std::cout << "\nSending message conditions" << std::endl;
+            std::cout << "HROS: " << HROS << " Threshold: "<<  args->ROSThreshold << std::endl;
+            std::cout << "HeadStruct FI: " << headstruct.fi << " Threshold: " << args->HFIThreshold << std::endl;
+	}
+	
+    // Check thresholds for sending messages	
+    if (HROS > args->ROSThreshold && headstruct.fi > args->HFIThreshold) {
+        // True = -100
+		repeat = -100;	
+		
+		if (args->verbose) {
+            std::cout << "\nRepeat condition: " << repeat << std::endl;
+            std::cout << "Cell can send messages" << std::endl;
+        }
+        
+		// ROS distribution method
+        //ros_distr(mainstruct.raz,  headstruct.ros, flankstruct.ros, backstruct.ros);
+		//std::cout << "Entra a Ros Dist" << std::endl;
+		ros_distr(cartesianAngle,  
+					  headstruct.ros * EllipseFactors[0], 
+					  flankstruct.ros * EllipseFactors[1], 
+					  backstruct.ros * EllipseFactors[2],
+					  EllipseFactors[3]);
+        //std::cout << "Sale de Ros Dist" << std::endl;		
+		
+		// Fire progress using ROS from burning cell, not the neighbors //
+       // vector<double> toPop = vector<double>();
+        
+		// this is a iterator through the keyset of a dictionary
+        for (auto&  _angle : this->ROSAngleDir) {
+            double angle = _angle.first;
+            int nb = angleToNb[angle];
+            double ros = (1 + args->ROSCV * ROSRV) * _angle.second;
+			
+            if (args->verbose) {
+                std::cout << "     (angle, realized ros in m/min): (" << angle << ", " << ros << ")" << std::endl;
+            }
+			            
+			// Workaround PeriodLen in 60 minutes
+            this->fireProgress[nb] += ros * args->FirePeriodLen;   // Updates fire progress
+		
+		    // If the message arrives to the adjacent cell's center, send a message
+            if (this->fireProgress[nb] >= this->distToCenter[nb]) {
+                msg_list.push_back(nb);
+				FSCell->push_back(double(this->realId));
+				FSCell->push_back(double(nb));
+				FSCell->push_back(double(period));
+				FSCell->push_back(ros);
+                // cannot mutate ROSangleDir during iteration.. we do it like 10 lines down
+               // toPop.push_back(angle);
+                /*if (verbose) {
+                    //fill out this verbose section
+                    std::cout << "MSG list" << msg_list << std::endl;
+                }*/
+            }    
+        
+			// Info for debugging status of the cell and fire evolution			
+			if (this->fireProgress[nb] < this->distToCenter[nb] && repeat == -100 && -100  != msg_list_aux[0]){
+                    if (args->verbose){
+                        std::cout << "A Repeat = TRUE flag is sent in order to continue with the current fire....." << std::endl;
+                        std::cout << "Main workaround of the new sim logic....." << std::endl;
+					}
+                    msg_list_aux[0] = repeat;
+			}
+						
+		}
+		
+		if (args->verbose){
+			printf("fireProgress Dict: ");
+			for (auto & nb : this->fireProgress){
+				std::cout << " " << nb.first << " : " << nb.second;
+			}
+			std::cout << std::endl;
+		}
+    }
+	
+	
+	// If original is empty (no messages but fire is alive if aux_list is not empty)
+	if  (msg_list.size() == 0){
+		if (msg_list_aux[0] == -100){
+			msg_list = msg_list_aux;
+		}
+	
+		else{
+			this->status = 2;   // we are done sending messages, call us burned
+		}
+	}
+				
+    if (args->verbose){
+		std::cout << " ----------------- End of new manageFire function -----------------" << std::endl;
+	}
+    return msg_list;
+}
+    
+
+
 		
 /*
     Get burned new logic: Checks if the ROS on its side is above a threshold for burning

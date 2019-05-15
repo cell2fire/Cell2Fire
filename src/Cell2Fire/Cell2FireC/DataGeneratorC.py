@@ -77,7 +77,7 @@ def ForestGrid(filename, Dictionary):
             if c not in Dictionary.keys():
                 gridcell1.append("NData")
                 gridcell2.append("NData")
-                gridcell3.append("NData")
+                gridcell3.append(int(0))
                 gridcell4.append("NF")
             else:
                 gridcell1.append(c)
@@ -153,7 +153,7 @@ def DataGrids(InFolder, NCells):
     return Elevation, SAZ, PS, Curing
 
 # Generates the Data.dat file (csv) from all data files (ready for the simulator)
-def GenerateDat(GFuelType, Elevation, PS, SAZ, Curing, InFolder):
+def GenerateDat(GFuelType, GFuelTypeN, Elevation, PS, SAZ, Curing, InFolder):
     # DF columns
     Columns = ["fueltype", "mon", "jd", "M", "jd_min", 
                "lat", "lon", "elev", "ffmc", "ws", "waz", 
@@ -214,7 +214,9 @@ def GenerateDat(GFuelType, Elevation, PS, SAZ, Curing, InFolder):
     for i in PCD.keys():
         DF["pc"][DF.fueltype == i] = PCD[i]
     
-    
+    # Populate fuel type number 
+    DF["ftypeN"] = GFuelTypeN
+    print(np.asarray(GFuelTypeN).flatten())
     filename = os.path.join(InFolder, "Data.csv")
     print(filename)
     DF.to_csv(path_or_buf=filename, index=False, index_label=False, header=True)
@@ -231,7 +233,7 @@ def GenDataFile(InFolder):
     
     NCells = len(GFuelType)
     Elevation, SAZ, PS, Curing = DataGrids(InFolder, NCells)
-    GenerateDat(GFuelType, Elevation, PS, SAZ, Curing, InFolder)
+    GenerateDat(GFuelType, GFuelTypeN, Elevation, PS, SAZ, Curing, InFolder)
 
 
 # Main function 

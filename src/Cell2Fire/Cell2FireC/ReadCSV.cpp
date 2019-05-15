@@ -42,6 +42,7 @@ std::vector<std::vector<std::string>> CSVReader::getData(){
 	return dataList;
 }
 
+
 /*
 * Prints data to screen inside the DF obtained from the CSV file
 */
@@ -149,6 +150,32 @@ void CSVReader::parseDF(inputs * df_ptr, std::vector<std::vector<std::string>> &
 }
 
 
+/*
+* Populates vector of size NCells with type number based on lookup table 
+*/
+void CSVReader::parseNDF(std::vector<int> &NFTypes, std::vector<std::vector<std::string>> & DF, int NCells){
+	int i;
+	
+	// Ints 
+	int FType;
+	
+	// CChar
+	const char * faux;
+	std::string::size_type sz;   // alias of size_t
+	
+	// Loop over cells (populating per row)
+	for (i=1; i <= NCells; i++){
+		//printf("Populating DF for cell %d\n", i);
+		if (DF[i][20].compare("") == 0) FType = 0;
+		else FType = std::stoi (DF[i][20], &sz);
+			
+		// Set values
+		NFTypes.push_back(FType);
+		
+	}
+}
+
+
 
 /*
 * Populate Weather DF
@@ -224,6 +251,10 @@ void CSVReader::parseWeatherDF(weatherDF * wdf_ptr, std::vector<std::vector<std:
 	
 }
 
+
+/*
+* Populate IgnitionDF
+*/
 void CSVReader::parseIgnitionDF(std::vector<int> & ig, std::vector<std::vector<std::string>> & DF, int IgPeriods){
 	// Integers
 	int i, igcell;
@@ -239,6 +270,65 @@ void CSVReader::parseIgnitionDF(std::vector<int> & ig, std::vector<std::vector<s
 			
 		// Next pointer
 		//ig_ptr++;
+	}
+	
+	
+}
+
+/*
+* Populate HarvestedDF
+*/
+void CSVReader::parseHarvestedDF(std::unordered_map<int, std::vector<int>> & hc, std::vector<std::vector<std::string>> & DF, int HPeriods){
+	// Integers
+	int i, j, hcell;
+	std::vector<int> toHarvestCells;
+	std::string::size_type sz;   // alias of size_t
+	
+	// Loop over cells (populating per row)
+	for (i=1; i <= HPeriods; i++){
+		// Clean the vector before the new year 
+		toHarvestCells.clear();
+		
+		// Loop over years of the simulation
+		for(j=1; j < DF[i].size(); j++){
+			hcell = std::stoi(DF[i][j], &sz);
+		
+			// Set values
+			toHarvestCells.push_back(hcell);
+		}
+		
+		// Populate unordered set 
+		hc.insert(std::make_pair(i, toHarvestCells));	
+		
+	}
+	
+	
+}
+
+/*
+* Populate BBO Tuning factors
+*/
+void CSVReader::parseBBODF(std::unordered_map<int, std::vector<float>> & bbo, std::vector<std::vector<std::string>> & DF, int NFTypes){
+	// Integers
+	int i, j, ftype;
+	int ffactors = 4;
+	std::vector<float> bboFactors;
+	std::string::size_type sz;   // alias of size_t
+	
+	// Loop over cells (populating per row)
+	for (i=1; i <= NFTypes; i++){
+		// Clean the vector before the fuels
+		bboFactors.clear();
+		
+		//DEBUGprintf("Populating Ignition points: %d\n", i);
+		ftype = std::stoi(DF[i][0], &sz);
+		
+		for (j=1; j <= ffactors; j++){
+			bboFactors.push_back(std::stof(DF[i][j], &sz));
+		}
+
+		//Set values							 
+		bbo.insert(std::make_pair(ftype, bboFactors));	
 	}
 	
 	

@@ -6,6 +6,7 @@ __author__ = "Cristobal Pais"
 # Importations
 import pandas as pd
 import numpy as np
+import glob
 import os 
 
 # Plot
@@ -20,6 +21,11 @@ import matplotlib.patches as patches
 from matplotlib.colors import LinearSegmentedColormap
 import seaborn as sns
 import matplotlib.colors as colors
+import cv2
+
+# Extra
+import multiprocessing
+from multiprocessing import Process
 
 # Extra
 from operator import itemgetter
@@ -115,11 +121,11 @@ class Statistics(object):
 
         #sns.set(style="darkgrid", font_scale=1.5)
         ax = sns.boxplot(x=xx, y=yy, data=Data, linewidth=2.5, palette=pal).set(xlabel=xlab,ylabel=ylab)    
-        if swarm == True:
+        if swarm:
             ax = sns.swarmplot(x=xx, y=yy, data=Data, linewidth=2.5, palette=pal).set(xlabel=xlab,ylabel=ylab)   
 
         # Save it
-        if Path == None:
+        if Path is None:
             Path = os.getcwd() + "/Stats/"
             if not os.path.exists(Path):
                 os.makedirs(Path)
@@ -179,7 +185,7 @@ class Statistics(object):
 
     # Burnt Probability Heatmap
     def BPHeatmap(self, WeightedScar, Path=None, nscen=10, sq=False, namePlot="BP_HeatMap", 
-                  Title=None, cbarF=True, ticks="auto"):
+                  Title=None, cbarF=True, ticks="auto", transparent=False):
         # Figure size
         plt.figure(figsize = (15, 9)) 
 
@@ -207,7 +213,7 @@ class Statistics(object):
 
         # Modify existing map to have white values
         cmap = cm.get_cmap('RdBu_r')
-        lower = plt.cm.seismic(np.ones(100)*0.50)
+        lower = plt.cm.seismic(np.ones(100)*0.50)  # Original is ones 
         upper = cmap(np.linspace(1 - 0.5, 1, 90))
         colors = np.vstack((lower, upper))
         tmap = matplotlib.colors.LinearSegmentedColormap.from_list('terrain_map_white', colors)
@@ -226,7 +232,7 @@ class Statistics(object):
             spine.set_visible(True)
 
         plt.savefig(os.path.join(Path, namePlot + ".png"), dpi=200, bbox_inches='tight', 
-                    pad_inches=0, transparent=False)
+                    pad_inches=0, transparent=transparent)
         
         plt.close("all")
     
@@ -281,7 +287,13 @@ class Statistics(object):
         ax.get_xaxis().tick_bottom()  
         ax.get_yaxis().tick_left() 
         plt.ylim(bottom=0)
+        for _, spine in ax.spines.items():
+            spine.set_visible(True)
 
+
+        # Dimensionamos el eje X e Y
+        #plt.axis([-1, self._Rows, -1, self._Cols])
+        
         # Print nodes
         if onlyGraph is False:
             nx.draw_networkx_nodes(self._GGraph, pos = coord_pos,
@@ -301,29 +313,52 @@ class Statistics(object):
             if version == 0:
                 # Fixed edge color (red), different scaled width
                 outname = "NWFreq"
-                nx.draw_networkx_edges(self._GGraph, pos = coord_pos, edge_color = 'r',
+                plt.title("Propagation Tree: edge normalized width (usage frequency)", y=1.08)
+                
+                nx.draw_networkx_edges(self._GGraph, pos = coord_pos, edge_color = 'r', node_size = 0,
                                        width = weights/np.max(weights), arrowsize=3)
+                #nx.draw(self._GGraph, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+                #    edge_color='r', width=weights/np.max(weights), arrows=True, arrowsize=3, ax=ax)
+
+            if version == 4:
+                # Edge = Frequency, width = frequency
+                outname = "CFreq_NWFreq"
+                plt.title("Propagation Tree: edge color and normalized width (usage frequency)", y=1.08)
+                nx.draw_networkx_edges(self._GGraph, pos = coord_pos, edge_color = weights, edge_cmap=plt.cm.Reds,
+                                       width = weights/np.max(weights), arrowsize=3, node_size = 0)
+                sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=np.min(weights), vmax=np.max(weights)))
+                sm._A = []
+                plt.colorbar(sm)
+                #nx.draw(self._GGraph, with_labels=False, pos = coord_pos, node_color='w', node_size=0, edge_cmap=plt.cm.Reds,
+                #        edge_color=weights, width=weights/np.max(weights), arrows=True, arrowsize=3, ax=ax)
+
 
             if version == 1:
                 # Edge = Frequency, width = frequency
-                outname = "CFreq_NWFreq"
-                nx.draw_networkx_edges(self._GGraph, pos = coord_pos, edge_color = weights, edge_cmap=plt.cm.Reds,
-                                       width = weights/np.max(weights), arrowsize=3)
-
-            if version == 2:
-                # Edge = Frequency, width = frequency
                 outname = "CNFreq_NWFreq"
+                plt.title("Propagation Tree: edge normalized width and color (usage frequency)", y=1.08)
                 nx.draw_networkx_edges(self._GGraph, pos = coord_pos, edge_color = weights/np.max(weights), edge_cmap=plt.cm.Reds,
-                                      width = weights/np.max(weights), arrowsize=3)
+                                      width = weights/np.max(weights), arrowsize=3, node_size = 0)
+                sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=np.min(0), vmax=np.max(1)))
+                sm._A = []
+                plt.colorbar(sm)
+                #nx.draw(self._GGraph, with_labels=False, pos = coord_pos, node_color='w', node_size=0, edge_cmap=plt.cm.Reds,
+                #        edge_color=weights/np.max(weights), width=weights/np.max(weights), arrows=True, arrowsize=3, ax=ax)
 
-            if version == 3:
+                
+            if version == 2:
                 # Edge = frequency, fixed width
                 outname = "CFreq"
+                plt.title("Propagation Tree: edge color (usage frequency)", y=1.08)
                 nx.draw_networkx_edges(self._GGraph, pos = coord_pos, edge_color = weights, edge_cmap=plt.cm.Reds,
-                                      width = 1.0, arrowsize=3)
+                                      width = 1.0, arrowsize=3, node_size = 0)
+                sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=np.min(weights), vmax=np.max(weights)))
+                sm._A = []
+                plt.colorbar(sm)
+                #nx.draw(self._GGraph, with_labels=False, pos = coord_pos, node_color='w', node_size=0, edge_cmap=plt.cm.Reds,
+                #        edge_color=weights, width=1.0, arrows=True, arrowsize=3, ax=ax)
 
             #Title
-            plt.title("Propagation Tree and Frequency")
             plt.axis('scaled')
             plt.savefig(os.path.join(self._StatsFolder, "SpreadTree_FreqGraph_" + outname + ".png"), 
                         dpi=200, figsize=(200, 200), 
@@ -367,7 +402,9 @@ class Statistics(object):
             plt.rcParams['figure.titlesize'] = 18
 
             # axes
-            ax = plt.subplot(111)                    
+            ax = plt.subplot(111)                
+            for _, spine in ax.spines.items():
+                spine.set_visible(True)
             ax.get_xaxis().tick_bottom()  
             ax.get_yaxis().tick_left() 
 
@@ -382,8 +419,12 @@ class Statistics(object):
                                        node_shape='s',
                                        node_color = Colors)
 
-            nx.draw_networkx_edges(H, pos = coord_pos, edge_color = 'r', width = 0.5, arrowsize=3)
+            #nx.draw(H, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+            #        edge_color= 'r', width=0.5, edge_cmap=plt.cm.Reds,
+            #        arrows=True, arrowsize=3, ax=ax)
 
+            nx.draw_networkx_edges(H, pos = coord_pos, edge_color = 'r', width = 0.5, arrowsize=3, node_size=0)
+            
             #Title
             plt.title("Propagation Tree")
             plt.axis('scaled')
@@ -394,7 +435,7 @@ class Statistics(object):
                 os.makedirs(PlotPath)
             
             plt.savefig(os.path.join(PlotPath, "PropagationTree" + str(nSim) +".png"), 
-                        dpi=200, figsize=(200, 200), 
+                        dpi=200, figsize=(200, 200), edgecolor='b', 
                         bbox_inches='tight', transparent=False)
 
         # Hitting times and ROSs
@@ -419,23 +460,10 @@ class Statistics(object):
             plt.savefig(os.path.join(PlotPath, 'HitTime_Histogram.png'))
 
         plt.close("all")
-        
+              
     
     # Fire Spread evolution plots (per sim, version 2)
     def SimFireSpreadEvoV2(self, nSim, CoordCells, Colors, H=None, version=0, onlyGraph=True):
-        # V2
-        # Scatter data
-        c = self._Cols
-        r = self._Rows
-        x = np.linspace(0, c, c+1)
-        y = np.linspace(0, r, r+1)
-        pts = itertools.product(x, y)
-
-        #Initializing figures
-        figure()
-        ax = gca()
-
-        # If no graph H, read it
         if H is None:
             msgFileName = "MessagesFile0" if (nSim < 10) else "MessagesFile"
             H = nx.read_edgelist(path = os.path.join(self._MessagesPath, msgFileName + str(nSim) + ".csv"),
@@ -443,83 +471,103 @@ class Statistics(object):
                                  nodetype = int,
                                  data = [('time', float), ('ros', float)],
                                  delimiter=',')
-            
-        # Cartesian positions
-        coord_pos = dict() 
-
-        # Generate G graph (empty)
-        if self._GGraph is None:
-            self.GGraphGen()
         
-        # Coordinates
-        for i in self._GGraph.nodes:
-            coord_pos[i] = CoordCells[i-1] + 0.5
-        
-        # Rectangle
-        edgecolor = "None" #'k' if black borders are wanted
-        lwidth = 1.0
+        # If MessageFile is empty, skip
+        if len(H.nodes) > 0:
+            # Cartesian positions
+            coord_pos = dict() 
 
-        rectangle = []
+            # Generate G graph (empty)
+            if self._GGraph is None:
+                self.GGraphGen()
+            for i in self._GGraph.nodes:
+                coord_pos[i] = CoordCells[i-1] + 0.5
 
-        # Fill figure
-        for c in range(0, len(Colors)):
-            rectangle.append(plt.Rectangle((CoordCells[c][0], CoordCells[c][1]), 1, 1, 
-                                            fc="white", alpha=0.0, ec=edgecolor, linewidth=lwidth))
-        for i in range(0, len(Colors)):
-            ax.add_patch(rectangle[i])
+            # No nodes
+            if onlyGraph is False:
+                nx.draw_networkx_nodes(self._GGraph, pos = coord_pos,
+                                       node_size = 4,
+                                       nodelist = list(G.nodes),
+                                       node_shape='s',
+                                       node_color = Colors)
 
-        plt.title("Propagation Tree")#,color="white")
-        plt.axis('scaled')
+            # plt.figure(figsize = (15, 9)) 
 
-        # No nodes
-        if onlyGraph == False:
-            nx.draw_networkx_nodes(self._GGraph, pos = coord_pos,
-                                   node_size = 4,
-                                   nodelist = list(G.nodes),
-                                   node_shape='s',
-                                   node_color = Colors)
+            # Font sizes
+            plt.rcParams['font.size'] = 16
+            plt.rcParams['axes.labelsize'] = 16
+            plt.rcParams['axes.titlesize'] = 16
+            plt.rcParams['xtick.labelsize'] = 16
+            plt.rcParams['ytick.labelsize'] = 16
+            plt.rcParams['legend.fontsize'] = 16
+            plt.rcParams['figure.titlesize'] = 18
 
-        # Simple red
-        if version == 0:
-            nx.draw_networkx_edges(H, pos = coord_pos, edge_color = 'r', width = 0.5, 
-                                   arrowsize=4, label="ROS messages")
+            # axes
+            ax = plt.subplot(111)       
+            for _, spine in ax.spines.items():
+                spine.set_visible(True)
+            ax.get_xaxis().tick_bottom()  
+            ax.get_yaxis().tick_left() 
 
-        # Different plot versions
-        elif version != 0 and H is not None:
-            edges = H.edges()
-            weights = [H[u][v]['ros'] for u,v in edges]
-            times = [H[u][v]['time'] for u,v in edges]
+            # Dimensionamos el eje X e Y
+            plt.axis([-1, self._Rows, -1, self._Cols])    
 
-            # Edge color = Weights (freq)
-            if version == 1:
-                nx.draw_networkx_edges(H, pos = coord_pos, edge_color = weights, edge_cmap=plt.cm.Reds,
-                                       width = 1.0, arrowsize=2)
-            
-            # Edge color = hit Times (normalized)
-            if version == 2:
-                nx.draw_networkx_edges(H, pos = coord_pos, edge_color = times/np.max(times), edge_cmap=plt.cm.Reds_r,
-                                       width = 1.0, arrowsize=2)
+            # Simple red
+            if version == 0:
+                nx.draw_networkx_edges(H, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+                        edge_color= 'r', width=0.5, edge_cmap=plt.cm.Reds,
+                        arrows=True, arrowsize=3, ax=ax, label="ROS messages")
 
-            # Edge color = Weights (freq) and width = hit times (normalized)
-            if version == 3:
-                nx.draw_networkx_edges(H, pos = coord_pos, edge_color = weights/np.max(weights), edge_cmap=plt.cm.Reds,
-                                       width = times / np.max(times), arrowsize=2)
 
-        # Add legend and coordinates (if needed)
-        # plt.legend()
-        XCoord = None
-        YCoord = None
+            # Different plot versions
+            elif version != 0 and H is not None:
+                edges = H.edges()
+                ross = [H[u][v]['ros'] for u,v in edges]
+                times = [H[u][v]['time'] for u,v in edges]
 
-        # Create plots folder
-        PlotPath = os.path.join(self._OutFolder, "Plots", "Plots" + str(nSim))
-        if os.path.isdir(PlotPath) is False:
-            os.makedirs(PlotPath)
-       
-        # Save Figure
-        plt.savefig(os.path.join(PlotPath, "FireSpreadTree_V2" + str(nSim) + ".png"),
-                    dpi=200,  figsize=(200, 200), 
-                    bbox_inches='tight', transparent=False)
-        plt.close("all")
+                # Edge color = ROSs
+                if version == 1:
+                    plt.title("Propagation Tree: hitting ROS")
+                    nx.draw_networkx_edges(H, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+                        edge_color=ross, width=1.0, edge_cmap=plt.cm.Reds,
+                        arrows=True, arrowsize=3, ax=ax)
+                    sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=np.min(ross), vmax=np.max(ross)))                
+
+                # Edge color = hit Times (normalized)
+                if version == 2:
+                    plt.title("Propagation Tree: traveling times")
+                    nx.draw_networkx_edges(H, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+                            edge_color=times, width=1.0, edge_cmap=plt.cm.Reds,  #edge_color=times/np.max(times)
+                            arrows=True, arrowsize=3, ax=ax)
+                    sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=np.min(times), vmax=np.max(times)))
+
+                # Edge color = Weights (Ross) and width = hit times (normalized)
+                if version == 3:
+                    plt.title("Propagation Tree: ROS(c) and times")
+                    nx.draw_networkx_edges(H, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+                            edge_color= ross/np.max(ross), width= times/np.max(times), edge_cmap=plt.cm.Reds,
+                            arrows=True, arrowsize=3, ax=ax)
+                    sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=np.min(0), vmax=np.max(1)))
+
+
+            # Add legend and coordinates (if needed)
+            # plt.legend()
+            XCoord = None
+            YCoord = None
+
+            # Create plots folder
+            PlotPath = os.path.join(self._OutFolder, "Plots", "Plots" + str(nSim))
+            if os.path.isdir(PlotPath) is False:
+                os.makedirs(PlotPath)
+
+            # Save Figure
+            plt.axis('scaled')
+            sm._A = []
+            plt.colorbar(sm)
+            plt.savefig(os.path.join(PlotPath, "FireSpreadTree" + str(nSim) + "_" + str(version) + ".png"),
+                        dpi=200,  figsize=(200, 200), 
+                        bbox_inches='tight', transparent=False)
+            plt.close("all")
         
     
     # Individual BP maps (for plotting the evolution of the fire)
@@ -568,12 +616,14 @@ class Statistics(object):
                 if os.path.isdir(PlotPath) is False:
                     os.makedirs(PlotPath)
                 
-                self.BPHeatmap(a, Path=PlotPath, nscen=1, sq=True, namePlot="Fire" + str(j + 1), 
-                               Title="Fire Period " + str(j + 1), cbarF=False, ticks=False)
+                num = str(j+1).zfill(2)
+                self.BPHeatmap(a, Path=PlotPath, nscen=1, sq=True, namePlot="Fire" + num, 
+                               Title="Fire Period " + str(j + 1), cbarF=False, ticks=False,
+                               transparent=True)
             
     
     # Plot full forest (all cells and colors)
-    def ForestPlot(self, LookupTable, data, Path, namePlot="Initial Forest"):
+    def ForestPlot(self, LookupTable, data, Path, namePlot="InitialForest"):
         # Colors dictionary (container)
         myColorsD = {}
 
@@ -591,7 +641,8 @@ class Statistics(object):
             myColorsD[i] = MColors[aux]
             aux += 1
         myColorsD[9999] = (1.0, 1.0, 1.0, 1.0)
-
+        myColorsD[-1] = (6/255., 150/255., 165/255., 1.0) 
+        
         mykeys = np.unique(data)
 
         aux = 0
@@ -624,20 +675,22 @@ class Statistics(object):
         ax.get_yaxis().tick_left() 
 
         # Title and labels
-        plt.title("Initial Landscape")
+        plt.title(" ")
 
         if len(mykeys) > 1: 
             cmap = LinearSegmentedColormap.from_list('Custom', myColors, len(myColors))
-            ax = sns.heatmap(data, cmap=cmap, linewidths=.5, linecolor='lightgray', annot=False, cbar=False,
-                             square=True)
+            ax = sns.heatmap(data, cmap=cmap, linewidths=.0, linecolor='lightgray', annot=False, cbar=False,
+                             square=True, xticklabels=False, yticklabels=False)
 
         else:
             cmap = colors.ListedColormap(myColors)
             boundaries = [-1, 1]
             norm = colors.BoundaryNorm(boundaries, cmap.N, clip=True)
-            ax = sns.heatmap(data, cmap=cmap, linewidths=.5, linecolor='lightgray', 
-                             annot=False, cbar=False, norm=norm, square=True)
-
+            ax = sns.heatmap(data, cmap=cmap, linewidths=.0, linecolor='lightgray', 
+                             annot=False, cbar=False, norm=norm, square=True,   # Testing new options for combining
+                             xticklabels=False, yticklabels=False)       
+        
+            
         # Only y-axis labels need their rotation set, x-axis labels already have a rotation of 0
         _, labels = plt.yticks()
         plt.setp(labels, rotation=0)
@@ -646,6 +699,63 @@ class Statistics(object):
 
         plt.close("all")
 
+    # Merge evolution plots with background (Initial forest)
+    def combinePlot(self, BackgroundPath, fileN, Sim):
+        # Read Forest
+        ForestFile = os.path.join(BackgroundPath, "InitialForest.png")
+        p1 = cv2.imread(ForestFile) 
+
+        # Read Evo plot
+        fstr = str(fileN).zfill(2)
+        PathFile = os.path.join(BackgroundPath, "Plots", "Plots"+ str(Sim), "Fire" + fstr + ".png")
+        p2 = cv2.imread(PathFile) 
+
+        # Alpha channels
+        p1 = cv2.cvtColor(p1, cv2.COLOR_BGR2RGBA)
+        p2 = cv2.cvtColor(p2, cv2.COLOR_BGR2RGBA)
+        p2[np.all(p2 >= [230, 230, 230, 230], axis=2)] = [0, 0, 0, 1]
+
+        # Axis
+        gca().set_axis_off()
+        subplots_adjust(top = 1, bottom = 0, 
+                        right = 1, left = 0, 
+                        hspace = 0, wspace = 0)
+        margins(0,0)
+        gca().xaxis.set_major_locator(NullLocator())
+        gca().yaxis.set_major_locator(NullLocator())
+
+        # Create plot
+        plt.imshow(p1, zorder=0)
+        plt.imshow(p2, zorder=1)
+        plt.savefig(PathFile, dpi=200, bbox_inches='tight', pad_inches=0, transparent=False)
+        plt.close('all')
+     
+        
+    
+    # Merge the plots
+    def mergePlot(self, multip=True):
+        # Stats per simulation
+        for i in tqdm(range(self._nSims)):
+            PlotPath = os.path.join(self._OutFolder, "Plots", "Plots" + str(i + 1))
+            PlotFiles = glob.glob(os.path.join(PlotPath, 'Fire[0-9]*.*'))
+            
+            if multip is False:
+                for (j, _) in enumerate(PlotFiles):
+                    self.combinePlot(self._OutFolder, j + 1, i + 1)  
+            
+            else:
+                # Multiprocess
+                jobs = []
+
+                for (j, _) in enumerate(PlotFiles):
+                    p = Process(target=self.combinePlot, args=(self._OutFolder, j + 1, i + 1,))
+                    jobs.append(p)
+                    p.start()
+
+                # complete the processes
+                for job in jobs:
+                    job.join()            
+    
     # General Stats (end of the fire stats per scenario) 
     def GeneralStats(self):
         # If nSims = -1, read the output folder
@@ -671,7 +781,7 @@ class Statistics(object):
                 statDict[i] = {"ID": i+1,
                                "NonBurned": len(a[(a == 0) | (a == 2)]),
                                "Burned": len(a[a == 1]), 
-                               "Harvested": len(a[a == 2])}
+                               "Harvested": len(a[a == -1])}
             else:
                 if i != 0:
                     a = np.zeros([a.shape[0], a.shape[1]]).astype(np.int64)
@@ -679,14 +789,14 @@ class Statistics(object):
                     statDict[i] = {"ID": i+1,
                                    "NonBurned": len(a[(a == 0) | (a == 2)]),
                                    "Burned": len(a[a == 1]), 
-                                   "Harvested": len(a[a == 2])}
+                                   "Harvested": len(a[a == -1])}
                 else:
                     a = np.zeros([self._Rows,self._Cols]).astype(np.int64)
                     b.append(a)
                     statDict[i] = {"ID": i+1,
                                    "NonBurned": len(a[(a == 0) | (a == 2)]),
                                    "Burned": len(a[a == 1]), 
-                                   "Harvested": len(a[a == 2])}
+                                   "Harvested": len(a[a == -1])}
                                         
         # Generate CSV files
         if self._CSVs:
@@ -701,7 +811,7 @@ class Statistics(object):
                      float_format='%.3f')
             if self._verbose:
                 print("General Stats:\n", A)
-                display(A[["Burned","Harvested"]].std())
+                print(A[["Burned","Harvested"]].std())
             
 
             # General Summary
@@ -775,7 +885,7 @@ class Statistics(object):
                     statDicth[(i,j)] = {"ID": i+1,
                                        "NonBurned": len(ah[(ah == 0) | (ah == 2)]),
                                        "Burned": len(ah[ah == 1]), 
-                                       "Harvested": len(ah[ah == 2]),
+                                       "Harvested": len(ah[ah == -1]),
                                        "Hour": j+1}
             else:
                 if i != 0:
@@ -784,7 +894,7 @@ class Statistics(object):
                     statDicth[(i,j)] = {"ID": i+1,
                                         "NonBurned": len(ah[(ah == 0) | (ah == 2)]),
                                         "Burned": len(ah[ah == 1]), 
-                                        "Harvested": len(ah[ah == 2]),
+                                        "Harvested": len(ah[ah == -1]),
                                         "Hour": j+1}
                 else:
                     ah = np.zeros([self._Rows,self.Cols]).astype(np.int64)
@@ -792,7 +902,7 @@ class Statistics(object):
                     statDicth[(i,0)] = {"ID": i+1,
                                         "NonBurned": len(ah[(ah == 0) | (ah == 2)]),
                                         "Burned": len(ah[ah == 1]), 
-                                        "Harvested": len(ah[ah == 2]),
+                                        "Harvested": len(ah[ah == -1]),
                                         "Hour": 0 + 1}
            
         # Generate CSV files

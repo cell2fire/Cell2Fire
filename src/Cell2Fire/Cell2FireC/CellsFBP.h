@@ -71,6 +71,12 @@ class CellsFBP {
 														  arguments * args, weatherDF * wdf_ptr, std::vector<double> * FSCell,
 														  double randomROS);
 		
+		std::vector<int> manageFireBBO(int period, std::unordered_set<int> & AvailSet,      
+															inputs * df_ptr, fuel_coefs * coef, 
+															std::vector<std::vector<int>> & coordCells, std::unordered_map<int, CellsFBP> & Cells_Obj, 
+															arguments * args, weatherDF * wdf_ptr, std::vector<double> * FSCell,
+															double randomROS, std::vector<float> & EllipseFactors);
+		
 		bool get_burned(int period, int season, int NMsg, inputs df[],  fuel_coefs * coef, arguments * args, weatherDF * wdf_ptr) ;
 								
 		void set_Adj(std::unordered_map<std::string, int> & adjacentCells);

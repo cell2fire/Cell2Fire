@@ -42,8 +42,9 @@ class Cell2FireC:
         self._FTypes2 = {"m1": 0, "m2": 1, "m3": 2, "m4": 3,
                          "c1": 4, "c2": 5, "c3": 6, "c4": 7, "c5": 8, "c6": 9, "c7": 10,
                          "d1": 11, "s1": 12, "s2": 13, "s3": 14, "o1a": 15, "o1b": 16, "d2": 17}
-
-    # Run C++ Sim (Hard coded for debuging)
+        
+    
+    # Run C++ Sim 
     def run(self):
         # Parse args for calling C++ via subprocess        
         execArray=[os.path.join(os.getcwd(),'Cell2FireC/Cell2Fire'), 
@@ -59,7 +60,11 @@ class Cell2FireC:
                    '--nweathers', str(self.args.nweathers),
                    '--ROS-CV', str(self.args.ROS_CV),
                    '--IgnitionRad', str(self.args.IgRadius), 
-                   '--seed', str(int(self.args.seed))]
+                   '--seed', str(int(self.args.seed)),
+                   '--ROS-Threshold', str(self.args.ROS_Threshold),
+                   '--HFI-Threshold', str(self.args.HFI_Threshold),
+                   '--bbo' if (self.args.BBO) else '',
+                   '--HarvestPlan', self.args.HCells if(self.args.HCells is not None) else '',]
         
         # Output log
         if self.args.OutFolder is not None:
@@ -78,7 +83,6 @@ class Cell2FireC:
         # End of the replications
         print("End of Cell2FireC execution...")
         
-    
     # Pre-processing
     '''
     Generate the Data.csv file for the C++ core
@@ -120,15 +124,37 @@ class Cell2FireC:
     
         self._Colors = Colors 
         self._FTypeCells = FTypeCells 
-    
+        self._StatusCells = StatusCells
 
+    '''
+    Generate empty MessageFiles if needed
+    '''
+    def DummyMsg(self):
+        # Messages path and CWD for returning
+        MPath = os.path.join(self.args.OutFolder, "Messages")
+        CWD = os.getcwd()
+        os.chdir(MPath)
+        
+        # Read files 
+        MessagesFiles = glob.glob('*')
+        existingIDs = [int(re.match('MessagesFile(\d+)', MessagesFiles[i]).groups()[0]) for i in range(0, len(MessagesFiles))]
+        
+        # Loop for filling with dummy files 
+        for i in range(1, self.args.nsims + 1):
+            if i not in existingIDs:
+                np.savetxt(os.path.join(MPath, "MessagesFile" + str(i).zfill(2) + ".csv"), np.asarray([]))
+        
+        # Come back to the original directory
+        os.chdir(CWD)
+        
+    
     '''
     Generate statistics from Grids
     '''
     def stats(self):
         # Get rows, cols 
         DFForest = pd.read_csv(os.path.join(self.args.InFolder, "Forest.asc"), 
-                   sep=" ", header=None, nrows=2)
+                               sep=" ", header=None, nrows=2)
         Shape = DFForest[1].values
         
         # Initialize the Stats object
@@ -150,8 +176,9 @@ class Cell2FireC:
                                   tCorrected=False)
 
         # Hourly Stats
-        print("Hourly stats...")
-        StatsPrinter.HourlyStats()
+        if self.args.grids:
+            print("Hourly stats...")
+            StatsPrinter.HourlyStats()
 
         # General Stats
         print("General stats...")
@@ -161,47 +188,71 @@ class Cell2FireC:
         if self.args.spreadPlots or self.args.plots or self.args.allPlots:
             print("Reading data...")
             self.getData()  
+            print("Dummy if needed...")
+            self.DummyMsg()
         
         # Spread plots
         if self.args.spreadPlots or self.args.allPlots:
             # Fire Spread Graphs
             print("Generating global fire spread evolution...")
             totalPlots = 1
+            
+            # If multiple sims, plots including freq are useful
             if self.args.nsims > 1:
-                totalPlots = 4
+                totalPlots = 3
             for v in tqdm(range(totalPlots)):
                 StatsPrinter.GlobalFireSpreadEvo(self._CoordCells, 
                                                  onlyGraph=True,
                                                  version=v)
 
             # Fire Spread Graphs (individual)
-            print("Generating individual Fire Spread plots...")
-            for n in tqdm(range(1, self.args.nsims + 1)):
-                StatsPrinter.SimFireSpreadEvo(n, self._CoordCells, 
-                                              self._Colors, 
-                                              H=None, version=0,
-                                              print_graph=True, 
-                                              analysis_degree=False,
-                                              onlyGraph=True)
+            if self.args.grids:
+                print("Generating individual Fire Spread plots...")
+                for n in tqdm(range(1, self.args.nsims + 1)):
+                    StatsPrinter.SimFireSpreadEvo(n, self._CoordCells, 
+                                                  self._Colors, 
+                                                  H=None, version=0,
+                                                  print_graph=True, 
+                                                  analysis_degree=False,
+                                                  onlyGraph=True)
+                    
+            
+            # Generate Initial Forest
+            print("Generating initial forest plot...")
+            FBPlookup = os.path.join(self.args.InFolder, "fbp_lookup_table.csv")
+            if self.args.HCells is not None: 
+                HCarray = np.loadtxt(self.args.HCells, skiprows=1, delimiter=",")[1:].astype(np.int)
+                print("HCArray:", HCarray)
+                print("GForestN:", self._GForestN)
+                self._GForestN = self._GForestN.flatten()
+                for i in HCarray:
+                    self._GForestN[i-1] = -1                    
+                    #self._GForestN[i // Shape[1] - 1, i - i // Shape[1] * i // Shape[0] - 1] = -1
+            
+                self._GForestN = self._GForestN.reshape((Shape[0], Shape[1]))
+            StatsPrinter.ForestPlot(FBPlookup, self._GForestN, 
+                                    self.args.OutFolder, namePlot="InitialForest")
 
 
         # Individual plots 
         if self.args.plots or self.args.allPlots:            
-            # Plotting
-            print("Generating fire evolution plots...")
-            StatsPrinter.plotEvo()
+            if self.args.grids:
+                # Plotting
+                print("Generating fire evolution plots...")
+                StatsPrinter.plotEvo()
+                
+                # Combine them with background
+                if self.args.combine:
+                    print("Combining Fires with background (initial forest)...")
+                    StatsPrinter.mergePlot()
 
-            # Generate Initial Forest
-            print("Generating initial forest plot...")
-            #print("GForestN:", self._GForestN)
-            FBPlookup = os.path.join(self.args.InFolder, "fbp_lookup_table.csv")
-            StatsPrinter.ForestPlot(FBPlookup, self._GForestN, 
-                                    self.args.OutFolder, namePlot="Initial Forest")
-
-        '''
-
-            StatsPrinter.SimFireSpreadEvoV2(n, self._CoordCells,
-                                            self._Colors, 
-                                            H=None, version=0, 
-                                            onlyGraph=True)
-        '''
+            print("Generating detailed individual propagation trees...")
+            for n in tqdm(range(1, self.args.nsims + 1)):
+                for v in range(1,4):
+                    StatsPrinter.SimFireSpreadEvoV2(n, self._CoordCells,
+                                                    self._Colors, 
+                                                    H=None, version=v, 
+                                                    onlyGraph=True)        
+        
+    
+    

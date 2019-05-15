@@ -78,7 +78,7 @@ def ForestGrid(filename, Dictionary):
                 gridcell1.append("NData")
                 gridcell2.append("NData")
                 gridcell3.append("NData")
-                gridcell4.append("NF")
+                gridcell4.append("NData")
             else:
                 gridcell1.append(c)
                 gridcell2.append(Dictionary[c])

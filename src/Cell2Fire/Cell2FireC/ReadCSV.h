@@ -54,6 +54,9 @@ public:
 	//Populate DF 
 	void parseDF(inputs * df_ptr, std::vector<std::vector<std::string>> & DF, int NCells);
 	
+	// Populate NFtypes
+	void parseNDF(std::vector<int> & NFTypes, std::vector<std::vector<std::string>> & DF, int NCells);
+	
 	//Populate Weather DF
 	void parseWeatherDF(weatherDF * wt_ptr, std::vector<std::vector<std::string>> & DF, int WPeriods);
 	
@@ -62,6 +65,12 @@ public:
 	
 	// Populates ForestDF
 	void parseForestDF(forestDF * frt_ptr, std::vector<std::vector<std::string>> & DF);
+	
+	// Populate Harvested Cells 
+	void parseHarvestedDF(std::unordered_map<int, std::vector<int>> & hc, std::vector<std::vector<std::string>> & DF, int HPeriods);
+	
+	// Populate BBO Factors
+	void parseBBODF(std::unordered_map<int, std::vector<float>> & bbo, std::vector<std::vector<std::string>> & DF, int NFTypes);
 	
 	// Prints individual cell info
 	void printDF(inputs df);
