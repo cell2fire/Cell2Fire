@@ -1,0 +1,11 @@
+# Full run generating stats and all plot
+time python main.py --input-instance-folder /mnt/c/Users/Lenovo/documents/GitHub/Cell2Fire/data/dogrib/ --output-folder /mnt/c/Users/Lenovo/Documents/GitHub/Cell2Fire/results/dogrib_n100cv05 --ignitions --sim-years 1 --nsims 100 --grids --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.5 --seed 123 --IgnitionRad 0 --stats --allPlots 
+
+# Only processing (reads a previously simulated instance and computes stats/plots)
+# Important: provide the number of sims --nsims to be processed
+time python main.py --input-instance-folder /mnt/c/Users/Lenovo/documents/GitHub/Cell2Fire/data/9cells/ --output-folder /mnt/c/Users/Lenovo/Desktop/9cells --nsims 10 --stats --allPlots --onlyProcessing
+
+# DFO using BOBYQA (can provide initial points as indicated with the last args)
+# ROS_Threshold = float for critical ROS
+# BBOEllipticalFactors = HROS FROS BROS EFACTOR (floats)
+python main_DFO.py --input-instance-folder ../../../data/dogrib/ --OutFolder ../../../results/TestDFO --PathScars ../../../scars/dogrib/ --toTune "CriticalSROS" "EllipticalROS" --BBOEllipticalFactors 1.0 1.0 1.0 --ROS_Threshold 0.1
