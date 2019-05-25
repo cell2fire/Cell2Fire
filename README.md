@@ -18,10 +18,12 @@ It includes powerful statistical, graphical output, and spatial analysis feature
 - matplotlib
 - seaborn
 - tqdm
+- opencv
+- imread
 - networkx (for stats module)
 
 # Usage
-In order to run the simulator and process the results, the following command can be used:
+In order to run the simulator and process the results, the following Unix command can be used (assuming you are in src/Cell2Fire):
 ```
 $ python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../Sub40x40 --ignitions --sim-years 1 --nsims 100 --grids --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.8 --seed 123 --stats --allPlots --IgnitionRad 1
 ```
