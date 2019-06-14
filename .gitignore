@@ -1,0 +1,9 @@
+
+<<<<<<< HEAD
+*.o
+*.pyc
+src/Cell2Fire/Cell2FireC/Cell2Fire
+*.gch
+src/Cell2Fire/Cell2FireC/Makefile
+=======
+>>>>>>> db3e54a0bebef8aec535192e55a6508d30e2c0bb

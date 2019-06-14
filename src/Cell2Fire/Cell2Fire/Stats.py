@@ -92,6 +92,27 @@ class Statistics(object):
     #            Methods               #
     #                                  #
     ####################################
+    # Plot style
+    def plt_style(self):
+        # Figure
+        plt.figure(figsize = (15, 9)) 
+
+        # Font sizes
+        plt.rcParams['font.size'] = 16
+        plt.rcParams['axes.labelsize'] = 16
+        plt.rcParams['axes.titlesize'] = 16
+        plt.rcParams['xtick.labelsize'] = 16
+        plt.rcParams['ytick.labelsize'] = 16
+        plt.rcParams['legend.fontsize'] = 16
+        plt.rcParams['figure.titlesize'] = 18
+
+        # axes
+        ax = plt.subplot(111)                    
+        ax.spines["top"].set_visible(False)  
+        ax.spines["right"].set_visible(False)
+        ax.get_xaxis().tick_bottom()  
+        ax.get_yaxis().tick_left() 
+    
     # Boxplot function
     def BoxPlot(self, Data, xx="Hour", yy="Burned", xlab="Hours", ylab="# Burned Cells", 
                 pal="Reds", title="Burned Cells Evolution", Path=None, namePlot="BoxPlot",
@@ -134,6 +155,32 @@ class Statistics(object):
         plt.close("all")
         
     
+    # Final forest boxplot
+    def FinalBoxPlots(self, OutFolder=None, title="Final Forest Status",
+                      namePlot="FinalStats_BoxPlot"):
+
+        # Style
+        self.plt_style()
+
+        # Title and labels
+        plt.title(title)
+
+        # DFs containers (with results from heuristics)
+        DFs = {}
+
+        # Populate DF
+        filePath = os.path.join(self._StatsFolder, "FinalStats.csv")
+        DF = pd.read_csv(filePath)
+        DF = DF[["Burned", "NonBurned", "Harvested"]]
+
+        # Plot
+        my_pal = {"Burned": "r", "NonBurned": "g", "Harvested":"b"}
+        ax = sns.boxplot(data=DF, linewidth=2.5, palette=my_pal).set(xlabel="Final State", ylabel="Hectares")    
+
+        # Save it
+        plt.savefig(os.path.join(self._StatsFolder, namePlot + ".png"), dpi=200, bbox_inches='tight')
+        plt.close("all")
+    
     # Histograms
     def plotHistogram(self, df, NonBurned=False, xx="Hour", xmax=6, KDE=True, title="Histogram: Burned Cells",
                       Path=None, namePlot="Histogram"):
@@ -165,7 +212,7 @@ class Statistics(object):
         plt.title(title)
 
         # Make default histogram of sepal length
-        if KDE == True:
+        if KDE is True:
             g = sns.distplot(df[df[xx] == xmax]["Burned"], bins=10, kde=KDE, rug=False).set(xlabel="Number of Cells", ylabel="Density")
             if NonBurned == True: 
                 g += sns.distplot(df[df[xx] == xmax]["NonBurned"], bins=10, kde=KDE, rug=False).set(xlabel="Number of Cells", ylabel="Density")
@@ -175,7 +222,7 @@ class Statistics(object):
                 g += sns.distplot(df[df[xx] == xmax]["NonBurned"], bins=10, kde=KDE, rug=False).set(xlabel="Number of Cells", ylabel="Frequency")
 
         # Save it
-        if Path == None:
+        if Path is None:
             Path = os.getcwd() + "/Stats/"
             if not os.path.exists(Path):
                 os.makedirs(Path)
@@ -236,6 +283,111 @@ class Statistics(object):
         
         plt.close("all")
     
+    # ROS Heatmap
+    def ROSHeatmap(self, ROSM, Path=None, nscen=1, sq=True, namePlot="ROS_HeatMap",
+                  Title=None, cbarF=True, ticks="auto", transparent=False, 
+                  annot=False, lw=0.01, vmin=0, vmax=None):
+        # Figure size
+        plt.figure(figsize = (15, 9)) 
+
+        # Font sizes
+        plt.rcParams['font.size'] = 16
+        plt.rcParams['axes.labelsize'] = 16
+        plt.rcParams['axes.titlesize'] = 16
+        plt.rcParams['xtick.labelsize'] = 16
+        plt.rcParams['ytick.labelsize'] = 16
+        plt.rcParams['legend.fontsize'] = 16
+        plt.rcParams['figure.titlesize'] = 18
+
+        # axes
+        ax = plt.subplot(111)                    
+        ax.spines["top"].set_visible(False)  
+        ax.spines["right"].set_visible(False)
+        ax.get_xaxis().tick_bottom()  
+        ax.get_yaxis().tick_left() 
+
+        # Title and labels
+        if Title is None:
+            plt.title("ROS Heatmap (nscen="+str(nscen)+")")
+        else:
+            plt.title(Title)
+
+        # Modify existing map to have white values
+        cmap = cm.get_cmap('RdBu_r')
+        lower = plt.cm.seismic(np.ones(100)*0.50)  # Original is ones 
+        upper = cmap(np.linspace(1 - 0.5, 1, 90))
+        colors = np.vstack((lower, upper))
+        tmap = matplotlib.colors.LinearSegmentedColormap.from_list('terrain_map_white', colors)
+
+        # Limits
+        if vmax is None:
+            vmax = np.max(ROSM)
+
+        # Create Heatmap
+        ax = sns.heatmap(ROSM, center=0.0, xticklabels=ticks, yticklabels=ticks, linewidths=lw,
+                         square=sq, cmap=tmap, vmin=vmin, vmax=vmax, annot=annot, cbar=cbarF)
+
+        # Save it
+        if Path is None:
+            Path = os.getcwd() + "/Stats/"
+            if not os.path.exists(Path):
+                os.makedirs(Path)
+
+        for _, spine in ax.spines.items():
+            spine.set_visible(True)
+
+        plt.savefig(os.path.join(Path, namePlot + ".png"), dpi=200, bbox_inches='tight', 
+                    pad_inches=0, transparent=transparent)
+        
+        plt.close("all")
+    
+    # ROS Matrix individual
+    def ROSMatrix_ind(self, nSim): 
+        msgFileName = "MessagesFile0" if (nSim < 10) else "MessagesFile"
+        DF = pd.read_csv(os.path.join(self._MessagesPath, msgFileName), delimiter=",", header=None,)
+        DF.columns = ["i", "j", "time", "ROS"]
+
+        # Array
+        ROSM = np.zeros(self._Rows * self._Cols)
+
+        # Fill
+        for j in DF["j"]:
+            ROSM[j-1] = DF[DF["j"] == j]["ROS"].values[0]
+        ROSM = ROSM.reshape((self._Rows, self._Cols))
+        
+        # Create plots folder
+        PlotPath = os.path.join(self._OutFolder, "Plots", "Plots" + str(nSim))
+        if os.path.isdir(PlotPath) is False:
+            os.makedirs(PlotPath)
+
+        # Heatmap
+        self.ROSHeatmap(ROSM, Path=PlotPath, nscen=1, sq=True, namePlot="ROS_Heatmap", 
+                        Title="ROS Heatmap", cbarF=True)
+        
+    
+    # ROS Matrix
+    def ROSMatrix_AVG(self, nSim): 
+        msgFileName = "MessagesFile0" if (nSim < 10) else "MessagesFile"
+        DF = pd.read_csv(os.path.join(self._MessagesPath, msgFileName), delimiter=",", header=None,)
+        DF.columns = ["i", "j", "time", "ROS"]
+
+        # Array
+        ROSM = np.zeros(self._Rows * self._Cols)
+
+        # Fill
+        for j in DF["j"]:
+            ROSM[j-1] = DF[DF["j"] == j]["ROS"].values[0]
+        ROSM = ROSM.reshape((self._Rows, self._Cols))
+        
+        # Create plots folder
+        PlotPath = os.path.join(self._OutFolder, "Plots", "Plots" + str(nSim))
+        if os.path.isdir(PlotPath) is False:
+            os.makedirs(PlotPath)
+
+        # Heatmap
+        self.ROSHeatmap(ROSM, Path=PlotPath, nscen=1, sq=True, namePlot="ROS_Heatmap", 
+                        Title="ROS Heatmap", cbarF=True)
+    
     # Generate G graph
     def GGraphGen(self, full=False):
         # Graph generation
@@ -246,6 +398,10 @@ class Statistics(object):
 
         # We add nodes to the list
         self._GGraph.add_nodes_from(nodes)
+        for n in nodes:
+            self._GGraph.node[n]["ros"] = 0
+            self._GGraph.node[n]["time"] = 0
+            self._GGraph.node[n]["count"] = 0
         
         # If full, get edges
         if full:
@@ -260,8 +416,18 @@ class Statistics(object):
                 for e in HGraphs.edges():
                     if self._GGraph.has_edge(*e):
                         self._GGraph.get_edge_data(e[0], e[1])["weight"] += 1
+                        self._GGraph.node[e[1]]["ros"] += HGraphs[e[0]][e[1]]["ros"]
+                        self._GGraph.node[e[1]]["time"] += HGraphs[e[0]][e[1]]["time"]
+                        self._GGraph.node[e[1]]["count"] += 1
                     else:
                         self._GGraph.add_weighted_edges_from([(*e,1.)])
+                    
+        # Average ROS, time 
+        for n in nodes:
+            if self._GGraph.node[n]['count'] > 0:
+                self._GGraph.node[n]['ros'] /= self._GGraph.node[n]['count']
+                self._GGraph.node[n]['time'] /= self._GGraph.node[n]['count']
+
     
     # Fire Spread evolution plot (global sims)
     def GlobalFireSpreadEvo(self, CoordCells, onlyGraph=True, version=0):
@@ -809,11 +975,15 @@ class Statistics(object):
             A.to_csv(os.path.join(self._StatsFolder, "FinalStats.csv"), 
                      columns=A.columns, index=False, header=True, 
                      float_format='%.3f')
+            
+            # Final forest status boxplot
+            self.FinalBoxPlots(OutFolder=self._StatsFolder)
+            
+            # Info
             if self._verbose:
                 print("General Stats:\n", A)
                 print(A[["Burned","Harvested"]].std())
             
-
             # General Summary
             SummaryDF = A.describe()
             SummaryDF.to_csv(os.path.join(self._StatsFolder, "General_Summary.csv"), header=True, 

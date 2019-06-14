@@ -30,10 +30,6 @@ using namespace std;
 class Cell2Fire {
 	// DFs 
 	private:
-		inputs * df_ptr;
-		weatherDF * wdf_ptr;
-		weatherDF wdf[10];
-		inputs df[80000];
 		CSVReader CSVWeather;
 		CSVReader CSVForest;
 			
