@@ -30,7 +30,7 @@ void CSVWriter::addDatainRow(T first, T last){
 	// Open the file in truncate mode if first line else in Append Mode
 	file.open(this->fileName, std::ios::out | (this->linesCount ? std::ios::app : std::ios::trunc));
  
-	// Iterate over the range and add each lement to file seperated by delimeter.
+	// Iterate over the range and add each element to file seperated by delimeter.
 	for (; first != last; )
 	{
 		file << *first;

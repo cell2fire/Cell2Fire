@@ -128,7 +128,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	int dnsims = 1;
 	int dweather_period_len= 60;
 	int dweather_files = 1;
-	int dmax_fire_periods= 1000;
+	int dmax_fire_periods= 10000000;
 	int dseed = 123;
 	int diradius = 0;
 	float dROS_Threshold= 0.1;

@@ -439,6 +439,10 @@ std::vector<int> CellsFBP::manageFire(int period, std::unordered_set<int> & Avai
             int nb = angleToNb[angle];
             double ros = (1 + args->ROSCV * ROSRV) * _angle.second;
 			
+			if (std::isnan(ros)){
+				ros = 0.0001;
+			}
+			
             if (args->verbose) {
                 std::cout << "     (angle, realized ros in m/min): (" << angle << ", " << ros << ")" << std::endl;
             }

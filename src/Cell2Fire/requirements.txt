@@ -5,3 +5,4 @@ seaborn
 pprint
 imread
 tqdm
+opencv
