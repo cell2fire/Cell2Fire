@@ -175,6 +175,9 @@ class Cell2FireC:
                                   GGraph=None,
                                   tCorrected=False)
 
+        # Dummy messages (general case if needed)
+        self.DummyMsg()
+        
         # Hourly Stats
         if self.args.grids:
             print("Hourly stats...")
