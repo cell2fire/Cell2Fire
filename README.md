@@ -1,8 +1,5 @@
-# cell2fire: A Fire growth simulator with support for stochastics, harvest planning and other types of fuel management.
+# Cell2Fire: A Cell Based Forest Fire Growth Model  C++/Python
 ## Cristobal Pais, Jaime Carrasco, David Martell, David L. Woodruff, Andres Weintraub
-
-This software is for research use only. There is no warranty of any kind, not even the implied warranty of fitness for use.
-
 Cell2Fire is a new cell-based forest and wildland landscape fire spread simulator.
 The fire environment is characterized by partitioning the landscape into a large number of homogeneous cells and specifying the fuel, weather, fuel moisture and topography attributes of each cell.
 Fire spread within each cell is assumed to be elliptical and governed by spread rates predicted by any independent fire spread model (e.g. the Canadian Forest Fire Behavior Prediction System).
@@ -23,9 +20,9 @@ It includes powerful statistical, graphical output, and spatial analysis feature
 - networkx (for stats module)
 
 # Usage
-In order to run the simulator and process the results, the following Unix command can be used (assuming you are in src/Cell2Fire):
+In order to run the simulator (after compiling the code inside src/Cell2Fire/Cell2FireC/) and process the results, the following command can be used:
 ```
-$ python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../Sub40x40 --ignitions --sim-years 1 --nsims 100 --grids --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.8 --seed 123 --stats --allPlots --IgnitionRad 1
+$ python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
 ```
 For the full list of arguments and their explanation use:
 ```
@@ -37,15 +34,15 @@ In addition, both the C++ core and Python scripts can be used separately:
 Only simulation and generate evolution grids (no stats or plots).
 Parallel-ready version will be uploaded soon.
 ```
-$ ./Cell2Fire --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --ignitions --sim-years 1 --nsims 1 --grids --final-grid --Fire-Period-Length 1.0 --weather rows --nweathers 1 --output-messages --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --HFactor 1.0 --FFactor 1.0 --BFactor 1.0 --EFactor 1.0
+$ ./Cell2Fire --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 1 --grids --final-grid --Fire-Period-Length 1.0 --weather rows --nweathers 1 --output-messages --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --HFactor 1.0 --FFactor 1.0 --BFactor 1.0 --EFactor 1.0
 ```
 
 
 ## Python 
-Only processing (reads a previously simulated instance and computes stats/plots).
+Only processing option (reads a previously simulated instance and computes stats/plots).
 Important: provide the number of sims --nsims to be processed
 ```
-$ python main.py --input-instance-folder /mnt/c/Users/Lenovo/documents/GitHub/Cell2Fire/data/9cells/ --output-folder /mnt/c/Users/Lenovo/Desktop/9cells --nsims 10 --stats --allPlots --onlyProcessing
+$ python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40_Previous_simulation --nsims 10 --stats --allPlots --onlyProcessing
 ```
 
 # Output examples

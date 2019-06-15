@@ -15,10 +15,12 @@ It includes powerful statistical, graphical output, and spatial analysis feature
 - matplotlib
 - seaborn
 - tqdm
+- opencv
+- imread
 - networkx (for stats module)
 
 # Usage
-In order to run the simulator and process the results, the following command can be used:
+In order to run the simulator (after compiling the code inside src/Cell2Fire/Cell2FireC/) and process the results, the following command can be used:
 ```
 $ python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
 ```
@@ -37,7 +39,7 @@ $ ./Cell2Fire --input-instance-folder ../../data/Sub40x40/ --output-folder ../..
 
 
 ## Python 
-Only processing (reads a previously simulated instance and computes stats/plots).
+Only processing option (reads a previously simulated instance and computes stats/plots).
 Important: provide the number of sims --nsims to be processed
 ```
 $ python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40_Previous_simulation --nsims 10 --stats --allPlots --onlyProcessing
