@@ -7,6 +7,7 @@ Cell2Fire exploits parallel computation methods which allows users to run large-
 It includes powerful statistical, graphical output, and spatial analysis features to facilitate the display and analysis of projected fire growth.
 
 # Requirements
+- g++
 - Boost (C++)
 - Eigen (C++)
 - Python 3.6
@@ -19,8 +20,14 @@ It includes powerful statistical, graphical output, and spatial analysis feature
 - imread
 - networkx (for stats module)
 
+# Installation
+
+Installation may require some familiarity with C++, make, and Python. 
+- cd src/Cell2Fire/Cell2FireC
+- make
+
 # Usage
-In order to run the simulator (after compiling the code inside src/Cell2Fire/Cell2FireC/) and process the results, the following command can be used:
+In order to run the simulator (after installation and cd to  src/Cell2Fire), the following command can be used:
 ```
 $ python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
 ```
