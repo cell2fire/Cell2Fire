@@ -29,6 +29,7 @@ there is not even the implied warranty of fitness for use.
 
 Installation may require some familiarity with C++, make, and Python. 
 - cd src/Cell2Fire/Cell2FireC
+- (edit Makefile to have the correct path to Eigen)
 - make
 
 # Usage
