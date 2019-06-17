@@ -9,7 +9,7 @@ It includes powerful statistical, graphical output, and spatial analysis feature
 # Disclaimer
 
 This software is for research use only. There is no warranty of any kind;
-ther is not even the implied warranty of fitness for use.
+there is not even the implied warranty of fitness for use.
 
 # Requirements
 - g++
