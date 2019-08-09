@@ -1,0 +1,55 @@
+------ Command line values ------
+InFolder: ../../contributed/delme63/9cellsC1/ 
+OutFolder: ../../contributed/delme63/results 
+WeatherOpt: rows 
+HarvestPlan:  
+OutMessages: 1 
+Ignitions: 1 
+OutputGrids: 1 
+FinalGrid: 1 
+TotalYears: 1 
+TotalSims: 5 
+NWeatherFiles: 1 
+FirePeriodLength: 1.0 
+IgnitionRadius: 5 
+ROSThreshold: 0.1 
+HFIThreshold: 0.1 
+ROS-CV: 0.0 
+seed: 1134 
+
+Weather DataFrame from instance ../../contributed/delme63/9cellsC1/Weather.csv
+
+Selected ignition point for Year 1, sim 1: 3
+----------------------------- Results -----------------------------
+Total Available Cells:    1 - % of the Forest: 11.1111%
+Total Burnt Cells:        8 - % of the Forest: 88.8889%
+Total Non-Burnable Cells: 0 - % of the Forest: 0%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+Selected ignition point for Year 1, sim 2: 4
+----------------------------- Results -----------------------------
+Total Available Cells:    0 - % of the Forest: 0%
+Total Burnt Cells:        9 - % of the Forest: 100%
+Total Non-Burnable Cells: 0 - % of the Forest: 0%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+Selected ignition point for Year 1, sim 3: 1
+----------------------------- Results -----------------------------
+Total Available Cells:    0 - % of the Forest: 0%
+Total Burnt Cells:        9 - % of the Forest: 100%
+Total Non-Burnable Cells: 0 - % of the Forest: 0%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+Selected ignition point for Year 1, sim 4: 3
+----------------------------- Results -----------------------------
+Total Available Cells:    1 - % of the Forest: 11.1111%
+Total Burnt Cells:        8 - % of the Forest: 88.8889%
+Total Non-Burnable Cells: 0 - % of the Forest: 0%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+Selected ignition point for Year 1, sim 5: 7
+----------------------------- Results -----------------------------
+Total Available Cells:    0 - % of the Forest: 0%
+Total Burnt Cells:        9 - % of the Forest: 100%
+Total Non-Burnable Cells: 0 - % of the Forest: 0%
+Total Harvested Cells: 0 - % of the Forest: 0%
