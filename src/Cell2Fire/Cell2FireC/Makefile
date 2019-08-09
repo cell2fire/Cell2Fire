@@ -1,4 +1,5 @@
-EIGENDIR     = /lib/eigen/
+EIGENDIR     = /usr/include/eigen3/
+#EIGENDIR     = /lib/eigen/
 CC = g++
 MPCC = g++
 OPENMP = -openmp
@@ -20,28 +21,28 @@ SpottingFBP.o: SpottingFBP.cpp SpottingFBP.h CellsFBP.h
 
 CellsFBP.o: CellsFBP.cpp CellsFBP.h FBPfunc5_NoDebug.o
 	$(CC) -c $(CFLAGS) CellsFBP.cpp
-	
+
 FBPfunc5_NoDebug.o: FBPfunc5_NoDebug.c FBP5.0.h
 	$(CC) -c $(CFLAGS) FBPfunc5_NoDebug.c
 
 ReadCSV.o: ReadCSV.cpp ReadCSV.h FBPfunc5_NoDebug.o
 	$(CC) -c $(CFLAGS) ReadCSV.cpp
-	
+
 ReadArgs.o: ReadArgs.cpp ReadArgs.h
 	$(CC) -c $(CFLAGS) ReadArgs.cpp
-	
+
 Lightning.o: Lightning.cpp Lightning.h
 	$(CC) -c $(CFLAGS) Lightning.cpp
 
 Forest.o: Forest.cpp Forest.h
 	$(CC) -c $(CFLAGS) Forest.cpp
-	
+
 WriteCSV.o: WriteCSV.cpp WriteCSV.h
 	$(CC) -c $(CFLAGS) WriteCSV.cpp
 
 Ellipse.o: Ellipse.cpp Ellipse.h 
 	$(CC) -c $(LIBS) $(CFLAGS) Ellipse.cpp 
 
-	
+
 clean:
 	rm Lightning.o ReadArgs.o ReadCSV.o FBPfunc5_NoDebug.o Cell2Fire.o CellsFBP.o Cell2Fire SpottingFBP.o Forest.o WriteCSV.o Ellipse.o *.gch
