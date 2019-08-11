@@ -38,28 +38,28 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--input-instance-folder
 	char * input_folder = getCmdOption(argv, argv + argc, "--input-instance-folder");
     if (input_folder){
-        printf("InFolder: %s \n", input_folder);
+        //DEBUGprintf("InFolder: %s \n", input_folder);
     }
 	else input_folder = &empty;
 	
 	//--output-folder
 	char * output_folder = getCmdOption(argv, argv + argc, "--output-folder");
     if (output_folder){
-        printf("OutFolder: %s \n", output_folder );
+        //DEBUGprintf("OutFolder: %s \n", output_folder );
     }
 	else output_folder = &empty;
 	
 	//--weather
 	char * input_weather = getCmdOption(argv, argv + argc, "--weather");
     if (input_weather){
-        printf("WeatherOpt: %s \n", input_weather);
+        //DEBUGprintf("WeatherOpt: %s \n", input_weather);
     }
 	else input_weather = &empty;
 	
 	//--HarvestPlan
 	char * input_hplan = getCmdOption(argv, argv + argc, "--HarvestPlan");
     if (input_hplan){
-        printf("HarvestPlan: %s \n", input_hplan);
+        //DEBUGprintf("HarvestPlan: %s \n", input_hplan);
     }
 	else input_hplan = &empty;
 		
@@ -78,61 +78,61 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--out-messages
     if(cmdOptionExists(argv, argv+argc, "--output-messages")){
         out_messages = true;
-        printf("OutMessages: %d \n", out_messages);
+        //DEBUGprintf("OutMessages: %d \n", out_messages);
     }
 	
 	//--trajectories
     if(cmdOptionExists(argv, argv+argc, "--trajectories")){
         out_trajectories = true;
-        printf("Trajectories: %d \n", out_trajectories);
+        //DEBUGprintf("Trajectories: %d \n", out_trajectories);
     }
 	
 	//--no-output
 	if(cmdOptionExists(argv, argv+argc, "--no-output")){
 		no_output = true;
-		printf("noOutput: %d \n", no_output);
+		//DEBUGprintf("noOutput: %d \n", no_output);
     }
 	
 	//--verbose
 	if(cmdOptionExists(argv, argv+argc, "--verbose")){
         verbose_input = true;
-		printf("verbose: %d \n", verbose_input);
+		//DEBUGprintf("verbose: %d \n", verbose_input);
     }
 	
 	//--ignitions
 	if(cmdOptionExists(argv, argv+argc, "--ignitions")){
         input_ignitions = true;
-        printf("Ignitions: %d \n", input_ignitions);
+        //DEBUGprintf("Ignitions: %d \n", input_ignitions);
     }
 	
 	//--grids
 	if(cmdOptionExists(argv, argv+argc, "--grids")){
 		out_grids = true;
-		printf("OutputGrids: %d \n", out_grids);
+		//DEBUGprintf("OutputGrids: %d \n", out_grids);
     }
 	
 	//--final-grid
 	if(cmdOptionExists(argv, argv+argc, "--final-grid")){
 		out_finalgrid = true;
-		printf("FinalGrid: %d \n", out_finalgrid);
+		//DEBUGprintf("FinalGrid: %d \n", out_finalgrid);
     }
 	
 	//--Prom_tuned
 	if(cmdOptionExists(argv, argv+argc, "--PromTuned")){
         prom_tuned = true;
-		printf("PromTuned: %d \n", prom_tuned);
+		//DEBUGprintf("PromTuned: %d \n", prom_tuned);
     }
 	
 	//--statistics
 	if(cmdOptionExists(argv, argv+argc, "--statistics")){
         out_stats = true;
-		printf("Statistics: %d \n", out_stats);
+		//DEBUGprintf("Statistics: %d \n", out_stats);
     }
 	
 	//--bbo
 	if(cmdOptionExists(argv, argv+argc, "--bbo")){
         bbo_tuning = true;
-		printf("BBOTuning: %d \n", out_stats);
+		//DEBUGprintf("BBOTuning: %d \n", out_stats);
     }
 
 	
@@ -160,7 +160,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--sim-years  (float)
 	char * sim_years = getCmdOption(argv, argv + argc, "--sim-years");
     if (sim_years){
-        printf("TotalYears: %s \n", sim_years);
+        //DEBUGprintf("TotalYears: %s \n", sim_years);
 		args_ptr->TotalYears = std::stoi (sim_years ,&sz); 
     }
 	else args_ptr->TotalYears = dsim_years;
@@ -168,7 +168,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--nsims
 	char * input_nsims = getCmdOption(argv, argv + argc, "--nsims");
     if (input_nsims){
-        printf("TotalSims: %s \n", input_nsims);
+        //DEBUGprintf("TotalSims: %s \n", input_nsims);
 		args_ptr->TotalSims = std::stoi (input_nsims ,&sz);  
     }
 	else args_ptr->TotalSims = dnsims; 
@@ -176,7 +176,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--Weather-Period-Length
 	char * weather_period_len = getCmdOption(argv, argv + argc, "--Weather-Period-Length");
     if (weather_period_len){
-        printf("WeatherPeriodLength: %s \n", weather_period_len);
+        //DEBUGprintf("WeatherPeriodLength: %s \n", weather_period_len);
 		args_ptr->MinutesPerWP = std::stoi (weather_period_len ,&sz); 
     }
 	else args_ptr->MinutesPerWP = dweather_period_len;
@@ -184,7 +184,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--nweathers
 	char * nweathers = getCmdOption(argv, argv + argc, "--nweathers");
     if (nweathers){
-        printf("NWeatherFiles: %s \n", nweathers);
+        //DEBUGprintf("NWeatherFiles: %s \n", nweathers);
 		args_ptr->NWeatherFiles = std::stoi (nweathers ,&sz); 
     }
 	else args_ptr->NWeatherFiles = dweather_files;
@@ -192,7 +192,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--Fire-Period-Length
 	char * input_PeriodLen = getCmdOption(argv, argv + argc, "--Fire-Period-Length");
     if (input_PeriodLen){
-        printf("FirePeriodLength: %s \n", input_PeriodLen);
+        //DEBUGprintf("FirePeriodLength: %s \n", input_PeriodLen);
 		if (std::stof (input_PeriodLen ,&sz) <= args_ptr->MinutesPerWP){
 			 args_ptr->FirePeriodLen = std::stof (input_PeriodLen ,&sz); 
 		}
@@ -203,7 +203,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--IgnitionRad
 	char * input_igrad = getCmdOption(argv, argv + argc, "--IgnitionRad");
     if (input_igrad){
-        printf("IgnitionRadius: %s \n", input_igrad);
+        //DEBUGprintf("IgnitionRadius: %s \n", input_igrad);
 		args_ptr->IgnitionRadius = std::stoi (input_igrad ,&sz); 
     } 
 	else args_ptr->IgnitionRadius =  diradius;
@@ -212,7 +212,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--ROS-Threshold
 	char * ROS_Threshold = getCmdOption(argv, argv + argc, "--ROS-Threshold");
     if (ROS_Threshold){
-        printf("ROSThreshold: %s \n", ROS_Threshold);
+        //DEBUGprintf("ROSThreshold: %s \n", ROS_Threshold);
 		args_ptr->ROSThreshold = std::stof (ROS_Threshold ,&sz); 
     }
 	else args_ptr->ROSThreshold = dROS_Threshold;
@@ -220,7 +220,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--HFI-Threshold
 	char * HFI_Threshold = getCmdOption(argv, argv + argc, "--HFI-Threshold");
     if (HFI_Threshold){
-        printf("HFIThreshold: %s \n", HFI_Threshold);
+        //DEBUGprintf("HFIThreshold: %s \n", HFI_Threshold);
 		args_ptr->HFIThreshold = std::stof (HFI_Threshold ,&sz);
     }
 	else args_ptr->HFIThreshold = dHFI_Threshold;
@@ -228,7 +228,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--HFactor
 	char * H_Factor = getCmdOption(argv, argv + argc, "--HFactor");
     if (H_Factor){
-        printf("HFactor: %s \n", H_Factor);
+        //DEBUGprintf("HFactor: %s \n", H_Factor);
 		args_ptr->HFactor = std::stof (H_Factor ,&sz); 
     }
 	else args_ptr->HFactor = dHFactor;
@@ -236,7 +236,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//---FFactor
 	char * F_Factor = getCmdOption(argv, argv + argc, "--FFactor");
     if (F_Factor){
-        printf("FFactor: %s \n", F_Factor);
+        //DEBUGprintf("FFactor: %s \n", F_Factor);
 		args_ptr->FFactor = std::stof (F_Factor ,&sz); 
     }
 	else args_ptr->FFactor = dFFactor;
@@ -244,7 +244,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	///--BFactor
 	char * B_Factor = getCmdOption(argv, argv + argc, "--BFactor");
     if (B_Factor){
-        printf("BFactor: %s \n", B_Factor);
+        //DEBUGprintf("BFactor: %s \n", B_Factor);
 		args_ptr->BFactor = std::stof (B_Factor ,&sz); 
     }
 	else args_ptr->BFactor = dBFactor;
@@ -252,7 +252,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	///--EFactor
 	char * E_Factor = getCmdOption(argv, argv + argc, "--EFactor");
     if (E_Factor){
-        printf("EFactor: %s \n", E_Factor);
+        //DEBUGprintf("EFactor: %s \n", E_Factor);
 		args_ptr->EFactor = std::stof (E_Factor ,&sz); 
     }
 	else args_ptr->EFactor = dEFactor;
@@ -260,7 +260,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--ROS-CV
 	char * ROS_CV = getCmdOption(argv, argv + argc, "--ROS-CV");
     if (ROS_CV){
-        printf("ROS-CV: %s \n", ROS_CV);
+        //DEBUGprintf("ROS-CV: %s \n", ROS_CV);
 		args_ptr->ROSCV = std::stof (ROS_CV ,&sz); 
     }
 	else args_ptr->ROSCV = dROSCV;
@@ -268,7 +268,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--max-fire-periods
 	char * max_fire_periods = getCmdOption(argv, argv + argc, "--max-fire-periods");
     if (max_fire_periods){
-        printf("MaxFirePeriods: %s \n", max_fire_periods);
+        //DEBUGprintf("MaxFirePeriods: %s \n", max_fire_periods);
 		args_ptr->MaxFirePeriods = std::stoi (max_fire_periods ,&sz); 
     }
 	else args_ptr->MaxFirePeriods = dmax_fire_periods;
@@ -276,7 +276,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--seed  (int)
 	char * seed = getCmdOption(argv, argv + argc, "--seed");
     if (seed){
-        printf("seed: %s \n", seed);
+        //DEBUGprintf("seed: %s \n", seed);
 		args_ptr->seed = std::stoi (seed ,&sz); 
     }
 	else args_ptr->seed = dseed;

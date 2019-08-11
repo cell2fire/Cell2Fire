@@ -64,6 +64,7 @@ class Cell2FireC:
                    '--ROS-Threshold', str(self.args.ROS_Threshold),
                    '--HFI-Threshold', str(self.args.HFI_Threshold),
                    '--bbo' if (self.args.BBO) else '',
+                   '--verbose' if (self.args.verbose) else '',
                    '--HarvestPlan', self.args.HCells if(self.args.HCells is not None) else '',]
         
         # Output log

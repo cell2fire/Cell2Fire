@@ -159,6 +159,8 @@ class Cell2FireObj(object):
         self._heuristic = heuristic
         self._msgHeur = msgHeur
         self._GASelection = GASelection
+
+        print ("DLW debug 000, noout, verb", self._nooutput, self._verbose)
         
         # Step -1: FBP
         ##########################################################################################################
@@ -205,6 +207,7 @@ class Cell2FireObj(object):
             #shutil.rmtree(OutFolder)
             os.makedirs(self._OutFolder)
 
+        print ("DLW debug, noout, verb", self._nooutput, self._verbose)
         # No output dominates verbose
         if self._nooutput:
             self._verbose = False
