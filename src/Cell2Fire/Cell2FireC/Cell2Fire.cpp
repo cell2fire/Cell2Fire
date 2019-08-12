@@ -1382,13 +1382,15 @@ std::vector<float> Cell2Fire::getFireProgressMatrix(){
 
 *******************************************************************************/
 int main(int argc, char * argv[]){
+  std::cout << "Start C++\n";
 	// Read Arguments
-	std::cout << "------ Command line values ------\n";
 	arguments args;
 	arguments * args_ptr = &args;
 	parseArgs(argc, argv, args_ptr);
-	//printArgs(args);
-	
+	if (args.verbose){
+	  std::cout << "------ Command line values ------\n";
+	  printArgs(args);
+	}
 	// Random generator and distributions
 	std::default_random_engine generator (args.seed);
 	std::uniform_int_distribution<int> udistribution(1, args.NWeatherFiles);		// Get random weather
