@@ -1,0 +1,17 @@
+------ Command line values ------
+InFolder: /mnt/c/Users/Lenovo/documents/GitHub/Cell2Fire/data/9cells/ 
+OutFolder:  
+WeatherOpt: rows 
+OutMessages: 1 
+Ignitions: 1 
+OutputGrids: 1 
+FinalGrid: 1 
+TotalYears: 1 
+TotalSims: 1 
+NWeatherFiles: 1 
+FirePeriodLength: 60 
+
+----------------------------- Results -----------------------------
+Total Available Cells:    0 - % of the Forest: 0%
+Total Burnt Cells:        9 - % of the Forest: 100%
+Total Non-Burnable Cells: 0 - % of the Forest: 0%
