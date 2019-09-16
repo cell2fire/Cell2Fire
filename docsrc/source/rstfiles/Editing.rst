@@ -100,10 +100,19 @@ Notably, in the second scenario we see that fire is not able to spread to all of
 Build Up Index
 --------------
 
+The BUI is a weighted combination of the DMC and DC to indicate the total amount of fuel available for combustion by a moving flame front. The Duff Moisture Code (DMC) indicates the moisture content of loosely-compacted organic layers of moderate depth
+while the Drought Code(DC) indicates moisture, content in deep, compact organic layers. The BUI scale starts at zero and is open ended, a rating above 34 is demeed high and after 77 it is considered extreme.
 
+Editing the BUI input would change how much fuel is their is for the fire to spread from the inital cell to the next. The Following test has a low BUI value
 
+.. image:: /image/Fire01.jpg
+   :width: 23%
+.. image:: /image/Fire01.jpg
+   :width: 23%
+.. image:: /image/Fire04.png
+   :width: 23%    
 
-
+The fire is kept for a few hours in the same cell but at the 7th hour it is able to proceed and burn all the cells.
 
 
 
