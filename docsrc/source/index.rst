@@ -17,6 +17,7 @@ This software is for research use only. There is no warranty of any kind; there 
    rstfiles/run.rst
    rstfiles/examples.rst
    rstfiles/Editing.rst
+   rstfiles/Ig.rst
 
    
    
