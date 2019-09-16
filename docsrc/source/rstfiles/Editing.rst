@@ -1,6 +1,6 @@
-========================
-Creating new Simulations
-========================
+===============
+Editing Weather 
+===============
 
 One of the benifits of this simulator is the ability to able to modify inputs to create different enviorments.
 To modify inputs you will want to go into 
@@ -42,7 +42,6 @@ Wind Speed and Direction
 Wind influences heavily how effective fires are and how fast they spread through the forest. A stronger signifies a more intense fire causing a wild fire to spread faster. By defult currently we have that the fire 
 starts from the bottom left cell. How Wind direction works and is measured as a degree of where the wind is coming from. For example if a wind is coming from east to west it would coming from 0 degrees but wind coming from West to East would be from 180 degrees. Another quick example
 would be if you want to input wind coming from NW direction then it would be between 90 and 180 degrees.
-
 
 Example
 -------
@@ -96,5 +95,20 @@ Notably, in the second scenario we see that fire is not able to spread to all of
    :width: 40% 
    
    9th hour
+
+
+Build Up Index
+--------------
+
+
+
+
+
+
+
+
+
+
+
 
 
