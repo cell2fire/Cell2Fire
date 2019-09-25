@@ -25,7 +25,8 @@ In this file the following inputs are editable.
 * Buildup Index [BUI]
 * Fire Weather Index [FWI]
 
-How changing these inputs effect the results will be explained next.
+In the case of the Buildup Index, Initial Spread Index, and Fire Weather Index these inputs use the values of the other inputs to calculate their respective scores.
+It is recommended to use the equations found in *Equations for the Canadian Forest Fire Weather Index System* (Van Wagner). This paper clearly explains how generate these values using the other inputs. 
 
 Temperature & Humidity
 ----------------------
@@ -109,10 +110,46 @@ Editing the BUI input would change how much fuel is their is for the fire to spr
    :width: 23%
 .. image:: /image/Fire01.jpg
    :width: 23%
-.. image:: /image/Fire04.png
-   :width: 23%    
+  
 
-The fire is kept for a few hours in the same cell but at the 7th hour it is able to proceed and burn all the cells.
+The fire is kept for a few hours in the same cell and it will never be able to proceed and burn other cells as their is no fuel for the fire.
+
+Test 2 has an extreme BUI score and will be set at 99:
+
+.. image:: /image/Fire01.jpg
+  :width: 23%
+.. image:: /image/Fire02.png
+  :width: 23%
+.. image:: /image/Fire03.png
+   :width: 23%
+.. image:: /image/Fire04.png
+   :width: 23%
+   
+In Test 2 the fire has an extensive amount of fule and is able to burn all 9 cells in 4 hours. When changing BUI there is a way to calculate a typical value but it is important
+to know that the DMC value has more weight when getting your value for BUI. Its also important to know that when you have a DMC value of 0 then BUI is zero. 
+
+Initial spread Index
+--------------------
+
+The ISI combines the FFMC and wind speed to indicate the expected rate of fire spread.
+Generally, a 13 km/h increase in wind speed will double the ISI value. 
+The ISI is accepted as a good indicator of fire spread in open light fuel stands with wind speeds up to 40 km/h.
+
+To explain how ISI works we will have to tests one with low winds and high a FFMC value 
+
+For Test 1 we have :
+
+* Wind speed 4 km/h
+* FFMC 95
+* ISI is calculated to be 35.9
+
+
+
+
+
+
+
+ 
 
 
 
