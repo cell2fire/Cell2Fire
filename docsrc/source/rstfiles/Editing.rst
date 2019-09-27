@@ -143,6 +143,33 @@ For Test 1 we have :
 * FFMC 95
 * ISI is calculated to be 35.9
 
+we get the following plots
+
+.. image:: /image/ISI1.png
+  :width: 23%
+.. image:: /image/ISI2.png
+  :width: 23%
+.. image:: /image/ISI4.png
+   :width: 23%
+
+with these values it will take up until the 4th hour to be able to burn all of the cells. 
+
+But knowing that a 13 km/h will double the ISI value test 2 will have values :
+
+* Wind speed 17 km/h
+* FFMC 95
+* ISI is calculated to be 71.8
+
+these inputs resulted in the following graphs :
+
+.. image:: /image/ISI5.png
+  :width: 23%
+.. image:: /image/ISI6.png
+  :width: 23%
+.. image:: /image/ISI4.png
+   :width: 23%
+
+The first image is at the end of the 1st hour and the final image is at the end of the 3rd hour so we are able to see that increasing the ISI will make the fire spread faster
 
 
 
