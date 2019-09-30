@@ -1,0 +1,23 @@
+Start C++
+------ Command line values ------
+InFolder: ../../contributed/forest/12cellsC1/
+OutFolder: ../../contributed/forest/12Cellresults
+WeatherOpt: rows
+NWeatherFiles: 1
+MinutesPerWP: 60
+MaxFirePeriods: 10000000
+Messages: 1
+HarvestPlan: 
+TotalYears: 1
+TotalSims: 1
+FirePeriodLen: 1
+Ignitions: 1
+IgnitionRad: 0
+OutputGrid: 1
+FinalGrid: 1
+PromTuned: 0
+BBOTuning: 0
+Statistics: 0
+noOutput: 0
+verbose: 1
+seed: 1134
