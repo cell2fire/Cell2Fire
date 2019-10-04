@@ -1,0 +1,7 @@
+Hour,AVGNonBurned,AVGBurned,AVGHarvested,STDBurned,STDHarvested,MaxNonBurned,MaxBurned,MinNonBurned,MinBurned,%AVGNonBurned,%AVGBurned,%AVGHarvested
+1,11,1,0,,,11,1,11,1,0.917,0.083,0.000
+2,9,3,0,,,9,3,9,3,0.750,0.250,0.000
+3,4,8,0,,,4,8,4,8,0.333,0.667,0.000
+4,2,10,0,,,2,10,2,10,0.167,0.833,0.000
+5,0,12,0,,,0,12,0,12,0.000,1.000,0.000
+6,0,9,0,,,0,9,0,9,0.000,1.000,0.000
