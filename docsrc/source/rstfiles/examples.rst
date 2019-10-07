@@ -20,7 +20,7 @@ you will also get hourly plots of the fire propagation.
 
 .. image:: /image/Fire01.jpg
    :width: 20%
-.. image:: /image/fire02.png
+.. image:: /image/Fire02.png
    :width: 20%
 .. image:: /image/Fire03.png
    :width: 20%
