@@ -7,8 +7,8 @@ Disclaimer
 This software is for research use only. There is no warranty of any kind; there is not even the implied warranty of fitness for use.
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Contents
+   :maxdepth: 2
+   
    
    
    rstfiles/intro.rst
@@ -18,7 +18,7 @@ This software is for research use only. There is no warranty of any kind; there 
    rstfiles/examples.rst
    rstfiles/Editing.rst
    rstfiles/Ig.rst
-
+   rstfiles/Codeline.rst 
    
    
 
