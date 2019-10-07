@@ -33,4 +33,4 @@ In the command line of your go.bash file you will have a section that looks like
    --sim-years 1
    
 from here you are able to change how many years you want to simulate up to 4 years. This is use full as in your ignition point file you are able to edit
-where the fire starts for each of those 4 years.
+where the fire starts for each of those 4 years. (Only 4 years!!)
