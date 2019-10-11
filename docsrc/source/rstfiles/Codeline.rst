@@ -32,5 +32,29 @@ In the command line of your go.bash file you will have a section that looks like
    
    --sim-years 1
    
-from here you are able to change how many years you want to simulate up to 4 years. This is use full as in your ignition point file you are able to edit
-where the fire starts for each of those 4 years. (Only 4 years!!)
+from here this will let you chose how many years per simulation you can have. This would give you more data as you could start the ignition point and see how it happen 
+if it started at different locations.
+
+Number of simulations
+---------------------
+To change the number of simulations which will output multiple stats depending on the number of simulations. This can be edited in the command line at
+
+..code-block:: html
+  :linenos:
+  
+  --nsmis #
+  
+This will give you multiple outputs depending on your # of simulations.
+
+For example when the command line had 
+
+..code-block:: html
+  :linenos:
+  
+  --nsmis 10
+  
+it resulted in 10 graphs(i dont recommend)
+
+.. image:: /image/plots.png
+  :width: 30%
+
