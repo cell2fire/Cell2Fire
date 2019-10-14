@@ -39,7 +39,7 @@ Number of simulations
 ---------------------
 To change the number of simulations which will output multiple stats depending on the number of simulations. This can be edited in the command line at
 
-..code-block:: html
+.. code-block:: html
   :linenos:
   
   --nsmis #
@@ -48,12 +48,12 @@ This will give you multiple outputs depending on your # of simulations.
 
 For example when the command line had 
 
-..code-block:: html
+.. code-block:: html
   :linenos:
   
   --nsmis 10
   
-it resulted in 10 graphs(i dont recommend)
+which resulted in 10 graphs (i don't recommend)
 
 .. image:: /image/plots.png
   :width: 30%
