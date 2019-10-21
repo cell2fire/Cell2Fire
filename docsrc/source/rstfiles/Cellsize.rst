@@ -32,3 +32,5 @@ From here run the code the same way you would the original code from here the re
   :width: 25% 
 .. image:: /image/16cell2.png
   :width: 25%   
+  
+Dont forget that you have to add the number of wanted cells and have a respected number of rows and columns. :) 
