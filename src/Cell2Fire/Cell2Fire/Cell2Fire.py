@@ -16,7 +16,7 @@ from itertools import repeat
 import time
 import ctypes
 import pickle
-from Cell2Fire.ParseInputs import ParseInputs, Init, InitCells, InitForest
+from Cell2Fire.Cell2Fire.ParseInputs import ParseInputs, Init, InitCells, InitForest
 
 # Class importations
 from Cell2Fire import *

@@ -1,0 +1,24 @@
+Cell2Fire Internship Meeting 4 June 2020
+
+o Between now and our next meeting.
+- learn about Python Unittest
+- learn about github; make your own branch of Cell2Fire
+- install Cell2Fire (you may need help with that)
+
+o We should meet again soon
+
+o At first will all do the same thing so we can learn and in a few
+weeks we will divide the work.
+
+o Note: this is almost all work that is done with terminals and
+editors, there is very little clicking. Also, one must read carefully.
+
+Notes that won't make sense yet but will after our next meeting:
+
+  _ The directory structure for this repo is very unusual, but we will just
+  live with it for now. (the setup.py lives in src, which is strange)
+
+- For our first tests we will call the function Cell2FireC passing in args
+(see main.py)
+
+- parse_args can be given a list as input (or we could use mock)
