@@ -633,7 +633,7 @@ bool Cell2Fire::RunIgnition(std::default_random_engine generator){
             temp = this->IgnitionSets[this->year - 1][udistribution(generator)];          
 		}
 		
-		std::cout << "\nSelected ignition point for Year " << this->year <<  ", sim " <<  this->sim << ": "<< temp;
+		std::cout << "\nSelected ignition point for Year " << this->year <<  ", sim " <<  this->sim << ": "<< temp << "\n";
 	
 		// If cell is available 
 		if (this->burntCells.find(temp) == this->burntCells.end() && this->statusCells[temp - 1] < 3) {
