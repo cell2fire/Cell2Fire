@@ -1,0 +1,21 @@
+Cell2Fire
+=========
+
+Here is some text explaning some very difficult stuff
+    print 'Hello'
+    >> Hello
+.. toctree::
+   :maxdepth: 2
+
+   usage/installation
+   usage/quickstart
+   :caption: Contents:
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
