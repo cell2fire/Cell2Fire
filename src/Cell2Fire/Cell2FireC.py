@@ -69,8 +69,9 @@ class Cell2FireC:
         
         # Output log
         if self.args.OutFolder is not None:
-            if os.path.isdir(self.args.OutFolder) is False:
-                os.makedirs(self.args.OutFolder)
+            if os.path.isdir(self.args.OutFolder):
+                shutil.rmtree(self.args.OutFolder)
+            os.makedirs(self.args.OutFolder)
             LogName = os.path.join(self.args.OutFolder, "LogFile.txt")
         else:
             LogName = os.path.join(self.args.InFolder, "LogFile.txt")   
