@@ -2,8 +2,9 @@
 import pyutilib.th as unittest
 import os.path
 import datetime
-import mape_maker
+from Cell2Fire.Cell2Fire.ParseInputs import make_parser
 import Cell2Fire
+from Cell2Fire.Cell2Fire import *
 from Cell2Fire import main
 p = str(Cell2Fire.__path__)
 l = p.find("'")
@@ -14,10 +15,9 @@ data_path = os.path.join(cell2fire_path, "..", "..","data")
 
 class TestMain(unittest.TestCase):
 
-
     def _readme_list(self):
         # arguments list that matches the readme
-        datadir = os.join(data_path, "Sub40x40")
+        datadir = os.path.join(data_path, "Sub40x40")
         baselist = ["--input-instance-folder {}".format(datadir),
                     "--output-folder .",
                     "--ignitions",
@@ -43,7 +43,9 @@ class TestMain(unittest.TestCase):
 
     def test_readme_cmd(self):
         print("Running ", str(self.id()).split('.')[2])
-
+        parser = make_parser()
+        args = parser.parse_args(self._readme_list())
+        env = Cell2FireC(args)  # see main.py
 
 if __name__ == "__main__":
     unittest.main()

@@ -9,10 +9,10 @@ import shutil
 import signal
 import subprocess
 import sys
-import Cell2Fire.DataGeneratorC as DataGenerator
-import Cell2Fire.ReadDataPrometheus as ReadDataPrometheus
-from Cell2Fire.ParseInputs import InitCells
-from Cell2Fire.Stats import *
+import Cell2Fire.Cell2Fire.DataGeneratorC as DataGenerator
+import Cell2Fire.Cell2Fire.ReadDataPrometheus as ReadDataPrometheus
+from Cell2Fire.Cell2Fire.ParseInputs import InitCells
+from Cell2Fire.Cell2Fire.Stats import *
 
 class Cell2FireC:
     # Constructor and initial run
