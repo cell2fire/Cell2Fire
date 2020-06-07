@@ -3,8 +3,9 @@ import pyutilib.th as unittest
 import os.path
 import datetime
 import mape_maker
-from Cell2Fire import main 
-p = str(cell2fire.__path__)
+import Cell2Fire
+from Cell2Fire import main
+p = str(Cell2Fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
 cell2fire_path = p[l+1:r]

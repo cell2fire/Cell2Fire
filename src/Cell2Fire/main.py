@@ -10,9 +10,10 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Inputs and environment generator
-from Cell2Fire.ParseInputs import ParseInputs
-from Cell2FireC import *
-from Cell2Fire.Stats import *
+from Cell2Fire.Cell2Fire.ParseInputs import ParseInputs
+#from Cell2Fire.ParseInputs import ParseInputs
+from Cell2Fire.Cell2FireC import *
+from Cell2Fire.Cell2Fire.Stats import *
 
 def main():
     # Parse inputs (args)
