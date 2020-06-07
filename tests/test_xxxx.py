@@ -3,8 +3,8 @@ import pyutilib.th as unittest
 import os.path
 import datetime
 from Cell2Fire.Cell2Fire.ParseInputs import make_parser
-import Cell2Fire
 from Cell2Fire.Cell2FireC import *
+import Cell2Fire
 p = str(Cell2Fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
