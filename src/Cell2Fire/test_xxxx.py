@@ -2,23 +2,25 @@
 import pyutilib.th as unittest
 import os.path
 import datetime
-from Cell2Fire.Cell2Fire.ParseInputs import make_parser
-from Cell2Fire.Cell2FireC import *
+from Cell2Fire.ParseInputs import make_parser
+from Cell2FireC_class import *
 import Cell2Fire
 p = str(Cell2Fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
 cell2fire_path = p[l+1:r]
-data_path = os.path.join(cell2fire_path, "..", "..","data")
+data_path = os.path.join(cell2fire_path, "..", "..","..","data")
 
 
 class TestMain(unittest.TestCase):
 
     def _readme_list(self):
         # arguments list that matches the readme
+        #python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
         datadir = os.path.join(data_path, "Sub40x40")
+        resultsdir = os.path.join(data_path, "..", "results", "Sub40x40")
         baselist = ["--input-instance-folder", datadir,
-                    "--output-folder", "outdir",
+                    "--output-folder", resultsdir,
                     "--ignitions",
                     "--sim-years", "1",
                     "--nsims",  "5",

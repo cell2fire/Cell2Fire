@@ -1,6 +1,7 @@
 # coding: utf-8
 __version__ = "1.0"
 __author__ = "Cristobal Pais"
+# name change to Cell2FireC_class by DLW (confusion with the dir name)
 
 # General imporations
 import os
@@ -78,7 +79,7 @@ class Cell2FireC:
             # TBD: always delete and make the output dir (maybe not here)
             if not os.path.isdir(self.args.OutFolder):
                 os.makedirs(self.args.OutFolder)
-                os.makedirs(os.path.joint(self.args.OutFolder, "Messages"))  # hack June 2020
+                os.makedirs(os.path.join(self.args.OutFolder, "Messages"))  # hack June 2020
             LogName = os.path.join(self.args.OutFolder, "LogFile.txt")
         else:
             LogName = os.path.join(self.args.InFolder, "LogFile.txt")   
