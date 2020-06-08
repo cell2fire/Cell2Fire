@@ -9,16 +9,16 @@ import shutil
 import signal
 import subprocess
 import sys
-import Cell2Fire.Cell2Fire.DataGeneratorC as DataGenerator
-import Cell2Fire.Cell2Fire.ReadDataPrometheus as ReadDataPrometheus
-from Cell2Fire.Cell2Fire.ParseInputs import InitCells
-from Cell2Fire.Cell2Fire.Stats import *
+import Cell2Fire.DataGeneratorC as DataGenerator
+import Cell2Fire.ReadDataPrometheus as ReadDataPrometheus
+from Cell2Fire.ParseInputs import InitCells
+from Cell2Fire.Stats import *
 import Cell2Fire
 p = str(Cell2Fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
 cell2fire_path = p[l+1:r]
-
+print("cell2fire_path",cell2fire_path)
 
 class Cell2FireC:
     # Constructor and initial run
@@ -53,7 +53,7 @@ class Cell2FireC:
     # Run C++ Sim 
     def run(self):
         # Parse args for calling C++ via subprocess        
-        execArray=[os.path.join(cell2fire_path,'Cell2FireC/Cell2Fire'), 
+        execArray=[os.path.join(cell2fire_path,"..", "Cell2FireC","Cell2Fire"),
                    '--input-instance-folder', self.args.InFolder,
                    '--output-folder', self.args.OutFolder if (self.args.OutFolder is not None) else '',
                    '--ignitions' if (self.args.ignitions) else '',

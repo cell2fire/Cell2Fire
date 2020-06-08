@@ -1,3 +1,5 @@
+# Was called Cell2Fire.py; now called pyCell2Fire.py
+# This seems to be superceded by C++ code and not used (DLW June 2020)
 # coding: utf-8
 __version__ = "2.0"
 __author__ = "Cristobal Pais, David Woodruff"
@@ -18,6 +20,8 @@ import ctypes
 import pickle
 #from Cell2Fire.ParseInputs import ParseInputs, Init, InitCells, InitForest
 from Cell2Fire.ParseInputs import ParseInputs, InitCells
+
+raise RuntimeError("Cell2Fire.py imported, but that doesn't make sense.")
 
 # Shared library .so (CP: Careful with Windows vs UNIX)
 sonames = ["FBPfunc5Unix.so", "FBPfunc5Win.so", "FBPfunc5MAC.so"]
