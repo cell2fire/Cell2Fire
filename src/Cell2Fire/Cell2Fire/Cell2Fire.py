@@ -34,8 +34,9 @@ try:
     lib_path = os.path.join(os.getcwd(), 'Cell2Fire', soname)
     lib = ctypes.cdll.LoadLibrary(lib_path)    
 except:
-    raise RuntimeError("Could not load the library=" + soname)
-    print("Could not load the library=" + soname)
+    raise RuntimeError("Could not load the library=" + lib_path)
+print("Loaded the library=" + lib_path)
+    
 
     
     
