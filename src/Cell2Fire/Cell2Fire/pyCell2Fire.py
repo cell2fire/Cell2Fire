@@ -1,3 +1,5 @@
+# Was called Cell2Fire.py; now called pyCell2Fire.py
+# This seems to be superceded by C++ code and not used (DLW June 2020)
 # coding: utf-8
 __version__ = "2.0"
 __author__ = "Cristobal Pais, David Woodruff"
@@ -16,7 +18,10 @@ from itertools import repeat
 import time
 import ctypes
 import pickle
-from Cell2Fire.ParseInputs import ParseInputs, Init, InitCells, InitForest
+#from Cell2Fire.ParseInputs import ParseInputs, Init, InitCells, InitForest
+from Cell2Fire.ParseInputs import ParseInputs, InitCells
+
+raise RuntimeError("Cell2Fire.py imported, but that doesn't make sense.")
 
 # Shared library .so (CP: Careful with Windows vs UNIX)
 sonames = ["FBPfunc5Unix.so", "FBPfunc5Win.so", "FBPfunc5MAC.so"]
@@ -67,7 +72,7 @@ def save_obj(obj, name, OutFolder, Sim, noOutput):
         
     
 
-# Main class with all the simulation scheme   
+# Main class with all the simulation scheme   (NOT USED? checked June 2020)
 class Cell2FireObj(object):
     # Initializer
     def __init__(self,
@@ -344,6 +349,7 @@ class Cell2FireObj(object):
         #                               Ignition, Weather, Plot, Lightning Options/Data
         ##########################################################################################################    
         self._weatherperiod = 0
+        print("\n XXXX debug about to call Init XXXXX \n")
         self._Ignitions, self._Weather_Obj, self._Plotter, self._DF = Init(self._Ignitions, 
                                                                            self._WeatherOpt, 
                                                                            self._plotFreq,

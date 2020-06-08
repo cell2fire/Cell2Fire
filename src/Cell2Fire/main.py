@@ -11,7 +11,8 @@ warnings.filterwarnings("ignore")
 
 # Inputs and environment generator
 from Cell2Fire.ParseInputs import ParseInputs
-from Cell2FireC import *
+#from Cell2Fire.ParseInputs import ParseInputs
+from Cell2FireC_class import *
 from Cell2Fire.Stats import *
 
 def main():

@@ -1,6 +1,7 @@
 # coding: utf-8
 __version__ = "1.0"
 __author__ = "Cristobal Pais"
+# name change to Cell2FireC_class by DLW (confusion with the dir name)
 
 # General imporations
 import os
@@ -13,6 +14,12 @@ import Cell2Fire.DataGeneratorC as DataGenerator
 import Cell2Fire.ReadDataPrometheus as ReadDataPrometheus
 from Cell2Fire.ParseInputs import InitCells
 from Cell2Fire.Stats import *
+import Cell2Fire
+p = str(Cell2Fire.__path__)
+l = p.find("'")
+r = p.find("'", l+1)
+cell2fire_path = p[l+1:r]
+print("cell2fire_path",cell2fire_path)
 
 class Cell2FireC:
     # Constructor and initial run
@@ -47,7 +54,7 @@ class Cell2FireC:
     # Run C++ Sim 
     def run(self):
         # Parse args for calling C++ via subprocess        
-        execArray=[os.path.join(os.getcwd(),'Cell2FireC/Cell2Fire'), 
+        execArray=[os.path.join(cell2fire_path,"..", "Cell2FireC","Cell2Fire"),
                    '--input-instance-folder', self.args.InFolder,
                    '--output-folder', self.args.OutFolder if (self.args.OutFolder is not None) else '',
                    '--ignitions' if (self.args.ignitions) else '',
@@ -69,9 +76,10 @@ class Cell2FireC:
         
         # Output log
         if self.args.OutFolder is not None:
-            if os.path.isdir(self.args.OutFolder):
-                shutil.rmtree(self.args.OutFolder)
-            os.makedirs(self.args.OutFolder)
+            # TBD: always delete and make the output dir (maybe not here)
+            if not os.path.isdir(self.args.OutFolder):
+                os.makedirs(self.args.OutFolder)
+                os.makedirs(os.path.join(self.args.OutFolder, "Messages"))  # hack June 2020
             LogName = os.path.join(self.args.OutFolder, "LogFile.txt")
         else:
             LogName = os.path.join(self.args.InFolder, "LogFile.txt")   
@@ -144,8 +152,9 @@ class Cell2FireC:
         # Loop for filling with dummy files 
         for i in range(1, self.args.nsims + 1):
             if i not in existingIDs:
-                np.savetxt(os.path.join(MPath, "MessagesFile" + str(i).zfill(2) + ".csv"), np.asarray([]))
-        
+                # DLW June 2020: TBD: why do we do the CWD???
+                #np.savetxt(os.path.join(MPath, "MessagesFile" + str(i).zfill(2) + ".csv"), np.asarray([]))
+                np.savetxt("MessagesFile" + str(i).zfill(2) + ".csv", np.asarray([]))
         # Come back to the original directory
         os.chdir(CWD)
         
