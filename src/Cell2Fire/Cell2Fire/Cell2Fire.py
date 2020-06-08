@@ -18,9 +18,6 @@ import ctypes
 import pickle
 from Cell2Fire.ParseInputs import ParseInputs, Init, InitCells, InitForest
 
-# Class importations
-from Cell2Fire import *
-
 # Shared library .so (CP: Careful with Windows vs UNIX)
 sonames = ["FBPfunc5Unix.so", "FBPfunc5Win.so", "FBPfunc5MAC.so"]
 OS = platform.system()
