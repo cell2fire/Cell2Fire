@@ -18,7 +18,7 @@ class TestMain(unittest.TestCase):
         # arguments list that matches the readme
         datadir = os.path.join(data_path, "Sub40x40")
         baselist = ["--input-instance-folder", datadir,
-                    "--output-folder", " .",
+                    "--output-folder", "outdir",
                     "--ignitions",
                     "--sim-years", "1",
                     "--nsims",  "5",
@@ -45,6 +45,7 @@ class TestMain(unittest.TestCase):
         parser = make_parser()
         args = parser.parse_args(self._readme_list())
         env = Cell2FireC(args)  # see main.py
+        env.stats()
 
 if __name__ == "__main__":
     unittest.main()
