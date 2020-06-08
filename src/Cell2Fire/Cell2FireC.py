@@ -75,9 +75,10 @@ class Cell2FireC:
         
         # Output log
         if self.args.OutFolder is not None:
-            if os.path.isdir(self.args.OutFolder):
-                shutil.rmtree(self.args.OutFolder)
-            os.makedirs(self.args.OutFolder)
+            # TBD: always delete and make the output dir (maybe not here)
+            if not os.path.isdir(self.args.OutFolder):
+                os.makedirs(self.args.OutFolder)
+                os.makedirs(os.path.joint(self.args.OutFolder, "Messages"))  # hack June 2020
             LogName = os.path.join(self.args.OutFolder, "LogFile.txt")
         else:
             LogName = os.path.join(self.args.InFolder, "LogFile.txt")   
@@ -150,8 +151,9 @@ class Cell2FireC:
         # Loop for filling with dummy files 
         for i in range(1, self.args.nsims + 1):
             if i not in existingIDs:
-                np.savetxt(os.path.join(MPath, "MessagesFile" + str(i).zfill(2) + ".csv"), np.asarray([]))
-        
+                # DLW June 2020: TBD: why do we do the CWD???
+                #np.savetxt(os.path.join(MPath, "MessagesFile" + str(i).zfill(2) + ".csv"), np.asarray([]))
+                np.savetxt("MessagesFile" + str(i).zfill(2) + ".csv", np.asarray([]))
         # Come back to the original directory
         os.chdir(CWD)
         
