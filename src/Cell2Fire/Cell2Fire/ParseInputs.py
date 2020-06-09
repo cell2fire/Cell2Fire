@@ -300,6 +300,13 @@ def ParseInputs():
     parser = make_parser()        
     
     args = parser.parse_args()
+    # DLW June 2020 TBD: do something less invasive?
+    def _abspath(a):
+        if a is not None:
+            a = os.path.abspath(a)
+    _abspath(args.InFolder)
+    _abspath(args.OutFolder)
+    
     return args
     
     
