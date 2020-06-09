@@ -460,7 +460,7 @@ void Cell2Fire::reset(int rnumber, double rnumber2){
 		this->gridFolder = "mkdir -p " + this->args.OutFolder + "/Grids/Grids" + std::to_string(this->sim);
 		CSVFolder.MakeDir(this->gridFolder);
 		this->gridFolder = this->args.OutFolder + "/Grids/Grids" + std::to_string(this->sim) + "/";
-		//DEBUGstd::cout << "\nInitial Grid folder was generated in " << this->gridFolder << std::endl;
+		std::cout << "\nInitial Grid folder was generated in " << this->gridFolder << std::endl;  // DEBUG dlw
 	}
 	
 	// Messages Folder

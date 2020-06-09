@@ -45,7 +45,7 @@ void parseArgs(int argc, char * argv[], arguments * args_ptr)
 	//--output-folder
 	char * output_folder = getCmdOption(argv, argv + argc, "--output-folder");
     if (output_folder){
-        //DEBUGprintf("OutFolder: %s \n", output_folder );
+      printf("OutFolder: %s \n", output_folder ); //DEBUG dlw
     }
 	else output_folder = &empty;
 	
