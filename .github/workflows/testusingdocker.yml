@@ -20,11 +20,11 @@ jobs:
 
       - name: setup the program
         run: |
-	  cd src
+          cd src
           python setup.py develop
 
       - name: run tests
         run: |
           python Cell2Fire/test_xxxx.py
           # DLW: use pytest (see mape-maker)
-	  # everyone else: add your test here for now...
+          # everyone else: add your test here for now...
