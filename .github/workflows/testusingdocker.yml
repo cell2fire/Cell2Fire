@@ -35,6 +35,6 @@ jobs:
       - name: run tests
         run: |
           cd src/Cell2Fire
-          python test_xxxx.py
+          python test_doccmd1.py
           # DLW: use pytest (see mape-maker)
           # everyone else: add your test here for now...
