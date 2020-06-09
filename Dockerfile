@@ -11,3 +11,9 @@ RUN conda install -c anaconda seaborn
 RUN conda install -c conda-forge tqdm
 #RUN conda install -c conda-forge opencv
 RUN pip install opencv-python
+RUN apt update
+RUN apt install -y build-essential
+# we will assume that eign3 goes to /usr/include
+RUN apt-get install -y libeigen3-dev
+RUN apt install -y libboost-dev
+RUN apt install -y libboost-all-dev

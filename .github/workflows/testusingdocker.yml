@@ -18,6 +18,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: make C++
+        run: |
+          cd src/Cell2Fire/Cell2FireC
+          make
       - name: setup the program
         run: |
           cd src
