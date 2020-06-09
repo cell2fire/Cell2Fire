@@ -36,6 +36,8 @@ Installation may require some familiarity with C++, make, and Python.
 - cd src/Cell2Fire/Cell2FireC
 - (edit Makefile to have the correct path to Eigen)
 - make
+- cd src
+- python setup.py develop
 
 # Usage
 In order to run the simulator (after installation and cd to  src/Cell2Fire), the following command can be used:

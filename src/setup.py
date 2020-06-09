@@ -20,6 +20,6 @@ setup(name='Cell2Fire',
       author='Cristobal Pais, Jaime Carrasco, David Martell, David L. Woodruff, Andres Weintraub',
       author_email='dlwoodruff@ucdavis.edu',
       packages=packages,
-      install_requires=['numpy', 'pandas', 'matplotlib', 'seaborn', 'tqdm', 'imread', 'networkx']
+      install_requires=['numpy', 'pandas', 'matplotlib', 'seaborn', 'tqdm', 'imread', 'networkx', 'opencv']
 )
-# what about opencv (or cv2)?
+

@@ -3,13 +3,22 @@ Installation
 ============
 
 To be able to run the file will first need to download the zip file and extract
-it in a folder in your preferred directory (I used Desktop)
+it in a folder in your preferred directory (I used Desktop). Or clone
+the githup repository (these instructions assume you cloned in Desktop)
 
-On your terminal write
+Give a terminal command to cd to the directory, e.g.,
 
 .. code-block:: html
    :linenos:
    
-    cd Desktop/FolderName/src/Cell2Fire/Cell2FireC
+    cd Desktop/Cell2Fire/src/Cell2Fire/Cell2FireC
     
-from here you edit your make file to have the correct path to Eigen. Then run make in your terminal.
+then edit Makefile to have the correct path to Eigen. Then,
+
+.. code-block:: html
+   :linenos:
+   
+      make
+      cd ../..   # (the working directory should now be src)
+      python setup.py develop
+      cd Desktop/FolderName/src/Cell2Fire/Cell2FireC

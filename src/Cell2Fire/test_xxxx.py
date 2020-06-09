@@ -1,5 +1,5 @@
 # demonstrate how to write a test
-import pyutilib.th as unittest
+import  unittest
 import os.path
 import datetime
 from Cell2Fire.ParseInputs import make_parser

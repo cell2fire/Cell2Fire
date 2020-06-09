@@ -2,6 +2,6 @@ numpy
 pandas
 matplotlib
 seaborn
-pprint
+opencv
 imread
 tqdm
