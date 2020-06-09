@@ -51,9 +51,10 @@ class Cell2FireC:
                          "d1": 11, "s1": 12, "s2": 13, "s3": 14, "o1a": 15, "o1b": 16, "d2": 17}
         
     
-    # Run C++ Sim 
+    # Run C++ Sim
     def run(self):
         # Parse args for calling C++ via subprocess        
+        # DLW June 2020: supporting calling with os.system
         execArray=[os.path.join(cell2fire_path,"..", "Cell2FireC","Cell2Fire"),
                    '--input-instance-folder', self.args.InFolder,
                    '--output-folder', self.args.OutFolder if (self.args.OutFolder is not None) else '',
@@ -83,16 +84,21 @@ class Cell2FireC:
             LogName = os.path.join(self.args.OutFolder, "LogFile.txt")
         else:
             LogName = os.path.join(self.args.InFolder, "LogFile.txt")   
-         
+
         # Perform the call
         with open(LogName, 'w') as output:
             proc = subprocess.Popen(execArray, stdout=output)
             proc.communicate()
         proc.wait()
-        
+        """
+        cmdstr = ""
+        for es in execArray:
+            cmdstr += es+' '
+        os.system(cmdstr + ">"+LogName)
+        """
         # End of the replications
-        print("End of Cell2FireC execution...")
-        
+        print("End of Cell2FireC C++  execution...")
+    
     # Pre-processing
     '''
     Generate the Data.csv file for the C++ core
