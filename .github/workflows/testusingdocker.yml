@@ -25,7 +25,7 @@ jobs:
 
       - name: run tests
         run: |
-	  cd src
+          cd src
           python Cell2Fire/test_xxxx.py
           # DLW: use pytest (see mape-maker)
           # everyone else: add your test here for now...
