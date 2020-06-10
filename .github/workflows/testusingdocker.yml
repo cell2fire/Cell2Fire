@@ -26,7 +26,7 @@ jobs:
         run: |
           cd src
           python setup.py develop
-	  
+  
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
