@@ -37,6 +37,7 @@ Installation may require some familiarity with C++, make, and Python.
 - (edit Makefile to have the correct path to Eigen)
 - make
 - cd src
+- pip install -r requirements.txt  # might not do anything
 - python setup.py develop
 
 # Usage
