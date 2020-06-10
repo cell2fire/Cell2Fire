@@ -58,7 +58,6 @@ class TestMain(unittest.TestCase):
         parser = make_parser()
         cmdlist = _readme_list()
         cmdlist.append("--onlyProcessing")
-        print(cmdlist)
         # only-processing means something else has to make the data!!! (no call to C++)
 
         args = parser.parse_args(cmdlist)
