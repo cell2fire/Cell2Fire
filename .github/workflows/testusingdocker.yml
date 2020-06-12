@@ -42,12 +42,15 @@ jobs:
         run: |
           cd src/Cell2Fire
           pytest test_doccmd1.py --cov=./ --cov-report=xml
-# probably need a port in the docker image or something
-#      - name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v1
-#        with:
-#          file: ./coverage.xml
-#          flags: unittests
-#          env_vars: OS,PYTHON
-#          name: codecov-umbrella
-#          fail_ci_if_error: true
+          
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./src/Cell2Fire/coverage.xml
+          flags: unittests
+          env_vars: OS,PYTHON
+          name: codecov-umbrella
+          fail_ci_if_error: false
+#
+# apt-get update; apt-get install curl
+# bash <(curl -s https://codecov.io/bash)
