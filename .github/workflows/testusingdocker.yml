@@ -51,6 +51,4 @@ jobs:
           env_vars: OS,PYTHON
           name: codecov-umbrella
           fail_ci_if_error: false
-#
-# apt-get update; apt-get install curl
-# bash <(curl -s https://codecov.io/bash)
+

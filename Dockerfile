@@ -1,5 +1,6 @@
-# to build: docker build -t c2fcondatest .
+# to build: docker build -t c2fcondatest:latest .
 # local test: docker run -it --mount source=$(pwd),destination=/src,type=bind c2fcondatest:latest
+# docker push dlwoodruff/c2fcondatest:latest
 FROM continuumio/anaconda3
 RUN conda update conda
 RUN conda install -c anaconda numpy
@@ -17,3 +18,4 @@ RUN apt install -y build-essential
 RUN apt-get install -y libeigen3-dev
 RUN apt install -y libboost-dev
 RUN apt install -y libboost-all-dev
+RUN apt install -y curl
