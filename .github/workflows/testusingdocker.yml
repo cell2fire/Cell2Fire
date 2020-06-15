@@ -11,7 +11,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-        image: dlwoodruff/c2fcondatest:withcurl
+        image: dlwoodruff/c2fcondatest:latest
         env:
           PATH: /opt/conda/bin:/opt/conda/condabin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
