@@ -6,6 +6,8 @@
 This software is for research use only. There is no warranty of any kind;
 there is not even the implied warranty of fitness for use.
 
+https://github.com/cell2fire/Cell2Fire/workflows/TestExamples/badge.svg
+
 # Introduction
 
 Cell2Fire is a new cell-based forest and wildland landscape fire spread simulator.

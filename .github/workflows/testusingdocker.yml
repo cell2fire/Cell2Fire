@@ -1,4 +1,4 @@
-name: FirstExampleInDocs
+name: TestExamples
 
 on:
   push:
@@ -48,7 +48,7 @@ jobs:
         with:
           file: ./src/Cell2Fire/coverage.xml
           flags: unittests
-          env_vars: OS,PYTHON
+          ###env_vars: OS,PYTHON
           name: codecov-umbrella
           fail_ci_if_error: false
 
