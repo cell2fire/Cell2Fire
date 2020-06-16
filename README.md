@@ -6,7 +6,7 @@
 This software is for research use only. There is no warranty of any kind;
 there is not even the implied warranty of fitness for use.
 
-![]https://github.com/cell2fire/Cell2Fire/workflows/TestExamples/badge.svg
+![](https://github.com/cell2fire/Cell2Fire/workflows/TestExamples/badge.svg)
 
 # Introduction
 
