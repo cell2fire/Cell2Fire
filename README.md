@@ -16,7 +16,8 @@ Fire spread within each cell is assumed to be elliptical and governed by spread 
 Cell2Fire exploits parallel computation methods which allows users to run large-scale simulations in short periods of time.
 It includes powerful statistical, graphical output, and spatial analysis features to facilitate the display and analysis of projected fire growth.
 
-Documentation is available at [readthedocs] (https://cell2fire.readthedocs.io/) and there is a paper on [arXiv] (https://arxiv.org/abs/1905.09317v1).
+Documentation is available at [readthedocs](https://cell2fire.readthedocs.io/).
+[]: # (and there is a paper on [arXiv] (https://arxiv.org/abs/1905.09317v1).)
 
 # Requirements
 - g++
