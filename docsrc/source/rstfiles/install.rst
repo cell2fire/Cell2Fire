@@ -20,5 +20,5 @@ then edit Makefile to have the correct path to Eigen. Then,
    
       make
       cd ../..   # (the working directory should now be src)
+      pip install -r requirements.txt
       python setup.py develop
-      cd Desktop/FolderName/src/Cell2Fire/Cell2FireC
