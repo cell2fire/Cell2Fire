@@ -18,8 +18,6 @@ It includes powerful statistical, graphical output, and spatial analysis feature
 
 Documentation is available at [readthedocs](https://cell2fire.readthedocs.io/).
 
-[//]: # (and there is a paper on [arXiv] (https://arxiv.org/abs/1905.09317v1).)
-
 # Requirements
 - g++
 - Boost (C++)
