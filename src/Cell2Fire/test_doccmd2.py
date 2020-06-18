@@ -17,7 +17,6 @@ def _readme_list():
     resultsdir = os.path.abspath(os.path.join(data_path, "..", "results", "Sub40x40"))
     baselist = ["--input-instance-folder", datadir,
                 "--output-folder", resultsdir,
-                "--ignitions",
                 "--nsims",  "5",
                 "--stats",
                 "--allPlots"]
