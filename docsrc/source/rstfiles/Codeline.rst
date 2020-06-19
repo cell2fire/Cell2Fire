@@ -46,14 +46,14 @@ To change the number of simulations which will output multiple stats depending o
   
 This will give you multiple outputs depending on your # of simulations.
 
-For example when the command line had 
+For example if the command line had 
 
 .. code-block:: html
   :linenos:
   
   --nsmis 10
   
-which resulted in 10 graphs (i don't recommend)
+this will result in 10 plots:
 
 .. image:: /image/plots.png
   :width: 30%
