@@ -36,8 +36,8 @@ using namespace std;
 // Global Variables (DFs with cells and weather info)
 inputs * df_ptr;
 weatherDF * wdf_ptr;
-weatherDF wdf[25];
-inputs df [560000];
+weatherDF wdf[150];
+inputs df [1560000];
 std::unordered_map<int, std::vector<float>> BBOFactors;
 std::unordered_map<int, std::vector<int>> HarvestedCells;   
 std::vector<int> NFTypesCells;
@@ -96,7 +96,7 @@ void CSVGrid(int rows, int cols, int gridNumber, std::string gridFolder, std::ve
 		std::cout  << "We are plotting the current forest to a csv file " << gridName << std::endl;
 	}
 	CSVWriter CSVPloter(gridName, ",");
-	CSVPloter.printCSV(rows, cols, statusCellsCSV);
+	CSVPloter.printCSV_V2(rows, cols, statusCellsCSV);
 }
 
 
@@ -170,9 +170,9 @@ Cell2Fire::Cell2Fire(arguments _args) : CSVWeather(_args.InFolder + "Weather.csv
 	
 	// Populate DF 
 	std::vector<std::vector<std::string>> DF = CSVParser.getData();
-	//DEBUGstd::cout << "Forest DataFrame from instance " << filename << std::endl;
+	std::cout << "Forest DataFrame from instance " << filename << std::endl;
 	//DEBUGCSVParser.printData(DF);
-	//DEBUGstd::cout << "Number of cells: " <<  this->nCells  << std::endl;
+	std::cout << "Number of cells: " <<  this->nCells  << std::endl;
 	
 	// Create empty df with size of NCells
 	df_ptr = & df[0];
@@ -480,7 +480,7 @@ void Cell2Fire::reset(int rnumber, double rnumber2){
 	if(this->args.WeatherOpt.compare("random") == 0){
 		// Random Weather 	
 		CSVWeather.fileName = this->args.InFolder + "Weathers/Weather" + std::to_string(rnumber) + ".csv" ;
-		//DEBUGstd::cout  << "Weather file selected: " <<  CSVWeather.fileName  << std::endl;
+		std::cout  << "Weather file selected: " <<  CSVWeather.fileName  << std::endl;
 
 		/* Weather DataFrame */
 		this->WeatherDF = this->CSVWeather.getData();
@@ -1144,7 +1144,7 @@ void Cell2Fire::Results(){
 			std::cout  << "We are generating the network messages to a csv file " << messagesName << std::endl;
 		}
 		CSVWriter CSVPloter(messagesName, ",");
-		CSVPloter.printCSVDouble(this->burntCells.size() - this->nIgnitions, 4, this->FSCell);
+		CSVPloter.printCSVDouble_V2(this->burntCells.size() - this->nIgnitions, 4, this->FSCell);
 	}
 
 	
@@ -1182,7 +1182,7 @@ void Cell2Fire::outputGrid(){
 	}
 	
 	CSVWriter CSVPloter(gridName, ",");
-	CSVPloter.printCSV(this->rows, this->cols, statusCells2);
+	CSVPloter.printCSV_V2(this->rows, this->cols, statusCells2);
 	this->gridNumber++;
 }
 
@@ -1387,10 +1387,8 @@ int main(int argc, char * argv[]){
 	arguments args;
 	arguments * args_ptr = &args;
 	parseArgs(argc, argv, args_ptr);
-	if (args.verbose){
-	  std::cout << "------ Command line values ------\n";
-	  printArgs(args);
-	}
+	//printArgs(args);
+	
 	// Random generator and distributions
 	std::default_random_engine generator (args.seed);
 	std::uniform_int_distribution<int> udistribution(1, args.NWeatherFiles);		// Get random weather
