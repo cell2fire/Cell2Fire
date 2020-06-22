@@ -14,7 +14,7 @@ from distutils.core import setup
 packages = find_packages()
 
 setup(name='Cell2Fire',
-      version='0.1',
+      version='0.2',
       description="Fire Simulator for Harvest and Fuel Management Planning",
       url='https://github.com/cell2Fire/Cell2Fire',
       author='Cristobal Pais, Jaime Carrasco, David Martell, David L. Woodruff, Andres Weintraub',
