@@ -10,12 +10,12 @@ import shutil
 import signal
 import subprocess
 import sys
-import Cell2Fire.DataGeneratorC as DataGenerator
-import Cell2Fire.ReadDataPrometheus as ReadDataPrometheus
-from Cell2Fire.ParseInputs import InitCells
-from Cell2Fire.Stats import *
-import Cell2Fire
-p = str(Cell2Fire.__path__)
+import cell2fire.utils.DataGeneratorC as DataGenerator
+import cell2fire.utils.ReadDataPrometheus as ReadDataPrometheus
+from cell2fire.utils.ParseInputs import InitCells
+from cell2fire.utils.Stats import *
+import cell2fire  # for path finding
+p = str(cell2fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
 cell2fire_path = p[l+1:r]
@@ -55,7 +55,7 @@ class Cell2FireC:
     def run(self):
         # Parse args for calling C++ via subprocess        
         # DLW June 2020: supporting calling with os.system
-        execArray=[os.path.join(cell2fire_path,"..", "Cell2FireC","Cell2Fire"),
+        execArray=[os.path.join(cell2fire_path,"Cell2FireC","Cell2Fire"),
                    '--input-instance-folder', self.args.InFolder,
                    '--output-folder', self.args.OutFolder if (self.args.OutFolder is not None) else '',
                    '--ignitions' if (self.args.ignitions) else '',
