@@ -20,11 +20,10 @@ jobs:
 
       - name: make C++
         run: |
-          cd src/Cell2Fire/Cell2FireC
+          cd cell2fire/Cell2FireC
           make
       - name: setup the program
         run: |
-          cd src
           python setup.py develop
   
       - name: Lint with flake8
@@ -35,18 +34,18 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: create input data
         run: |
-           cd src/Cell2Fire
+           cd cell2fire
            python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
 
       - name: run tests
         run: |
-          cd src/Cell2Fire
+          cd cell2fire
           pytest test_doccmd1.py --cov=./ --cov-report=xml
           
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
-          file: ./src/Cell2Fire/coverage.xml
+          file: ./cell2fire/coverage.xml
           flags: unittests
           ###env_vars: OS,PYTHON
           name: codecov-umbrella
