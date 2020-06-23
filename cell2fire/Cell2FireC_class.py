@@ -55,7 +55,7 @@ class Cell2FireC:
     def run(self):
         # Parse args for calling C++ via subprocess        
         # DLW June 2020: supporting calling with os.system
-        execArray=[os.path.join(cell2fire_path,"..", "Cell2FireC","Cell2Fire"),
+        execArray=[os.path.join(cell2fire_path,"Cell2FireC","Cell2Fire"),
                    '--input-instance-folder', self.args.InFolder,
                    '--output-folder', self.args.OutFolder if (self.args.OutFolder is not None) else '',
                    '--ignitions' if (self.args.ignitions) else '',
