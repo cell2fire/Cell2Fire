@@ -18,7 +18,7 @@ p = str(Cell2Fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
 cell2fire_path = p[l+1:r]
-data_path = os.path.join(cell2fire_path, "..", "..","..","contibuted","delme63")
+data_path = os.path.join(cell2fire_path, "..","..","contibuted","delme63")
 
 def _readme_list():
     # arguments list that matches the first example in the readme file
