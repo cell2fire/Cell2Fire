@@ -1,7 +1,7 @@
 # demonstrate how to hack together a test
 """
 Before you run this, run
-python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
+bash ../contributed/delme63/go.bash
 That will create the input files. Then we run basically the same command under the tester, but
 with --onlyProcessing to avoid calling the compiled C++ code.
 # TBD: this test module should take the command line as an arg, so it does not have to
