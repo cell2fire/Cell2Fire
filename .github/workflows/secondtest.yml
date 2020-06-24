@@ -20,11 +20,11 @@ jobs:
 
       - name: make C++
         run: |
-          cd src/Cell2Fire/Cell2FireC
+          cd cell2fire/Cell2FireC
           make
       - name: setup the program
         run: |
-          cd src
+          cd
           python setup.py develop
   
       - name: Lint with flake8
@@ -35,17 +35,17 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: create input data
         run: |
-           cd src/Cell2Fire
-           bash ../../contributed/delme63/go.bash
+           cd cell2fire
+           bash ../contributed/delme63/go.bash
       - name: run tests
         run: |
-          cd src/Cell2Fire
+          cd cell2fire
           pytest test2.py --cov=./ --cov-report=xml
           
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
-          file: ./src/Cell2Fire/coverage.xml
+          file: ./cell2fire/coverage.xml
           flags: unittests
           ###env_vars: OS,PYTHON
           name: codecov-umbrella
