@@ -1,4 +1,4 @@
-name: Test2
+name: TestExamples
 
 on:
   push:
@@ -24,7 +24,6 @@ jobs:
           make
       - name: setup the program
         run: |
-          cd
           python setup.py develop
   
       - name: Lint with flake8
