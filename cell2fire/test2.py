@@ -24,7 +24,7 @@ def _readme_list():
     # arguments list that matches the first example in the readme file
     #python main.py --input-instance-folder $mydir/9cellsC1/ --output-folder $mydir/results --ignitions --sim-years 1 --nsims 1 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 1134 --stats --allPlots --IgnitionRad 5 --grids --combine --verbose
     datadir = os.path.abspath(os.path.join(data_path, "9cellsC1"))
-    resultsdir = os.path.abspath(os.path.join(data_path, "..", "results"))
+    resultsdir = os.path.abspath(os.path.join(data_path, "results"))
     baselist = ["--input-instance-folder", datadir,
                 "--output-folder", resultsdir,
                 "--ignitions",
