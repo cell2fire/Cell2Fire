@@ -1,0 +1,56 @@
+import  unittest
+import os.path
+import datetime
+from Cell2Fire.ParseInputs import make_parser
+from Cell2FireC_class import *
+import Cell2Fire
+p = str(Cell2Fire.__path__)
+l = p.find("'")
+r = p.find("'", l+1)
+cell2fire_path = p[l+1:r]
+data_path = os.path.join(cell2fire_path, "..", "..","..","data")
+
+def _readme_list():
+    # arguments list that matches the first example in the readme file
+    #python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
+    datadir = os.path.abspath(os.path.join(data_path, "Sub40x40"))
+    resultsdir = os.path.abspath(os.path.join(data_path, "..", "results", "Sub40x40"))
+    baselist = ["--input-instance-folder", datadir,
+                "--output-folder", resultsdir,
+                "--nsims",  "5",
+                "--stats",
+                "--allPlots"]
+    return baselist
+
+class TestMain(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(self):
+        pass
+
+    def test_readme_cmd(self):
+        print("Running ", str(self.id()).split('.')[2])
+        parser = make_parser()
+        cmdlist = _readme_list()
+        cmdlist.append("--onlyProcessing")
+        # only-processing means something else has to make the data!!! (no call to C++)
+
+        args = parser.parse_args(cmdlist)
+        env = Cell2FireC(args)  # see main.py
+        env.stats()
+        # TBD: add an assert
+
+if __name__ == "__main__":
+
+    """
+    # first: full run to create data files for testing  
+    Unfortunately, we can run't under os.system because the call to compiled code fails....
+    cmdstr = "python main.py "
+    for es in _readme_list():
+        cmdstr += es+' '
+    print("cmdstr=",cmdstr)
+    os.system(cmdstr)
+    """
+    # something else needs to create the files
+    # second: do the tests
+    unittest.main()
