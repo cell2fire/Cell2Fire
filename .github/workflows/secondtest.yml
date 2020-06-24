@@ -35,7 +35,7 @@ jobs:
       - name: create input data
         run: |
            cd cell2fire
-           bash ../contributed/delme63/go.bash
+           python main.py --input-instance-folder ../contributed/9cellsC1/ --output-folder ../contributed/results --ignitions --sim-years 1 --nsims 1 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 1134 --stats --allPlots --IgnitionRad 5 --grids --combine --verbose
       - name: run tests
         run: |
           cd cell2fire
