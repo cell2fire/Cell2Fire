@@ -11,7 +11,7 @@ Give a terminal command to cd to the directory, e.g.,
 .. code-block:: html
    :linenos:
    
-    cd Desktop/Cell2Fire/src/Cell2Fire/Cell2FireC
+    cd Desktop/Cell2Fire/cell2fire/Cell2FireC
     
 then edit Makefile to have the correct path to Eigen. Then,
 
@@ -19,6 +19,6 @@ then edit Makefile to have the correct path to Eigen. Then,
    :linenos:
    
       make
-      cd ../..   # (the working directory should now be src)
+      cd ../..   # (the working directory should now be Cell2Fire)
+      pip install -r requirements.txt
       python setup.py develop
-      cd Desktop/FolderName/src/Cell2Fire/Cell2FireC

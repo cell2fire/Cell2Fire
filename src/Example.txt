@@ -1,2 +1,0 @@
-# Inside root folder
-python main.py --input-instance-folder=../instances/homogeneous/400CellsHomC1/ --Fire-Period-Length 1.0 --nsims=3 --sim-years 1 --ignitions --output-folder=../results/Test/ --output-messages --IgnitionRadius 5 --plotFreq 1 --plotStep 60 --gridsFreq 1 --gridsStep 60 --seed 1 --trajectories --output-messages --no-output --stats

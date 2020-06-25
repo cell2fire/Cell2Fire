@@ -1,14 +1,14 @@
 Editing Code Line
 =================
 
-Another are where you can make changes to the Fire simulator is in going into
+To experiment with running the simulator, (assuming you have installed in
+``mydirectory``) look at 
 
 .. code-block:: html
    :linenos:
    
    mydirectory/contributed/delme63/go.bash
    
-this will work with any of the other projects that you would like to work on as well not just delme63.
 You will need to open go.bash with your favorite text editing app (I used Xcode) and get the following code
 
 
@@ -16,7 +16,7 @@ You will need to open go.bash with your favorite text editing app (I used Xcode)
   :width: 99%
   
 if you are working on a different folder that is not delme63 make your directory is correctly pathed to file you are working with.
-It is only recommended to edit the following inputs
+To get started, try editing the following inputs
 
 * Number of years (Up to 4)
 * Number of simulations
@@ -46,14 +46,14 @@ To change the number of simulations which will output multiple stats depending o
   
 This will give you multiple outputs depending on your # of simulations.
 
-For example when the command line had 
+For example if the command line had 
 
 .. code-block:: html
   :linenos:
   
   --nsmis 10
   
-which resulted in 10 graphs (i don't recommend)
+this will result in 10 plots:
 
 .. image:: /image/plots.png
   :width: 30%

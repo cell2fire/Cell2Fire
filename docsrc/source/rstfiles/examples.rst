@@ -2,7 +2,9 @@
 Examples
 ========
 
-Know you are able to run different trial simulations. In folder there is contributed folder where you will find a folder labeled delme63.
+At present, this example assumes you are running on a Unix.
+
+In the contributed folder there is a folder labeled delme63.
 This example uses a 9 cell forest where you are able to change weather, wind speed, etc.  This will provide you results and plots hourly of the fire propagation.
 
 

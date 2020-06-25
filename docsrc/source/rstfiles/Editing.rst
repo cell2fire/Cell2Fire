@@ -3,7 +3,7 @@ Editing Weather
 ===============
 
 One of the benifits of this simulator is the ability to able to modify inputs to create different enviorments.
-To modify inputs you will want to go into 
+To modify inputs for the delme63 example, you will cd to
 
 .. code-block:: html
    :linenos:
@@ -26,7 +26,8 @@ In this file the following inputs are editable.
 * Fire Weather Index [FWI]
 
 In the case of the Buildup Index, Initial Spread Index, and Fire Weather Index these inputs use the values of the other inputs to calculate their respective scores.
-It is recommended to use the equations found in *Equations for the Canadian Forest Fire Weather Index System* (Van Wagner). This paper clearly explains how generate these values using the other inputs. 
+It is recommended to use the equations found in *Equations for the Canadian Forest Fire Weather Index System* (Van Wagner). This paper clearly explains how generate these values using the other inputs.
+
 
 Temperature & Humidity
 ----------------------

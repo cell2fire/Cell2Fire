@@ -14,14 +14,14 @@ with --onlyProcessing to avoid calling the compiled C++ code.
 import  unittest
 import os.path
 import datetime
-from Cell2Fire.ParseInputs import make_parser
-from Cell2FireC_class import *
-import Cell2Fire
-p = str(Cell2Fire.__path__)
+from cell2fire.utils.ParseInputs import make_parser
+from cell2fire.Cell2FireC_class import *
+import cell2fire  # for path finding
+p = str(cell2fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
 cell2fire_path = p[l+1:r]
-data_path = os.path.join(cell2fire_path, "..", "..","..","data")
+data_path = os.path.join(cell2fire_path, "..","data")
 
 def _readme_list():
     # arguments list that matches the first example in the readme file

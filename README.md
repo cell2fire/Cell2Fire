@@ -16,7 +16,10 @@ Fire spread within each cell is assumed to be elliptical and governed by spread 
 Cell2Fire exploits parallel computation methods which allows users to run large-scale simulations in short periods of time.
 It includes powerful statistical, graphical output, and spatial analysis features to facilitate the display and analysis of projected fire growth.
 
-Documentation is available at [readthedocs] (https://cell2fire.readthedocs.io/) and there is a paper on [arXiv] (https://arxiv.org/abs/1905.09317v1).
+Work in progress documentation is available at
+[readthedocs](https://cell2fire.readthedocs.io/) and there is an
+original draft of a paper on
+[arXiv](https://arxiv.org/abs/1905.09317v1).
 
 # Requirements
 - g++
@@ -35,17 +38,17 @@ Documentation is available at [readthedocs] (https://cell2fire.readthedocs.io/) 
 # Installation
 
 Installation may require some familiarity with C++, make, and Python. 
-- cd src/Cell2Fire/Cell2FireC
+- cd Cell2Fire/cell2fire/Cell2FireC
 - (edit Makefile to have the correct path to Eigen)
 - make
-- cd src
+- cd ../..
 - pip install -r requirements.txt  # might not do anything
 - python setup.py develop
 
 # Usage
-In order to run the simulator (after installation and cd to  src/Cell2Fire), the following command can be used:
+In order to run the simulator (after installation and cd to  Cell2Fire/cell2fire), the following command can be used:
 ```
-$ python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
+$ python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
 ```
 For the full list of arguments and their explanation use:
 ```
@@ -57,7 +60,7 @@ In addition, both the C++ core and Python scripts can be used separately:
 Only simulation and generate evolution grids (no stats or plots).
 Parallel-ready version will be uploaded soon.
 ```
-$ ./Cell2Fire --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 1 --grids --final-grid --Fire-Period-Length 1.0 --weather rows --nweathers 1 --output-messages --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --HFactor 1.0 --FFactor 1.0 --BFactor 1.0 --EFactor 1.0
+$ ./Cell2Fire --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --ignitions --sim-years 1 --nsims 1 --grids --final-grid --Fire-Period-Length 1.0 --weather rows --nweathers 1 --output-messages --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --HFactor 1.0 --FFactor 1.0 --BFactor 1.0 --EFactor 1.0
 ```
 
 
@@ -65,7 +68,7 @@ $ ./Cell2Fire --input-instance-folder ../../data/Sub40x40/ --output-folder ../..
 Only processing option (reads a previously simulated instance and computes stats/plots).
 Important: provide the number of sims --nsims to be processed
 ```
-$ python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40_Previous_simulation --nsims 10 --stats --allPlots --onlyProcessing
+$ python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40_Previous_simulation --nsims 10 --stats --allPlots --onlyProcessing
 ```
 
 # Output examples
