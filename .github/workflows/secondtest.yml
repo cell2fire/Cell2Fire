@@ -34,8 +34,7 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: create input data
         run: |
-           cd cell2fire
-           bash ../contributed/delme63/go.bash
+           bash contributed/delme63/go.bash
       - name: run tests
         run: |
           cd cell2fire
