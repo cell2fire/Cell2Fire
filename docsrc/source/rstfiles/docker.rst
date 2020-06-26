@@ -19,7 +19,7 @@ Then run this sequence of terminal commands. If any command fails, the subsequen
 
   * cd Cell2Fire
 
-  * docker run -it --mount source=$(pwd),destination=/Cell2Fire,type=bind c2fcondatest:latest
+  * docker run -it --mount source=$(pwd),destination=/Cell2Fire,type=bind dlwoodruff/c2fcondatest:latest
 
   * cd Cell2Fire
   
