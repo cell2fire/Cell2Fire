@@ -3,7 +3,9 @@ Installation
 ============
 
 If you are not a programmer, these instructions may be difficult. If
-you get frustrated, jump to the section on using docker.
+you get frustrated, jump to the section on using docker. Also, Windows
+users who are not programmers should either install the Unix
+subsystem, or use docker.
 
 First, be sure that boost, eigen and gcc are installed on your computer. 
 
@@ -21,7 +23,7 @@ Give a terminal command to cd to the C++ directory, e.g.,
    
     cd Desktop/Cell2Fire/cell2fire/Cell2FireC
     
-then edit Makefile to have the correct path to Eigen. Then,
+and edit Makefile to have the correct path to Eigen. Then,
 
 .. code-block:: html
    :linenos:
