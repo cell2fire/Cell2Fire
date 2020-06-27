@@ -8,7 +8,8 @@ If you have a lot of trouble installing the software on your
 computer, you can try running it under a docker image. If you are
 not familiar with docker, you may find it a little confusing,
 but the installation of Cell2Fire is much simpler (once you have docker
-installed and running).
+installed and running). You also need to install ``git``.
+
 
 Note that in these instructions some command arguments have a single dash,
 while others have a double-dash.
@@ -22,7 +23,7 @@ Install docker and start the docker daemon: https://docs.docker.com/get-docker/
 Install Cell2Fire in the Docker Image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-On Unix host machine, run this sequence of terminal commands. If any command fails,
+On a Unix host machine, run this sequence of terminal commands. If any command fails,
 the subsequent commands will fail:
 
 * git clone https://github.com/cell2fire/Cell2Fire
@@ -57,7 +58,10 @@ start with the ``docker run`` command.
 Running on Windows
 ^^^^^^^^^^^^^^^^^^
 
-If the host computer has a Windows operating system, replace the ``docker run`` command with this:
+On Windows machines, terminal commands are given to the ``DOS`` command prompt. These instructions
+assume you are running in DOS terminal and not some other shell.
+
+Replace the ``docker run`` command with this:
 
 * ``docker run --rm -it -v %cd%:/Cell2Fire dlwoodruff/c2fcondatest:latest``
 
