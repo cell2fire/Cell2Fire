@@ -3,9 +3,9 @@ Installation
 ============
 
 If you are not a programmer, these instructions may be difficult. If
-you get frustrated, jump to the section on using docker. Also, Windows
+you get frustrated, jump to the section :ref:`docker_section`. Also, Windows
 users who are not programmers should either install the Unix
-subsystem, or use docker.
+subsystem, or use docker as described in :ref:`docker_section`
 
 First, be sure that boost, eigen and gcc are installed on your computer. 
 
