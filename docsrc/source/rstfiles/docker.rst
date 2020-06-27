@@ -10,6 +10,9 @@ not familiar with docker, you may find it a little confusing,
 but the installation of Cell2Fire is much simpler (once you have docker
 installed and running).
 
+Note that in these instructions some command arguments have a single dash,
+while others have a double-dash.
+
 Install Docker
 ^^^^^^^^^^^^^^
 
@@ -41,7 +44,8 @@ the subsequent commands will fail:
 * cd ..
 
 To test your installation, try
-python main.py --help
+
+``python main.py --help``
 
 When you are done using the docker image, give the command ``exit`` to
 the hashtag prompt.
@@ -57,7 +61,7 @@ Replace the ``docker run`` command with this:
 
 * ``docker run --rm -it -v %cd%:/Cell2Fire dlwoodruff/c2fcondatest:latest``
 
-
+Note that it might take docker a minute or two to start the image.
 The commands you give to the docker image (with the `#` prompt) are
 unix commands, even if the docker image is running on a Windows
 machine.
