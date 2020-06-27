@@ -22,7 +22,7 @@ Install docker and start the docker daemon: https://docs.docker.com/get-docker/
 Install Cell2Fire in the Docker Image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-On Unix, run this sequence of terminal commands. If any command fails,
+On Unix host machine, run this sequence of terminal commands. If any command fails,
 the subsequent commands will fail:
 
 * git clone https://github.com/cell2fire/Cell2Fire
@@ -57,7 +57,7 @@ start with the ``docker run`` command.
 Running on Windows
 ^^^^^^^^^^^^^^^^^^
 
-Replace the ``docker run`` command with this:
+If the host computer has a Windows operating system, replace the ``docker run`` command with this:
 
 * ``docker run --rm -it -v %cd%:/Cell2Fire dlwoodruff/c2fcondatest:latest``
 
