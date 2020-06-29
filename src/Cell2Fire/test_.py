@@ -32,7 +32,7 @@ def _readme_list():
                 "--output-folder", resultsdir,
                 "--ignitions",
                 "--sim-years", "1",
-                "--nsims",  "10",
+                "--nsims",  "7",
                 "--finalGrid",
                 "--weather", "rows",
                 "--nweathers", "1",
