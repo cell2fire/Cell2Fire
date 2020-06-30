@@ -1,4 +1,4 @@
-name: TestExamples
+name: OnlyProcessingTest
 
 on:
   push:
