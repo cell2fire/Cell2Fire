@@ -39,13 +39,13 @@ jobs:
 
       - name: run tests
         run: |
-          cd cell2fire
+          cd tests
           pytest test_doccmd1.py --cov=./ --cov-report=xml
           
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
-          file: ./cell2fire/coverage.xml
+          file: ./tests/coverage.xml
           flags: unittests
           ###env_vars: OS,PYTHON
           name: codecov-umbrella
