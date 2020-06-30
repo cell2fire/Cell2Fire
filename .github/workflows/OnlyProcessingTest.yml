@@ -1,4 +1,4 @@
-name: OnlyProcessingTest
+name: OnlyProcessTest
 
 on:
   push:
@@ -39,7 +39,7 @@ jobs:
       - name: run tests
         run: |
           cd tests
-          pytest OnlyProcessingTest.py --cov=./ --cov-report=xml
+          pytest OnlyProcessTest.py --cov=./ --cov-report=xml
           
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
