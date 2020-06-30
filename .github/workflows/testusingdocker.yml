@@ -39,7 +39,7 @@ jobs:
 
       - name: run tests
         run: |
-          cd tests
+          cd cell2fire
           pytest test_doccmd1.py --cov=./ --cov-report=xml
           
       - name: Upload coverage to Codecov
