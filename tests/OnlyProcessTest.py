@@ -25,9 +25,9 @@ data_path = os.path.join(cell2fire_path, "..","data")
 
 def _readme_list():
     # arguments list that matches the first example in the readme file
-    #python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --nsims 10 --stats --allPlots --onlyProcessing
-    datadir = os.path.abspath(os.path.join(data_path, "Sub40x40"))
-    resultsdir = os.path.abspath(os.path.join(data_path, "..", "results", "Sub40x40"))
+    #python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/Sub20x20 --nsims 5 --stats --allPlots --onlyProcessing
+    datadir = os.path.abspath(os.path.join(data_path, "Sub20x20"))
+    resultsdir = os.path.abspath(os.path.join(data_path, "..", "results", "Sub20x20"))
     baselist = ["--input-instance-folder", datadir,
                 "--output-folder", resultsdir,
                 "--nsims",  "5",
