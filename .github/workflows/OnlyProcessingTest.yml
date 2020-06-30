@@ -35,7 +35,7 @@ jobs:
       - name: create input data
         run: |
            cd cell2fire
-           python python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --nsims 5 --stats --allPlots --onlyProcessing
+           python python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/Sub20x20 --nsims 5 --stats --allPlots --onlyProcessing
       - name: run tests
         run: |
           cd tests
