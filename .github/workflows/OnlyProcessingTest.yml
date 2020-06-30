@@ -35,6 +35,7 @@ jobs:
       - name: create input data
         run: |
            cd cell2fire
+           python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/Sub20x20 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
            python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/Sub20x20 --nsims 5 --stats --allPlots --onlyProcessing
       - name: run tests
         run: |
