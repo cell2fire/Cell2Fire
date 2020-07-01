@@ -25,14 +25,14 @@ data_path = os.path.join(cell2fire_path, "..","data")
 
 def _readme_list():
     # arguments list that matches the first example in the readme file
-    #python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
+    #python main.py --input-instance-folder ../../data/9cellsC1/ --output-folder ../../results/9cellsC1 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
     datadir = os.path.abspath(os.path.join(data_path, "9cellsC1"))
     resultsdir = os.path.abspath(os.path.join(data_path, "..", "results", "9cellsC1"))
     baselist = ["--input-instance-folder", datadir,
                 "--output-folder", resultsdir,
                 "--ignitions",
                 "--sim-years", "1",
-                "--nsims",  "10",
+                "--nsims",  "5",
                 "--finalGrid",
                 "--weather", "rows",
                 "--nweathers", "1",
