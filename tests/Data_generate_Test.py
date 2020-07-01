@@ -26,8 +26,8 @@
  def _readme_list():
      # arguments list that matches the first example in the readme file
      #python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
-     datadir = os.path.abspath(os.path.join(data_path, "Sub20x20_without_data"))
-     resultsdir = os.path.abspath(os.path.join(data_path, "..", "results", "Sub20x20_without_data"))
+     datadir = os.path.abspath(os.path.join(data_path, "Sub40x40_without_data"))
+     resultsdir = os.path.abspath(os.path.join(data_path, "..", "results", "Sub40x40_without_data"))
      baselist = ["--input-instance-folder", datadir,
                  "--output-folder", resultsdir,
                  "--ignitions",
