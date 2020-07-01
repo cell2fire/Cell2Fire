@@ -40,7 +40,7 @@ name: Data_Generate_Test
 
        - name: run tests
          run: |
-           cd cell2fire
+           cd tests
            pytest Data_Generate_Test.py --cov=./ --cov-report=xml
            
        - name: Upload coverage to Codecov
