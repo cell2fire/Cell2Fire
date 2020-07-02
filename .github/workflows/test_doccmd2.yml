@@ -1,4 +1,4 @@
-name: Test2
+name: Test_doccmd2
 
 on:
   push:
