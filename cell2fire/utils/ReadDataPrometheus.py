@@ -252,55 +252,7 @@ NCells          int
 '''   
 # Reads the ASCII files with forest data elevation, saz, slope, and (future) curing degree and returns arrays
 # with values
-def DataGrids(InFolder, NCells):
-    filenames = ["elevation.asc", "saz.asc", "slope.asc"]
-    Elevation =  np.full(NCells, np.nan)
-    SAZ = np.full(NCells, np.nan)
-    PS = np.full(NCells, np.nan)
-    #Curing = np.zeros([NCells])
-    
-    for name in filenames:
-        ff = os.path.join(InFolder, name)
-        if os.path.isfile(ff) == True:
-            aux = 0
-            with open(ff, "r") as f:
-                filelines = f.readlines()
-
-                line = filelines[4].replace("\n","")
-                parts = line.split()
-
-                if parts[0] != "cellsize":
-                    print ("line=",line)
-                    raise RuntimeError("Expected cellsize on line 5 of "+ ff)
-                cellsize = float(parts[1])
-
-                row = 1
-
-                # Read the ASCII file with the grid structure
-                for row in range(6, len(filelines)):
-                    line = filelines[row]
-                    line = line.replace("\n","")
-                    line = ' '.join(line.split())
-                    line = line.split(" ")
-                    #print(line)
-
-
-                    for c in line: 
-                        if name == "elevation.asc":
-                            Elevation[aux] = float(c)
-                            aux += 1
-                        if name == "saz.asc":
-                            SAZ[aux] = float(c)
-                            aux += 1
-                        if name == "slope.asc":
-                            PS[aux] = float(c)
-                            aux += 1
-                        #if name == "curing.asc":
-                        #    Curing[aux] = float(c)
-
-        else:
-            print("  No", name, "file, filling with NaN")
-    return Elevation, SAZ, PS
+###def DataGrids(InFolder, NCells):  (moved to DataGeneratorC)
 
 '''
 Not needed to translate, it is the pandas version of a previous function
