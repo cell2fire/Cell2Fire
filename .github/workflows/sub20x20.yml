@@ -1,4 +1,4 @@
-name: Test2_zonghan
+name: sub20x20  # Test2_zonghan
 
 on:
   push:
