@@ -88,6 +88,7 @@ class TestMain(unittest.TestCase):
         for f1, f2 in zip(baseline_files, result_files):
                 if (filecmp.cmp(f1,f2,shallow=False) == False):
                         equal = False
+                        print(f1)
         
         self.assertTrue(equal)
         
