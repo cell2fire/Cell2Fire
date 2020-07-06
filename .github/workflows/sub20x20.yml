@@ -40,7 +40,7 @@ jobs:
       - name: run tests
         run: |
           cd tests
-          pytest test_20x20.py --cov=../cell2fire/ --cov-report=xml
+          pytest test_20x20.py --cov=../cell2fire ../tests/ --cov-report=xml
           
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
