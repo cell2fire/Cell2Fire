@@ -88,8 +88,11 @@ class TestMain(unittest.TestCase):
         for f1, f2 in zip(baseline_files, result_files):
                 if (filecmp.cmp(f1,f2,shallow=False) == False):
                         equal = False
-                        print(f1 + " is different from " + f2 + "\n")
-        
+                        print(f1)
+                        
+        log = open(os.path.join(result_path, Messages/MessagesFile01.csv))
+        for line in log:
+                print(line)
         self.assertTrue(equal)
         
         
