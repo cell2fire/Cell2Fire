@@ -86,14 +86,12 @@ class TestMain(unittest.TestCase):
         # Compare all the files to see if they are exactly the same
         equal = True	
         for f1, f2 in zip(baseline_files, result_files):
-                if (filecmp.cmp(f1,f2,shallow=False) == False):
-                        equal = False
-                        print(f1)
-                        
-        log = open(os.path.join(result_path, "Messages/MessagesFile01.csv"))
-        for line in log:
-                print(line)
-        log.close()
+                if not f1.endswith(".png"):
+                        with open(f1) as file1:
+                                with open(f2) as file2:
+                                        if file1.read() != file2.read():
+                                                equal = False
+
         self.assertTrue(equal)
         
         
