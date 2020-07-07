@@ -91,8 +91,9 @@ class TestMain(unittest.TestCase):
                                 with open(f2) as file2:
                                         for line1, line2 in zip(file1,file2):
                                                 if not line1 == line2:
-                                                        equal = false
+                                                        equal = False
                                                         print(line1)
+                                                        print(line2)
 
         self.assertTrue(equal)
         
