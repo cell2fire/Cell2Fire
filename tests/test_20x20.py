@@ -91,6 +91,7 @@ class TestMain(unittest.TestCase):
                                 with open(f2) as file2:
                                         if file1.read() != file2.read():
                                                 equal = False
+                                                print(f1)
 
         self.assertTrue(equal)
         
