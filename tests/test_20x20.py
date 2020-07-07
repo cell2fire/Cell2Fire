@@ -89,9 +89,10 @@ class TestMain(unittest.TestCase):
                 if not f1.endswith(".png"):
                         with open(f1) as file1:
                                 with open(f2) as file2:
-                                        if file1.read() != file2.read():
-                                                equal = False
-                                                print(f1)
+                                        for line1, line2 in zip(file1,file2):
+                                                if not line1 == line2:
+                                                        equal = false
+                                                        print(line1)
 
         self.assertTrue(equal)
         
