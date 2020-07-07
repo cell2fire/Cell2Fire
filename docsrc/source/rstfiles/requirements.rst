@@ -2,7 +2,7 @@
 Requirements
 ============
 
-It is recommended to use a Unix system simplifying the installation of the following:
+To simplify the installation process we recommend the use of Unix for the following:
 
 .. hlist::
     :columns: 1
@@ -11,7 +11,7 @@ It is recommended to use a Unix system simplifying the installation of the follo
     * Boost (C++)
     * Eigen (C++)
 
-you will also need the following installed (Recommend using Anaconda) :
+The following also need to be installed (We recommend using Anaconda) :
 
 .. hlist::
     :columns: 1
@@ -25,3 +25,12 @@ you will also need the following installed (Recommend using Anaconda) :
     * opencv
     * imread 
     * networkx
+
+To work on documentation we require:
+
+.. hlist::
+    :columns: 1
+	
+    * Sphinx
+    * sphinx-rtd-theme
+
