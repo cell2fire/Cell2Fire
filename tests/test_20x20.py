@@ -92,8 +92,8 @@ class TestMain(unittest.TestCase):
                                         for line1, line2 in zip(file1,file2):
                                                 if not line1 == line2:
                                                         equal = False
-                                                        print(line1)
-                                                        print(line2)
+                                                        print(line1 + " in baseline, but")
+                                                        print(line2 + "in actual output")
 
         self.assertTrue(equal)
         
