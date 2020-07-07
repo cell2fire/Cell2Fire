@@ -90,9 +90,10 @@ class TestMain(unittest.TestCase):
                         equal = False
                         print(f1)
                         
-        log = open(os.path.join(result_path, Messages/MessagesFile01.csv))
+        log = open(os.path.join(result_path, "Messages/MessagesFile01.csv"))
         for line in log:
                 print(line)
+        log.close()
         self.assertTrue(equal)
         
         
