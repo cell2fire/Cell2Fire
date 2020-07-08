@@ -1,4 +1,4 @@
-name: test_readspot
+name: sub20x20  # Test2_zonghan
 
 on:
   push:
@@ -32,17 +32,15 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
       - name: create input data
         run: |
-               cd cell2fire
-               python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/ Sub20x20 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
-
+           cd cell2fire
+           python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/Sub20x20 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
 
       - name: run tests
         run: |
           cd tests/test_readspot
-          pytest test_readspot.py --cov=../cell2fire --cov=../tests --cov-report=xml
+          pytest test_readspot.py --cov=../cell2fire --cov=./tests --cov-report=xml
           
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
