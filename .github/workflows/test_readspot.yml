@@ -1,4 +1,4 @@
-name: sub20x20  # Test2_zonghan
+name: test_readspot
 
 on:
   push:
