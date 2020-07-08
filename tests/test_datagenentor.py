@@ -4,6 +4,7 @@ import datetime
 import warnings
 warnings.filterwarnings("ignore")
 from cell2fire.utils.ParseInputs import ParseInputs
+import cell2fire.utils.DataGeneratorC as DataGenerator
 from cell2fire.utils.ParseInputs import make_parser
 from cell2fire.Cell2FireC_class import *
 from cell2fire.utils.Stats import *
@@ -41,6 +42,8 @@ class TestMain(unittest.TestCase):
         if args.stats:
             print("------ Generating Statistics --------")
             env.stats()
+
+        DataGenerator.GenDataFile(env.args.InFolder)
     
 
 if __name__ == "__main__":
