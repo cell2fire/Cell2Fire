@@ -4,6 +4,7 @@ import datetime
 import warnings
 warnings.filterwarnings("ignore")
 from cell2fire.utils.ParseInputs import ParseInputs
+from cell2fire.utils.ParseInputs import make_parser
 from cell2fire.Cell2FireC_class import *
 from cell2fire.utils.Stats import *
 
