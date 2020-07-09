@@ -16,14 +16,13 @@ p = str(cell2fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
 cell2fire_path = p[l+1:r]
-result_path = os.path.join(cell2fire_path, "..", "results", "Sub20x20")
-baseline_path = os.path.join(cell2fire_path, "..", "tests", "baseline", "Sub20x20", "results")
+result_path = os.path.join(cell2fire_path, "..", "results", "Sub20x20", "Grids", "Grids1", "ForestGrid08.csv")
+baseline_path = os.path.join(cell2fire_path, "..", "tests", "baseline", "Sub20x20", "ForestGrid08.csv")
 
 
 def copy_and_overwrite():
 	
-	shutil.rmtree(baseline_path, ignore_errors = True)
-	shutil.copytree(result_path, baseline_path)
+	shutil.move(result_path, baseline_path)
 
 if __name__ == "__main__":
 	copy_and_overwrite()
