@@ -1,8 +1,7 @@
 Changing the grid
 =================
 
-The Cell2Fire simulator runs on 9x9 grid under default settings. We have recently added a 16 cell and a 12 cell version for use as well. For the flexibility of our users,
-we also provide an option to customize as per customer requirements. To customize follow the steps mentioned below:
+The Cell2Fire simulator runs on a variety of grid specifications depending on user expectations. For the flexibility of our software usage, we also provide an option to customize as per user requirements. To customize follow the steps mentioned below:
 
 * Find your contributed folder and create a duplicate of delme63 in it.
 * Change the path name so that you are in the right directory. (Look at editing Code Line section for help)
