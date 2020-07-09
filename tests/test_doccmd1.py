@@ -67,7 +67,7 @@ class TestMain(unittest.TestCase):
         env = Cell2FireC(args)  # see main.py
         env.stats()
 
-        csv_path = os.path.join(env.args.outfolder, "Stats", "HourlySummaryAVG.csv")
+        csv_path = os.path.join(data_path, "..", "results", "Sub40x40", "Stats", "HourlySummaryAVG.csv")
         df = pd.read_csv(csv_path)
         assert (df['AVGNonBurned'][6] == 1400.0), "TEST ERROR"
         assert (df['AVGNonBurned'][7] == 1351.6), "TEST ERROR"
