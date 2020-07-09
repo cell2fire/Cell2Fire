@@ -69,8 +69,8 @@ class TestMain(unittest.TestCase):
 
         csv_path = os.path.join(data_path, "..", "results", "Sub40x40", "Stats", "HourlySummaryAVG.csv")
         df = pd.read_csv(csv_path)
-        self.assertAlmostEqual(df['AVGNonBurned'][6],1264,0), "TEST ERROR"
-        self.assertAlmostEqual(df['AVGNonBurned'][7],1192,0), "TEST ERROR"
+        self.assertAlmostEqual(df['AVGNonBurned'][6],1264.6,0), "TEST ERROR"
+        self.assertAlmostEqual(df['AVGNonBurned'][7],1192.8,0), "TEST ERROR"
 
 
 
