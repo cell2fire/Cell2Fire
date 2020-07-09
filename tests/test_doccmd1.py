@@ -70,7 +70,7 @@ class TestMain(unittest.TestCase):
         csv_path = os.path.join(data_path, "..", "results", "Sub40x40", "Stats", "HourlySummaryAVG.csv")
         df = pd.read_csv(csv_path)
         assert (df['AVGNonBurned'][6] == 1264.6), "TEST ERROR"
-        assert (df['AVGNonBurned'][7] == 1351.6), "TEST ERROR"
+        assert (df['AVGNonBurned'][7] == 1192.8), "TEST ERROR"
 
 
 
