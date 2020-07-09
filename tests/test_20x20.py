@@ -18,6 +18,7 @@ import os
 import filecmp
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import collections
 
 
 p = str(cell2fire.__path__)
@@ -101,6 +102,14 @@ class TestMain(unittest.TestCase):
                         if not (img1.all() == img2.all()):
                                 equal = False 
                                 print("The image " + f2 + " doesn't match the baseline file")
+                elif ("Messages" in f1):
+                        with open(f1) as file1:
+                                with open(f2) as file2:
+                                        list1 = file1.readlines()
+                                        list2 = file2.readlines()
+                                        if not collections.Counter(list1) == collections.Counter(list2):
+                                                equal = False
+                                                print("The files " + f2 +"contains different thing compare to the baseline")
 
         self.assertTrue(equal)
         
