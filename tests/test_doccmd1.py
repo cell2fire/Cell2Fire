@@ -18,7 +18,6 @@ from cell2fire.utils.ParseInputs import make_parser
 from cell2fire.Cell2FireC_class import *
 import cell2fire  # for path finding
 import pandas as pd
-from math import isclose
 
 
 p = str(cell2fire.__path__)
@@ -70,8 +69,8 @@ class TestMain(unittest.TestCase):
 
         csv_path = os.path.join(env.args.outfolder, "Stats", "HourlySummaryAVG.csv")
         df = pd.read_csv(csv_path)
-        assert (isclose(df['AVGNonBurned'][6],1264.6,abs_tol = 1e-8)), "TEST ERROR"
-        assert (isclose(df['AVGNonBurned'][7],1192.8,abs_tol = 1e-8)), "TEST ERROR"
+        self.assertAlmostEqual(df['AVGNonBurned'][6],1264,0), "TEST ERROR"
+        self.assertAlmostEqual(df['AVGNonBurned'][7],1192,0), "TEST ERROR"
 
 
 
