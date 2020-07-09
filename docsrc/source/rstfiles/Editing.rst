@@ -1,21 +1,22 @@
-===============
-Editing Weather 
-===============
+==========================
+Editing Weather Conditions
+==========================
 
-One of the benifits of this simulator is the ability to able to modify inputs to create different enviorments.
-To modify inputs for the delme63 example, you will cd to
+Cell2Fire provides us the flexibility to modify for the various weather conditions (inputs) which cause wildfires.
+By modifying the weather conditions we can create different environments to run our simulator and obtain results required for a particular test case.
+To modify weather conditions we need to first find our delme63 directory, the path for the directory is as below:
 
 .. code-block:: html
    :linenos:
-   
-   Cell2Fire/contributed/delme63/9cellsC1
-   
-From here you will find a file labeled Weather.csv which I recommened using Excel to edit.
 
-In this file the following inputs are editable.
+   Cell2Fire/contributed/delme63/9cellsC1
+
+Once we are in the 9cellsC1 directory we need to open Weather.csv file. To edit Weather.csv we need to open it with Excel.
+
+**In Weather.csv the following inputs are editable.**
 
 * Temperature [TMP] (Celcius)
-* Relativity Humidity [RH]
+* Relative Humidity [RH]
 * Wind Speed [WS] (km/hr)
 * Wind Direction [WD] (degrees)
 * Fine Fuel moisture Code [FFMC]
@@ -25,97 +26,101 @@ In this file the following inputs are editable.
 * Buildup Index [BUI]
 * Fire Weather Index [FWI]
 
-In the case of the Buildup Index, Initial Spread Index, and Fire Weather Index these inputs use the values of the other inputs to calculate their respective scores.
-It is recommended to use the equations found in *Equations for the Canadian Forest Fire Weather Index System* (Van Wagner). This paper clearly explains how generate these values using the other inputs.
+The Initial SpreadIndex [ISI], Buildup Index [BUI], and Fire Weather Index [FWI] are dependent on the values of the other inputs to determine their respective scores.
+We can use **Equations for the Canadian Forest Fire Weather Index System (Van Wagner)** to clearly determine how to generate values for these three dependent attributes using the independent variables.
 
 
-Temperature & Humidity
-----------------------
+Temperature and Humidity
+------------------------
 
-One of the inputs that could be manipulated is the temperature humidity of the enviorment. Predicting the different outcomes that could occur depending heat and humidity of the region. This gives detailed distinction of how a fire would propagate in hot and humid area (example: Norther California), 
-or in a area that is generally colder and with higher amounts of precipitation(example: Calgary, Canada). Temperature is mesured in Celcius while relative humidity is 
-measured as a percentage. Temperature affects the ignition of fires. Warmer temperatures allow for fuels to ignite and burn faster, adding to the rate at which a wildfire spreads.
-When the humidity is low, meaning that there is a low amount of water vapor in the air, wildfires are more likely to start. 
-The higher the humidity, the less likely the fuel is to dry and ignite.
+We can manipulate either temperature or humidity or both of them to predict the different outcomes based on the heat and humidity conditions of the various climatic region.
+This provides us the flexibility to predict how fire would propagate in in hot and humid area (Norther California, USA) as well as in areas that is generally colder and with higher amounts of precipitation(Calgary, Canada).
+Temperature plays a key role in ignition of wildfires. As we all know, warmer temperatures with low relative humidity are the major factors for the spread of wildfires and even affects its rate of spread.
+**We would measure temperature in Celsius and relative humidity as percentage of water vapor in air.**
 
 Wind Speed and Direction
 ------------------------
 
-Wind influences heavily how effective fires are and how fast they spread through the forest. A stronger signifies a more intense fire causing a wild fire to spread faster. By defult currently we have that the fire 
-starts from the bottom left cell. How Wind direction works and is measured as a degree of where the wind is coming from. For example if a wind is coming from east to west it would coming from 0 degrees but wind coming from West to East would be from 180 degrees. Another quick example
-would be if you want to input wind coming from NW direction then it would be between 90 and 180 degrees.
-
-Example
--------
-
-To show how modifying these inputs would effect the simulation we will take two different enviorments and see how fire would spread in these different scenarios.
-
-The first set up is based on a cooler and drier climate with low Humidity with typically high wind speeds. The following inputs where used for this simulation:
+Winds have a significant influence on the spread of fire. It is evident that stronger winds increase the intensity of the fire and speeds up its spread through the forest.
+As per our default settings, fire starts from the bottom left cell of the grid. After which to monitor its spread we need to determine the wind direction.
+The direction of wind flow can be determined based on where it starts from and to which direction it flows.
+For example, if the movement of the wind is from East to West, we would take the input as 0 degrees whereas if its from West to East we would take the input as 180 degrees. 
+The input for wind coming from North West direction would lie between 90 and 180 degrees whereas the wind coming from North East would lie between 0 and 90 degrees.
 
 
-* Temperature: from 1pm-5pm was 25 celcius and from 6pm-8pm was 20 celcius. Humidity kept constant at 48%
-* Wind Speed: from 1pm-5pm was 23 km/h and slowed down to 6 km/h from 6pm-9pm.
-* Wind Direction: Constant at 135 degrees (North Western winds) 
+Illustration
+------------
 
-The second simulation is based on a area with higher temperatures, humid, and little to no wind. The following inputs where used for this simulation:
+To show how modifying Temperature, Wind Speed and Wind Direction affects the simulation, we will take two different environments to show how the fire will spread in these different scenarios.
 
-* Temperature: from 1pm-5pm was 33 celcius and from 6pm-8pm was 27 celcius. Humidity kept constant at 90%
-* Wind Speed: from 1pm-5pm was 5.9 km/h and slowed down to 4 km/h from 6pm-9pm.
-* Wind Direction : from 1pm-5pm winds are directed at 30 degrees, from 6pm-8pm wind are directed from 290 degrees.
+**The first simulation is based on an area with cooler and drier climate having low Humidity with typically high wind speeds. We used the following inputs for this simulation:**
+
+* **Temperature:** from 1pm-5pm was 25 Celsius and from 6pm-8pm was 20 Celsius. Humidity was constant at 48%.
+* **Wind Speed:** from 1pm-5pm was 23 km/h and from 6pm-9pm was 6 km/h.
+* **Wind Direction:** Constant at 135 degrees (North Western winds).
+
+**The second simulation is based on an area with higher temperatures and humidity with little to no wind. We used the following inputs for this simulation:**
+
+* **Temperature:** from 1pm-5pm was 33 Celsius and from 6pm-8pm was 27 Celsius. Humidity was constant at 90%.
+* **Wind Speed:** from 1pm-5pm was 5.9 km/h and from 6pm-9pm was 4 km/h.
+* **Wind Direction:** from 1pm-5pm winds were directed at 30 degrees, but from 6pm-8pm wind were directed from 290 degrees.
 
 
-In the first simulation we see that by the 8th hour that the fire has spread to all of the cells. Higher windspeeds usually influences how fast and effectively fires are able to spread.
+Our observation from the first simulation is that the fire has spread to all of the cells by the 8th hour. This could be attributed to the higher windspeed which influences how fast and effectively fires spread.
 
-.. figure:: /image/Chicohr1.png
-   :width: 40%  
-   
+.. image:: /image/Chicohr1.png
+   :width: 20%
+
    1st hour
-   
-.. figure:: /image/Chicohr4.png
-   :width: 40%
-      
-   4th hour 
-   
-.. figure:: /image/Chicohr8.png
-   :width: 40% 
-   
+
+.. image:: /image/Chicohr4.png
+   :width: 20%
+
+   4th hour
+
+.. image:: /image/Chicohr8.png
+   :width: 20%
+
    8th hour
 
-Notably, in the second scenario we see that fire is not able to spread to all of the cells.  This is mostly in part due to the high humidity and the low wind speeds.
+whereas, Our observations from the second simulation shows that the fire is not able to spread to all of the cells even by the end of the 9th hour.  This is mostly due to the high humidity and the low wind speed.
 
 .. figure:: /image/Manaushr1.png
-   :width: 40%  
-   
+   :width: 40%
+
    1st hour
-   
+
 .. figure:: /image/Manaushr6.png
    :width: 40%
-      
-   6th hour 
-   
+
+   6th hour
+
 .. figure:: /image/Manaushr9.png
-   :width: 40% 
-   
+   :width: 40%
+
    9th hour
 
 
 Build Up Index
 --------------
 
-The BUI is a weighted combination of the DMC and DC to indicate the total amount of fuel available for combustion by a moving flame front. The Duff Moisture Code (DMC) indicates the moisture content of loosely-compacted organic layers of moderate depth
-while the Drought Code(DC) indicates moisture, content in deep, compact organic layers. The BUI scale starts at zero and is open ended, a rating above 34 is demeed high and after 77 it is considered extreme.
+The Buildup Index [BUI] is a weighted combination of the Duff Moisture Code [DMC] and Drought code [DC]. It indicates the total amount of fuel available for combustion by a moving flame front.
+The Duff Moisture Code [DMC] indicates the moisture content of loosely-compacted organic layer at a moderate depth while the Drought Code(DC) indicates moisture content at higher depths with compact organic layers.
+**The Buildup Index [BUI] scale starts from zero, a rating above 34 is deemed high and one above 77 it is considered extreme.**
 
-Editing the BUI input would change how much fuel is their is for the fire to spread from the inital cell to the next. The Following test has a low BUI value
+Editing Buildup Index [BUI] determines the change in fuel content which determines the spread of fire from the initial cell to the subsequent cells.
+
+**Test 1 has a low BUI score:**
 
 .. image:: /image/Fire01.jpg
-   :width: 23%
+   :width: 25%
 .. image:: /image/Fire01.jpg
-   :width: 23%
-  
+   :width: 25%
 
-The fire is kept for a few hours in the same cell and it will never be able to proceed and burn other cells as their is no fuel for the fire.
+In test 1, the fire would remain in the same cell for a few hours.  The fire will not spread to the subsequent cells as there is no fuel for its spread.
 
-Test 2 has an extreme BUI score and will be set at 99:
+
+**Test 2 has an extreme BUI score set at 99:**
 
 .. image:: /image/Fire01.jpg
   :width: 23%
@@ -125,26 +130,27 @@ Test 2 has an extreme BUI score and will be set at 99:
    :width: 23%
 .. image:: /image/Fire04.png
    :width: 23%
-   
-In Test 2 the fire has an extensive amount of fule and is able to burn all 9 cells in 4 hours. When changing BUI there is a way to calculate a typical value but it is important
-to know that the DMC value has more weight when getting your value for BUI. Its also important to know that when you have a DMC value of 0 then BUI is zero. 
+
+In Test 2, the fire has enough fuel which enables it to burn all 9 cells in 4 hours.
+We should always keep in consideration the Duff Moisture Code [DMC] value while calculating the Buildup Index [BUI] as it considerably affects it.
+When Duff Moisture Code [DMC] value is zero the value for Buildup Index [BUI] is also zero.
 
 Initial spread Index
 --------------------
 
-The ISI combines the FFMC and wind speed to indicate the expected rate of fire spread.
-Generally, a 13 km/h increase in wind speed will double the ISI value. 
-The ISI is accepted as a good indicator of fire spread in open light fuel stands with wind speeds up to 40 km/h.
+The Initial Spread Index [ISI] combines the Fine Fuel moisture Code [FFMC] and Wind speed [WS] to indicate the expected rate of fire spread.
+Generally, a 13 km/h increase in wind speed will double the Initial Spread Index [ISI] value.
+The Initial Spread Index [ISI] is accepted as a good indicator for spread of fire for open light fuel with wind speeds up to 40 km/h.
 
-To explain how ISI works we will have to tests one with low winds and high a FFMC value 
+To explain how it works we will have to tests the two scenarios, one with low Wind speed [WS] and the other with high Wind speed [WS].
 
-For Test 1 we have :
+**For Test 1:**
 
-* Wind speed 4 km/h
-* FFMC 95
-* ISI is calculated to be 35.9
+* Wind speed [WS] 4 km/h
+* Fine Fuel moisture Code [FFMC] 95
+* Initial Spread Index [ISI] is calculated as 35.9
 
-we get the following plots
+**These inputs resulted in the following graphs :**
 
 .. image:: /image/ISI1.png
   :width: 23%
@@ -153,15 +159,15 @@ we get the following plots
 .. image:: /image/ISI4.png
    :width: 23%
 
-with these values it will take up until the 4th hour to be able to burn all of the cells. 
+with these values it will take 4 hour to burn all of the cells.
 
-But knowing that a 13 km/h will double the ISI value test 2 will have values :
+**For test 2 (we increase wind speed by 13 km/h as we know it doubles Initial Spread Index [ISI]):**
 
-* Wind speed 17 km/h
-* FFMC 95
-* ISI is calculated to be 71.8
+* Wind speed [WS] 17 km/h
+* Fine Fuel moisture Code [FFMC] 95
+* Initial Spread Index [ISI] is calculated as 71.8
 
-these inputs resulted in the following graphs :
+**These inputs resulted in the following graphs :**
 
 .. image:: /image/ISI5.png
   :width: 23%
@@ -170,19 +176,5 @@ these inputs resulted in the following graphs :
 .. image:: /image/ISI4.png
    :width: 23%
 
-The first image is at the end of the 1st hour and the final image is at the end of the 3rd hour so we are able to see that increasing the ISI will make the fire spread faster
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
+The first image is at the end of the 1st hour and the final image is at the end of the 3rd hour.
+This shows that increasing the Initial Spread Index [ISI] increases the spread of fire.
