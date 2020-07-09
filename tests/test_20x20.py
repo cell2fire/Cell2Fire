@@ -16,6 +16,8 @@ from cell2fire.Cell2FireC_class import *
 import cell2fire  # for path finding
 import os
 import filecmp
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 
 p = str(cell2fire.__path__)
@@ -92,8 +94,12 @@ class TestMain(unittest.TestCase):
                                         for line1, line2 in zip(file1,file2):
                                                 if not line1 == line2:
                                                         equal = False
-                                                        print(line1 + " in baseline, but")
-                                                        print(line2 + "in actual output")
+                                                        print("In File " + f2 + " We should get: " + line1 +" but we get: " + line2)
+                elif (f1.endswith(".png")):
+                        img1 = mpimg.imread(f1)
+                        img2 = mpimg.imread(f2)
+                        if not (img1.all() == img2.all()):
+                                equal = False 
 
         self.assertTrue(equal)
         
