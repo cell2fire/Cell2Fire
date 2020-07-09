@@ -11,12 +11,15 @@ with --onlyProcessing to avoid calling the compiled C++ code.
 #      yml file and read here, with --onlyProcessing appended here.
 
 """
-import  unittest
+import unittest
 import os.path
 import datetime
 from cell2fire.utils.ParseInputs import make_parser
 from cell2fire.Cell2FireC_class import *
 import cell2fire  # for path finding
+import pandas as pd
+
+
 p = str(cell2fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
@@ -63,7 +66,13 @@ class TestMain(unittest.TestCase):
         args = parser.parse_args(cmdlist)
         env = Cell2FireC(args)  # see main.py
         env.stats()
-        # TBD: add an assert
+
+        csv_path = os.path.join(env.args.outfolder, "Stats", "HourlySummaryAVG.csv")
+        df = pd.read_csv(csv_path)
+        assert (df['AVGNonBurned'][6] == 1400.0), "TEST ERROR"
+        assert (df['AVGNonBurned'][7] == 1351.6), "TEST ERROR"
+
+
 
 if __name__ == "__main__":
 
