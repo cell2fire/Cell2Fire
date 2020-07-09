@@ -86,7 +86,7 @@ class TestMain(unittest.TestCase):
         # Compare all the files to see if they are exactly the same
         equal = True	
         for f1, f2 in zip(baseline_files, result_files):
-                if not f1.endswith(".png"):
+                if (not f1.endswith(".png")) and (not "Messages" in f1):
                         with open(f1) as file1:
                                 with open(f2) as file2:
                                         for line1, line2 in zip(file1,file2):
