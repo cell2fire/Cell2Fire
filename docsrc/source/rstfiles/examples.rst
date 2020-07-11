@@ -2,29 +2,38 @@
 Examples
 ========
 
-At present, this example assumes you are running on a Unix.
+This example assumes you are running the program on a Unix based system.
+To illustrate we use a 9 cell forest in which all the variables such as weather, wind speed etc. can be changed. These changes could easily be made in the delme63 folder.
+After we make these changes the Simulator will provide us the necessary results as well as hourly data based on the spread of wildfire.
 
-In the contributed folder there is a folder labeled delme63.
-This example uses a 9 cell forest where you are able to change weather, wind speed, etc.  This will provide you results and plots hourly of the fire propagation.
-
-
-to run this simulation you will have to use the bash command from your src/Cell2Fire directory. In the command line write the following:
+**We need to be in the correct directory to run this simulation. We could use the command line as shown below:**
 
 .. code-block:: html
    :linenos:
-   
+
    bash ../../contributed/delme63/go.bash
-   
-the result output will be hourly stats concluding with the
-current conditions at 4 hours all 9 cells have been burned. These
-stats will also be abailable in your delme63 folder. In delme63/9cellsC1/Plots
-you will also get hourly plots of the fire propagation.
+
+The results obtained would show the stats for each hour. At the end of the 4th hour all the 9 cells would have burned.
+The results would also be stored in the following path:
+
+.. code-block:: html
+   :linenos:
+   delme63/9cellsC1/Plots
+
+
+**The hourly plots of the fire propagation is as shown below:**
 
 .. image:: /image/Fire01.jpg
-   :width: 20%
+   :width: 50%
+
+
 .. image:: /image/Fire02.png
-   :width: 20%
+   :width: 50%
+
+
 .. image:: /image/Fire03.png
-   :width: 20%
+   :width: 50%
+
+
 .. image:: /image/Fire04.png
-   :width: 20%
+   :width: 50%
