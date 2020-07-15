@@ -32,7 +32,6 @@ from multiprocessing import Process
 # Extra
 from operator import itemgetter
 import itertools
-from cell2fire.utils.coord_xy import *        
 from tqdm import tqdm
 import networkx as nx
 from shutil import copy2

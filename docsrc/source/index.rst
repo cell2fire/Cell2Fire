@@ -17,6 +17,7 @@ This software is for research use only. There is no warranty of any kind; there 
    rstfiles/intro.rst
    rstfiles/requirements.rst
    rstfiles/install.rst
+   rstfiles/docker.rst
    rstfiles/run.rst
    rstfiles/examples.rst
    rstfiles/Editing.rst
