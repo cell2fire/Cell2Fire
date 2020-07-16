@@ -1082,7 +1082,7 @@ class Statistics(object):
                                         "Harvested": len(ah[ah == -1]),
                                         "Hour": j+1}
                 else:
-                    ah = np.zeros([self._Rows,self.Cols]).astype(np.int64)
+                    ah = np.zeros([self._Rows,self._Cols]).astype(np.int64)
                     bh[(i,0)] = ah
                     statDicth[(i,0)] = {"ID": i+1,
                                         "NonBurned": len(ah[(ah == 0) | (ah == 2)]),
