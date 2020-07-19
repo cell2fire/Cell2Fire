@@ -1,5 +1,0 @@
-Start C++
-Forest DataFrame from instance ../data/dogrib/Data.csv
-Number of cells: 79611
-
-Weather DataFrame from instance ../data/dogrib/Weather.csv
