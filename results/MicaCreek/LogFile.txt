@@ -1,0 +1,20 @@
+Start C++
+Forest DataFrame from instance ../data/MicaCreek/Data.csv
+Number of cells: 348404
+
+Weather DataFrame from instance ../data/MicaCreek/Weather.csv
+
+Selected ignition point for Year 1, sim 1: 347464
+Next year...
+
+----------------------------- Results -----------------------------
+Total Available Cells:    226744 - % of the Forest: 65.0808%
+Total Burnt Cells:        0 - % of the Forest: 0%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+----------------------------- Results -----------------------------
+Total Available Cells:    226744 - % of the Forest: 65.0808%
+Total Burnt Cells:        0 - % of the Forest: 0%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%

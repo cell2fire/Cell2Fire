@@ -1,0 +1,5 @@
+Start C++
+Forest DataFrame from instance ../data/Revelstoke/Data.csv
+Number of cells: 391314
+
+Weather DataFrame from instance ../data/Revelstoke/Weather.csv

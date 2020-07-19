@@ -1,0 +1,5 @@
+Start C++
+Forest DataFrame from instance ../data/Arrowhead/Data.csv
+Number of cells: 265536
+
+Weather DataFrame from instance ../data/Arrowhead/Weather.csv

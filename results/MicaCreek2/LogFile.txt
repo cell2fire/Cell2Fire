@@ -1,0 +1,66 @@
+Start C++
+Forest DataFrame from instance ../data/MicaCreek/Data.csv
+Number of cells: 348404
+
+Weather DataFrame from instance ../data/MicaCreek/Weather.csv
+
+Selected ignition point for Year 1, sim 1: 347464
+Next year...
+
+----------------------------- Results -----------------------------
+Total Available Cells:    226744 - % of the Forest: 65.0808%
+Total Burnt Cells:        0 - % of the Forest: 0%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+----------------------------- Results -----------------------------
+Total Available Cells:    226744 - % of the Forest: 65.0808%
+Total Burnt Cells:        0 - % of the Forest: 0%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+Selected ignition point for Year 1, sim 2: 346387
+Next year...
+
+----------------------------- Results -----------------------------
+Total Available Cells:    226744 - % of the Forest: 65.0808%
+Total Burnt Cells:        0 - % of the Forest: 0%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+----------------------------- Results -----------------------------
+Total Available Cells:    226744 - % of the Forest: 65.0808%
+Total Burnt Cells:        0 - % of the Forest: 0%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+Selected ignition point for Year 1, sim 3: 346929
+
+----------------------------- Results -----------------------------
+Total Available Cells:    226743 - % of the Forest: 65.0805%
+Total Burnt Cells:        1 - % of the Forest: 0.000287023%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+Selected ignition point for Year 1, sim 4: 343137
+
+----------------------------- Results -----------------------------
+Total Available Cells:    225329 - % of the Forest: 64.6746%
+Total Burnt Cells:        1415 - % of the Forest: 0.406138%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+Selected ignition point for Year 1, sim 5: 347466
+Next year...
+
+----------------------------- Results -----------------------------
+Total Available Cells:    226744 - % of the Forest: 65.0808%
+Total Burnt Cells:        0 - % of the Forest: 0%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%
+
+----------------------------- Results -----------------------------
+Total Available Cells:    226744 - % of the Forest: 65.0808%
+Total Burnt Cells:        0 - % of the Forest: 0%
+Total Non-Burnable Cells: 121660 - % of the Forest: 34.9192%
+Total Harvested Cells: 0 - % of the Forest: 0%
