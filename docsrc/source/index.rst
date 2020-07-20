@@ -13,7 +13,7 @@ This software is for research use only. There is no warranty of any kind; there 
    :maxdepth: 2
    
    
-   
+   rstfiles/WhyCell2Fire.rst
    rstfiles/intro.rst
    rstfiles/requirements.rst
    rstfiles/install.rst
