@@ -11,7 +11,7 @@
 #include <unordered_set>
 #include <boost/algorithm/string.hpp>
 #include <set>
-using namespace std;
+
 /*
  * Constructur
  */
@@ -32,7 +32,7 @@ void CSVWriter::addDatainRow(T first, T last){
     file.open(this->fileName, std::ios::out | (this->linesCount ? std::ios::app : std::ios::trunc));
 
     if (!file.is_open()) {
-      std::string error_message = "Fail to find the file" + string(this->fileName);
+      std::string error_message = "Fail to open file " + std::string(this->fileName);
       std::cerr << error_message << std::endl;
       std::cerr << "exit for the error" << std::endl;
       exit(1);
@@ -82,7 +82,7 @@ void CSVWriter::printCSV_V2(int rows, int cols, std::vector<int> statusCells)
 {
     std::ofstream ofs(this->fileName, std::ofstream::out);
     if (!ofs.is_open()) {
-      std::string error_message = "Fail to find the file" + string(this->fileName);
+      std::string error_message = "Fail to open the file" + std::string(this->fileName);
       std::cerr << error_message << std::endl;
       std::cerr << "exit for the error" << std::endl;
       exit(1);
@@ -143,7 +143,7 @@ void CSVWriter::printCSVDouble_V2(int rows, int cols, std::vector<double> networ
     bool outs = false;
     std::ofstream ofs(this->fileName, std::ofstream::out);
     if (!ofs.is_open()) {
-      std::string error_message = "Fail to find the file" + string(this->fileName);
+      std::string error_message = "Fail to open the file" + std::string(this->fileName);
       std::cerr << error_message << std::endl;
       std::cerr << "exit for the error" << std::endl;
       exit(1);

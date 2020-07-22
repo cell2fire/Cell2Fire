@@ -90,6 +90,8 @@ class Cell2FireC:
             proc = subprocess.Popen(execArray, stdout=output)
             proc.communicate()
         proc.wait()
+        if not proc.returncode == 0:
+                sys.exit()        
         """
         cmdstr = ""
         for es in execArray:
