@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <boost/algorithm/string.hpp>
-using namespace std;
+
 /*
  * Constructur
  */
@@ -29,7 +29,7 @@ std::vector<std::vector<std::string>> CSVReader::getData(){
     std::vector<std::vector<std::string> > dataList;
     std::string line = "";
     if (!file.is_open()) {
-      std::string error_message = "Fail to find the file" + string(this->fileName);
+      std::string error_message = "Fail to open file " + std::string(this->fileName);
       std::cerr << error_message << std::endl;
       std::cerr << "exit for the error" << std::endl;
       exit(1);
