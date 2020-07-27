@@ -24,6 +24,7 @@ This software is for research use only. There is no warranty of any kind; there 
    rstfiles/Ig.rst
    rstfiles/Codeline.rst 
    rstfiles/Cellsize.rst
+   rstfiles/Graphics.rst
    
 
 
