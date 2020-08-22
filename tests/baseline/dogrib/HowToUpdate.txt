@@ -1,0 +1,7 @@
+The baseline files for the plots must be generated in docker image. See Cell2Fire/docsrc/source/rstfiles/docker.rst on how to run Cell2Fire using docker.
+
+After setting up the docker image, cd to Cell2Fire/cell2fire. and run the command:
+
+python main.py --input-instance-folder ../data/dogrib/ --output-folder ../results/dogrib --ignitions --sim-years 1 --nsims 1 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
+
+Then in this directory run the update_baseline.py, which will copy the new results as the baseline files.
