@@ -35,8 +35,7 @@ For our 1st illustration we save our harvestedCells.csv file with just one harve
 
 Input Command:
 
-.. code-block:: html
-   :linenos:
+::
    
     python main.py --input-instance-folder ../data/Harvest40x40/ --output-folder ../Harvest40x40 --ignitions --sim-years 1 --nsims 5 --grids --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.8 --seed 123 --stats --allPlots --IgnitionRad 1 --grids --combine --heuristic 1 --GASelection --HarvestedCells ../data/Harvest40x40/harvestedCells.csv
 	
@@ -57,8 +56,7 @@ For our 2nd illustration we save our harvestedCells.csv file with multiple harve
 
 Input Command:
 
-.. code-block:: html
-   :linenos:
+::
    
     python main.py --input-instance-folder ../data/Harvest40x40/ --output-folder ../Harvest40x40 --ignitions --sim-years 1 --nsims 5 --grids --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.8 --seed 123 --stats --allPlots --IgnitionRad 1 --grids --combine --heuristic 1 --GASelection --HarvestedCells ../data/Harvest40x40/harvestedCells.csv
 	
