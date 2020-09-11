@@ -52,11 +52,6 @@ We can see as the harvested cells are very few, we can not fully stop the propog
 
 Illustrations 2: 
 ----------------
-For our 2nd illustration we save our harvestedCells.csv file with multiple harvested cell (20,60,100,140..,1580). We have take the year number and cell numbers as 1,20,60,100,140..,1580. Once we save the harvestedCells.csv file with the following inputs we can parse them using our program. The command for our program with their respective inputs is as shown below.
-
-Input Command:
-
-::
    
     python main.py --input-instance-folder ../data/Harvest40x40/ --output-folder ../Harvest40x40 --ignitions --sim-years 1 --nsims 5 --grids --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.8 --seed 123 --stats --allPlots --IgnitionRad 1 --grids --combine --heuristic 1 --GASelection --HarvestedCells ../data/Harvest40x40/harvestedCells.csv
 	
@@ -70,6 +65,33 @@ We could show how the fire has spread through the BP_HeatMap.png saved in the St
 .. image:: /image/BP_HeatMap2.png
    :width: 50%
 
-As we have harvested enough cells the fire does not propogate. We have strategically harvested cells in a staight line starting from cell 20,60,100..1580. This results in stopping fire spread even though there is more forest cover which would be burned if we did not stop its propogation via harvesting.
+As we have harvested enough cells the fire does not propogate. We have strategically harvested cells in a staight line starting from cell 20,60,100..1580. This results in stopping fire spread even though there is more forest cover which would be burnt if we did not stop its propogation.
 
+Illustrations 3: 
+----------------
+For our 3rd illustration we save our harvestedCells.csv file with multiple harvested cell (1,42,83,124..,16000). We have harvested the forest diagonally to see how the fire propogates. We have take the year number and cell number as 1,1,42,83,124..,1600. Once we save the harvestedCells.csv file with the following inputs we can parse them using our program. The command for our program with their respective inputs is as shown below.
+
+Input Command:
+
+.. code-block:: html
+   :linenos:
+   
+    python main.py --input-instance-folder ../data/Harvest40x40/ --output-folder ../Harvest40x40 --ignitions --sim-years 1 --nsims 5 --grids --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.8 --seed 123 --stats --allPlots --IgnitionRad 1 --grids --combine --heuristic 1 --GASelection --HarvestedCells ../data/Harvest40x40/harvestedCells.csv
+
+Output:
+
+Once we run the program we create a series of outputs in Harvest40x40 folder which would be saved in the Cell2Fire directory. The Harvest40x40 folder will have the output in the form of Grids, Plots and Stats.  
+
+We could show how the fire has spread through the BP_HeatMap.png saved in our Stats Directory.
+
+.. image:: /image/BP_HeatMap3.png
+   :width: 50%
+
+As we can see even though we have harvested the cells in a diagonal the fire still spreads. This particular example would help to strategically decide on how to harvest the forest. It also shows that the fire would spread even if the adjacent cells are in contact with the burning cells with just their corners in contact with each other. Therefore to completely arrest spread of fire there should be no contact between forested cells and the ones having an active fire. 
+
+**Application:**
+
+The output of the program would be stored in Cell2Fire document. We can access the new folder that would be created after running the program and access the various Plots, Stats, Grids, and messages.
+
+By running multiple simulations we could reach an optimal solution which would enhance our chance to utilize our model to effectively manage the spread of forest fires.
 
