@@ -2,10 +2,8 @@
 """
 Before you run this, run
 python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
-
 That will create the input files. Then we run basically the same command under the tester, but
 with --onlyProcessing to avoid calling the compiled C++ code.
-
 # TBD: this test module should take the command line as an arg, so it does not have to
 #      be pasted into the github action yml file and here. It should just be in the action
 #      yml file and read here, with --onlyProcessing appended here.
@@ -27,8 +25,6 @@ cell2fire_path = p[l+1:r]
 data_path = os.path.join(cell2fire_path, "..","data")
 
 def _readme_list():
-    # arguments list that matches the first example in the readme file
-    #python main.py --input-instance-folder ../../data/Sub40x40/ --output-folder ../../results/Sub40x40 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
     datadir = os.path.abspath(os.path.join(data_path, "Sub40x40"))
     resultsdir = os.path.abspath(os.path.join(data_path, "..", "results", "Sub40x40"))
     baselist = ["--input-instance-folder", datadir,
@@ -49,6 +45,7 @@ def _readme_list():
                 "--grids",
                 "--combine"]
     return baselist
+
 
 class TestMain(unittest.TestCase):
 
