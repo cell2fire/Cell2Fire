@@ -1,0 +1,489 @@
+Start C++
+TotalSims: 6 
+Forest DataFrame from instance ../data/Harvest40x40/Data.csv
+Number of cells: 1600
+
+To Harvest Cells :
+ 1: 20 60 100 140 180 220 260 300 340 380 420 460 500 540 580 620 660 700 740 780 820 860 900 940 980 1020 1060 1100 1140 1180 1220 1260 1300 1340 1380 1420 1460 1500 1540 1580 
+
+Weather DataFrame from instance ../data/Harvest40x40/Weather.csv
+Start Episode 1 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1011
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 2 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1010
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 3 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1010
+
+Selected ignition point for Year 2, sim 1: 360
+cat Start Episode 4 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 930
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 5 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1011
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 6 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 930
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 7 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 969
+
+Selected ignition point for Year 2, sim 1: 319
+Start Episode 8 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 929
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 9 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 931
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 10 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1011
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 11 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 969
+
+Selected ignition point for Year 2, sim 1: 319
+Start Episode 12 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1010
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 13 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1010
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 14 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1010
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 15 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1010
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 16 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 970
+
+Selected ignition point for Year 2, sim 1: 320
+Start Episode 17 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1010
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 18 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 930
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 19 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 970
+
+Selected ignition point for Year 2, sim 1: 319
+Start Episode 20 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 931
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 21 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1009
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 22 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1009
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 23 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 931
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 24 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 929
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 25 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 930
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 26 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 971
+
+Selected ignition point for Year 2, sim 1: 320
+Start Episode 27 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 931
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 28 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1011
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 29 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 930
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 30 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1009
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 31 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 929
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 32 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 929
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 33 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 931
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 34 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1009
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 35 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 929
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 36 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 930
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 37 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 930
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 38 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1011
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 39 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1011
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 40 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 931
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 41 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 929
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 42 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 929
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 43 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1009
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 44 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 970
+
+Selected ignition point for Year 2, sim 1: 319
+Start Episode 45 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 970
+
+Selected ignition point for Year 2, sim 1: 320
+Start Episode 46 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 969
+
+Selected ignition point for Year 2, sim 1: 319
+Start Episode 47 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 970
+
+Selected ignition point for Year 2, sim 1: 319
+Start Episode 48 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 929
+
+Selected ignition point for Year 2, sim 1: 279
+Start Episode 49 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 971
+
+Selected ignition point for Year 2, sim 1: 320
+Start Episode 50 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 931
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 51 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1010
+
+Selected ignition point for Year 2, sim 1: 359
+Start Episode 52 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 970
+
+Selected ignition point for Year 2, sim 1: 319
+Start Episode 53 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1011
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 54 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 970
+
+Selected ignition point for Year 2, sim 1: 319
+Start Episode 55 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 1011
+
+Selected ignition point for Year 2, sim 1: 360
+Start Episode 56 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 969
+
+Selected ignition point for Year 2, sim 1: 319
+Start Episode 57 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 971
+
+Selected ignition point for Year 2, sim 1: 320
+Start Episode 58 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 931
+
+Selected ignition point for Year 2, sim 1: 280
+Start Episode 59 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 971
+
+Selected ignition point for Year 2, sim 1: 320
+Start Episode 60 on C++ side, sim=1
+--------------------- Reseting environment -----------------------
+
+Initial Grid folder was generated in ../Harvest40x40/Grids/Grids1/
+
+Selected ignition point for Year 1, sim 1: 930
+
+Selected ignition point for Year 2, sim 1: 279
