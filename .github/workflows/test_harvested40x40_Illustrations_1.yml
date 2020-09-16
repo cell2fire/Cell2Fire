@@ -1,5 +1,4 @@
-name: dogrib
-
+name: test_harvested40x40_Illustrations_1
 on:
   push:
     branches: [ master ]
