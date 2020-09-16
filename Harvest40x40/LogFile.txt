@@ -1,0 +1,48 @@
+Start C++
+Forest DataFrame from instance ../data/Harvest40x40/Data.csv
+Number of cells: 1600
+
+To Harvest Cells :
+ 1: 1 2 3 5 8 
+
+Weather DataFrame from instance ../data/Harvest40x40/Weather.csv
+
+Selected ignition point for Year 1, sim 1: 1011
+
+----------------------------- Results -----------------------------
+Total Available Cells:    1075 - % of the Forest: 67.1875%
+Total Burnt Cells:        369 - % of the Forest: 23.0625%
+Total Non-Burnable Cells: 151 - % of the Forest: 9.4375%
+Total Harvested Cells: 5 - % of the Forest: 0.3125%
+
+Selected ignition point for Year 1, sim 2: 1010
+
+----------------------------- Results -----------------------------
+Total Available Cells:    769 - % of the Forest: 48.0625%
+Total Burnt Cells:        675 - % of the Forest: 42.1875%
+Total Non-Burnable Cells: 151 - % of the Forest: 9.4375%
+Total Harvested Cells: 5 - % of the Forest: 0.3125%
+
+Selected ignition point for Year 1, sim 3: 1010
+
+----------------------------- Results -----------------------------
+Total Available Cells:    568 - % of the Forest: 35.5%
+Total Burnt Cells:        876 - % of the Forest: 54.75%
+Total Non-Burnable Cells: 151 - % of the Forest: 9.4375%
+Total Harvested Cells: 5 - % of the Forest: 0.3125%
+
+Selected ignition point for Year 1, sim 4: 930
+
+----------------------------- Results -----------------------------
+Total Available Cells:    1152 - % of the Forest: 72%
+Total Burnt Cells:        292 - % of the Forest: 18.25%
+Total Non-Burnable Cells: 151 - % of the Forest: 9.4375%
+Total Harvested Cells: 5 - % of the Forest: 0.3125%
+
+Selected ignition point for Year 1, sim 5: 1011
+
+----------------------------- Results -----------------------------
+Total Available Cells:    547 - % of the Forest: 34.1875%
+Total Burnt Cells:        897 - % of the Forest: 56.0625%
+Total Non-Burnable Cells: 151 - % of the Forest: 9.4375%
+Total Harvested Cells: 5 - % of the Forest: 0.3125%

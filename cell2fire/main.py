@@ -8,7 +8,11 @@ __author__ = "Cristobal Pais"
 # No Warnings
 import warnings
 warnings.filterwarnings("ignore")
-
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+import sys
+sys.path.append(dir_path+'/..')
+	
 # Inputs and environment generator
 from cell2fire.utils.ParseInputs import ParseInputs
 #from Cell2Fire.ParseInputs import ParseInputs
