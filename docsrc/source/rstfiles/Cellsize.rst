@@ -14,12 +14,12 @@ We have presented an example of 16 cell as follows:
 
 Text Editor Snapshot:
 
-.. image:: ./image/data.png
+.. image:: ../image/data.png
   :width: 75%
 
 Excel Snapshot:
 
-.. image:: ./image/excell.png
+.. image:: ../image/excell.png
   :width: 75%
 
 To create a grid of "n columns" and "m rows" we would require equivalent number of entries as there are rows and columns.
@@ -27,7 +27,7 @@ To create a grid of "n columns" and "m rows" we would require equivalent number 
 To change cell size we first need to open Forest.asc file present in 9cellsC1 directory. Here we could input the number of rows and columns we require for our own grid.
 For example to create a 16 cell grid we need to input columns as 4 and rows as 4. An illustration is presented below:
 
-.. image:: ./image/Forest.png
+.. image:: ../image/Forest.png
    :width: 75%
 
 At the very end of the code we need to redesign the grid using 1's as per our requirements. Once we have made the desired changes we need to save our file and run the code to get our
@@ -36,12 +36,12 @@ desired results. The different sized grids are as below:
 
 Image 1:
 
-.. image:: ./image/16cell1.png
+.. image:: ../image/16cell1.png
   :width: 50%
 
 Image 2:
 
-.. image:: ./image/16cell2.png
+.. image:: ../image/16cell2.png
   :width: 50%
 
 Do not forget to add the number of wanted cells along with respected number of rows and columns.
