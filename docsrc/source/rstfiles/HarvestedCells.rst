@@ -45,7 +45,7 @@ Once we run the program we create a series of outputs in Harvest40x40 folder whi
 
 We could show how the fire has spread through the BP_HeatMap.png saved in the Stats Directory. 
 
-.. image:: /image/BP_HeatMap1.png
+.. image:: ../image/BP_HeatMap1.png
    :width: 50%
 
 We can see as the harvested cells are very few, we can not fully stop the propogation of fire. It spreads spreads and covers the entire firest area.
@@ -62,7 +62,7 @@ Once we run the program we create a series of outputs in Harvest40x40 folder whi
 
 We could show how the fire has spread through the BP_HeatMap.png saved in the Stats Directory. 
 
-.. image:: /image/BP_HeatMap2.png
+.. image:: ../image/BP_HeatMap2.png
    :width: 50%
 
 As we have harvested enough cells the fire does not propogate. We have strategically harvested cells in a staight line starting from cell 20,60,100..1580. This results in stopping fire spread even though there is more forest cover which would be burnt if we did not stop its propogation.
@@ -84,7 +84,7 @@ Once we run the program we create a series of outputs in Harvest40x40 folder whi
 
 We could show how the fire has spread through the BP_HeatMap.png saved in our Stats Directory.
 
-.. image:: /image/BP_HeatMap3.png
+.. image:: ../image/BP_HeatMap3.png
    :width: 50%
 
 As we can see even though we have harvested the cells in a diagonal the fire still spreads. This particular example would help to strategically decide on how to harvest the forest. It also shows that the fire would spread even if the adjacent cells are in contact with the burning cells with just their corners in contact with each other. Therefore to completely arrest spread of fire there should be no contact between forested cells and the ones having an active fire. 

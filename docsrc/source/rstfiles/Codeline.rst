@@ -11,7 +11,7 @@ To make change to the code line we first need to be in the right directory. Assu
 
 Once in the right directory we can use any one of the text editing apps (Xcode, Atom etc.) to get the following code line.
 
-.. image:: /image/codeline.png
+.. image:: ../image/codeline.png
   :width: 100%
 
 The path of the working directory should be correctly edited to avoid any confusion.
@@ -56,5 +56,5 @@ This will give you multiple outputs depending on the number of simulations.
 
 **It will result in 10 plots:**
 
-.. image:: /image/plots.png
+.. image:: ../image/plots.png
   :width: 75%

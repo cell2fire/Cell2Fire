@@ -66,34 +66,34 @@ The second simulation is based on a area with higher temperatures, humid, and li
 
 In the first simulation we see that by the 8th hour that the fire has spread to all of the cells. Higher windspeeds usually influences how fast and effectively fires are able to spread.
 
-.. figure:: /image/Chicohr1.png
+.. figure:: ../image/Chicohr1.png
    :width: 40%  
    
    1st hour
    
-.. figure:: /image/Chicohr4.png
+.. figure:: ../image/Chicohr4.png
    :width: 40%
       
    4th hour 
    
-.. figure:: /image/Chicohr8.png
+.. figure:: ../image/Chicohr8.png
    :width: 40% 
    
    8th hour
 
 Notably, in the second scenario we see that fire is not able to spread to all of the cells.  This is mostly in part due to the high humidity and the low wind speeds.
 
-.. figure:: /image/Manaushr1.png
+.. figure:: ../image/Manaushr1.png
    :width: 40%  
    
    1st hour
    
-.. figure:: /image/Manaushr6.png
+.. figure:: ../image/Manaushr6.png
    :width: 40%
       
    6th hour 
    
-.. figure:: /image/Manaushr9.png
+.. figure:: ../image/Manaushr9.png
    :width: 40% 
    
    9th hour
@@ -107,9 +107,9 @@ while the Drought Code(DC) indicates moisture, content in deep, compact organic 
 
 Editing the BUI input would change how much fuel is their is for the fire to spread from the inital cell to the next. The Following test has a low BUI value
 
-.. image:: /image/Fire01.jpg
+.. image:: ../image/Fire01.jpg
    :width: 23%
-.. image:: /image/Fire01.jpg
+.. image:: ../image/Fire01.jpg
    :width: 23%
   
 
@@ -117,13 +117,13 @@ The fire is kept for a few hours in the same cell and it will never be able to p
 
 Test 2 has an extreme BUI score and will be set at 99:
 
-.. image:: /image/Fire01.jpg
+.. image:: ../image/Fire01.jpg
   :width: 23%
-.. image:: /image/Fire02.png
+.. image:: ../image/Fire02.png
   :width: 23%
-.. image:: /image/Fire03.png
+.. image:: ../image/Fire03.png
    :width: 23%
-.. image:: /image/Fire04.png
+.. image:: ../image/Fire04.png
    :width: 23%
    
 In Test 2 the fire has an extensive amount of fule and is able to burn all 9 cells in 4 hours. When changing BUI there is a way to calculate a typical value but it is important
@@ -146,11 +146,11 @@ For Test 1 we have :
 
 we get the following plots
 
-.. image:: /image/ISI1.png
+.. image:: ../image/ISI1.png
   :width: 23%
-.. image:: /image/ISI2.png
+.. image:: ../image/ISI2.png
   :width: 23%
-.. image:: /image/ISI4.png
+.. image:: ../image/ISI4.png
    :width: 23%
 
 with these values it will take up until the 4th hour to be able to burn all of the cells. 
@@ -163,11 +163,11 @@ But knowing that a 13 km/h will double the ISI value test 2 will have values :
 
 these inputs resulted in the following graphs :
 
-.. image:: /image/ISI5.png
+.. image:: ../image/ISI5.png
   :width: 23%
-.. image:: /image/ISI6.png
+.. image:: ../image/ISI6.png
   :width: 23%
-.. image:: /image/ISI4.png
+.. image:: ../image/ISI4.png
    :width: 23%
 
 The first image is at the end of the 1st hour and the final image is at the end of the 3rd hour so we are able to see that increasing the ISI will make the fire spread faster
