@@ -9,14 +9,9 @@ import glob
 from argparse import ArgumentParser
 
 # Classes importations
-import cell2fire.utils.Plot as Plot
+###import Cell2Fire.Cell2Fire.Plot as Plot
 
-'''
-Returns       args object (containing command line arguments)
-
-Inputs:
-'''
-def ParseInputs():
+def make_parser():
     parser = ArgumentParser()
     # Folders 
     parser.add_argument("--input-instance-folder",
@@ -321,7 +316,16 @@ def ParseInputs():
                         dest="BurningLen",
                         type=float,
                         default=-1.0)
-        
+    return parser
+
+
+'''
+Returns       args object (containing command line arguments)
+
+Inputs:
+'''
+def ParseInputs():
+    parser = make_parser()        
     
     args = parser.parse_args()
     return args
