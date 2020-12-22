@@ -1,36 +1,47 @@
 Changing the grid
 =================
 
-The Cell2Fire simulator is by default set to run on a 9x9 grid. Recently there has been added a 16 cell and a 12 cell example that is available to use. The other option
-would be creating your own which could be done by the following steps:
+The Cell2Fire simulator runs on a variety of grid specifications depending on user expectations. For the flexibility of our software usage, we also provide an option to customize as per user requirements. To customize follow the steps mentioned below:
 
-* You will need to find your contributed folder and create a duplicate of delme63.
-* From there you will need to edit your go bash to have the right directory to your file (Look at editing Code Line section for help)
+* Find your contributed folder and create a duplicate of delme63 in it.
+* Change the path name so that you are in the right directory. (Look at editing Code Line section for help)
 
-From here you have a couple files you will need find in your current 9cellsC1 that will allow you to edit the grid size.
-First you will need find both Data.csv and Data.dat. To open these files it recommended to have Microsoft Excell and a text editing program.
-After opening both files you will see they will have the same amount of Data lines 9 each. From here,depending on what grid size you would like, copy one of the lines and 
-paste the line in an empty section. The following is an example of the 16 cell:
+To edit the grid size first open 9cellsC1 folder. In this folder we need to first find Data.csv and Data.dat.
+We can then open these files either using excel or any other reliable text editor.
+Once we open these files we can notice that they have 9 data lines each. Here depending on the grid size we require, we could easily copy and paste one of the lines as many
+number of times as we require to match our grid size.
+We have presented an example of 16 cell as follows:
 
-.. image:: /image/data.png
-   :width: 25%
-.. image:: /image/excell.png
-   :width: 50%
-   
-You will need the same amount of entries equaling to size of grid you want to create of n columns and m rows.
+Text Editor Snapshot:
 
-From here find another file the 9cellsC1 folder named Forest.asc and will have to add a couple parts. To change cell size you will need to input the amount of rows and columns 
-wanted for the grid. In the 16 cell example the input has 4 columns and 4 rows here is an example of the code:
+.. image:: ../image/data.png
+  :width: 75%
 
-.. image:: /image/Forest.png
-   :width: 40%
-   
-Notice in the bottom of the code there is grid which you must create to resemble the desired cell grid. Using 1 to edit this sections create the desired grid, save, and exit the inputs.
-From here run the code the same way you would the original code from here the results should be different resulting in a different size grid:
+Excel Snapshot:
 
-.. image:: /image/16cell1.png
-  :width: 25% 
-.. image:: /image/16cell2.png
-  :width: 25%   
-  
-Dont forget that you have to add the number of wanted cells and have a respected number of rows and columns. :) 
+.. image:: ../image/excell.png
+  :width: 75%
+
+To create a grid of "n columns" and "m rows" we would require equivalent number of entries as there are rows and columns.
+
+To change cell size we first need to open Forest.asc file present in 9cellsC1 directory. Here we could input the number of rows and columns we require for our own grid.
+For example to create a 16 cell grid we need to input columns as 4 and rows as 4. An illustration is presented below:
+
+.. image:: ../image/Forest.png
+   :width: 75%
+
+At the very end of the code we need to redesign the grid using 1's as per our requirements. Once we have made the desired changes we need to save our file and run the code to get our
+desired results. The different sized grids are as below:
+
+
+Image 1:
+
+.. image:: ../image/16cell1.png
+  :width: 50%
+
+Image 2:
+
+.. image:: ../image/16cell2.png
+  :width: 50%
+
+Do not forget to add the number of wanted cells along with respected number of rows and columns.

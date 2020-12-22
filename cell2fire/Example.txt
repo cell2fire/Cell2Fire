@@ -1,0 +1,9 @@
+# Full run generating stats and all plot
+time python main.py --input-instance-folder ../data/dogrib/ --output-folder ../results/dogrib_n100cv05 --ignitions --sim-years 1 --nsims 100 --grids --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.5 --seed 123 --IgnitionRad 0 --stats --allPlots
+
+# Explicit heuristic value (-1 = no heuristic)
+time python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../Results/Sub40_n5cv1 --ignitions --sim-years 1 --nsims 5 --grids --finalGrid --weather rows --nweathers 129 --Fire-Period-Length 1.0 --output-messages --ROS-CV 1.0 --seed 123 --IgnitionRad 0 --stats --spreadPlots --heuristic -1 
+
+# Only processing (reads a previously simulated instance and computes stats/plots)
+# Important: provide the number of sims --nsims to be processed
+time python main.py --input-instance-folder ../data/9cells/ --output-folder ../results/9cells --nsims 10 --stats --allPlots --onlyProcessing
