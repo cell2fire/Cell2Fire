@@ -420,9 +420,9 @@ class Statistics(object):
         # We add nodes to the list
         self._GGraph.add_nodes_from(nodes)
         for n in nodes:
-            self._GGraph.node[n]["ros"] = 0
-            self._GGraph.node[n]["time"] = 0
-            self._GGraph.node[n]["count"] = 0
+            self._GGraph.nodes[n]["ros"] = 0
+            self._GGraph.nodes[n]["time"] = 0
+            self._GGraph.nodes[n]["count"] = 0
         
         # If full, get edges
         if full:
@@ -437,17 +437,17 @@ class Statistics(object):
                 for e in HGraphs.edges():
                     if self._GGraph.has_edge(*e):
                         self._GGraph.get_edge_data(e[0], e[1])["weight"] += 1
-                        self._GGraph.node[e[1]]["ros"] += HGraphs[e[0]][e[1]]["ros"]
-                        self._GGraph.node[e[1]]["time"] += HGraphs[e[0]][e[1]]["time"]
-                        self._GGraph.node[e[1]]["count"] += 1
+                        self._GGraph.nodes[e[1]]["ros"] += HGraphs[e[0]][e[1]]["ros"]
+                        self._GGraph.nodes[e[1]]["time"] += HGraphs[e[0]][e[1]]["time"]
+                        self._GGraph.nodes[e[1]]["count"] += 1
                     else:
                         self._GGraph.add_weighted_edges_from([(*e,1.)])
                     
         # Average ROS, time 
         for n in nodes:
-            if self._GGraph.node[n]['count'] > 0:
-                self._GGraph.node[n]['ros'] /= self._GGraph.node[n]['count']
-                self._GGraph.node[n]['time'] /= self._GGraph.node[n]['count']
+            if self._GGraph.nodes[n]['count'] > 0:
+                self._GGraph.nodes[n]['ros'] /= self._GGraph.nodes[n]['count']
+                self._GGraph.nodes[n]['time'] /= self._GGraph.nodes[n]['count']
 
     
     # Fire Spread evolution plot (global sims)
