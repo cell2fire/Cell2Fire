@@ -31,13 +31,13 @@ from multiprocessing import Process
 # Extra
 from operator import itemgetter
 import itertools
-from utils.coord_xy import *        
+from cell2fire.utils.coord_xy import *  # TBD: drop import *
 from tqdm import tqdm
 import networkx as nx
 from shutil import copy2
 
 # Cell2Fire
-import utils.ReadDataPrometheus as ReadDataPrometheus
+### import cell2fire.utils.ReadDataPrometheus as ReadDataPrometheus
 
 
 class Statistics(object):

@@ -10,10 +10,10 @@ import shutil
 import signal
 import subprocess
 import sys
-import utils.DataGeneratorC as DataGenerator
-import utils.ReadDataPrometheus as ReadDataPrometheus
-from utils.ParseInputs import InitCells
-from utils.Stats import *
+import cell2fire.utils.DataGeneratorC as DataGenerator
+import cell2fire.utils.ReadDataPrometheus as ReadDataPrometheus
+from cell2fire.utils.ParseInputs import InitCells
+from cell2fire.utils.Stats import *
 #import cell2fire  # for path finding
 #p = str(cell2fire.__path__)
 #l = p.find("'")
