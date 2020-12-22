@@ -9,7 +9,7 @@ import glob
 from argparse import ArgumentParser
 
 # Classes importations
-import utils.Plot as Plot
+import cell2fire.utils.Plot as Plot
 
 '''
 Returns       args object (containing command line arguments)
