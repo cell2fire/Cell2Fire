@@ -3,3 +3,9 @@
 *.gch
 src/Cell2Fire/Cell2FireC/Makefile
 
+cell2fire/Cell2FireC/Cell2Fire
+Cell2Fire.egg-info/top_level.txt
+Cell2Fire.egg-info/SOURCES.txt
+Cell2Fire.egg-info/requires.txt
+Cell2Fire.egg-info/PKG-INFO
+Cell2Fire.egg-info/dependency_links.txt

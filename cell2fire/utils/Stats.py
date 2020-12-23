@@ -1,6 +1,7 @@
 # coding: utf-8
 __version__ = "1.0"
 __author__ = "Cristobal Pais"
+# Minor edits by David L. Woodruff
 
 # Statistics Class
 # Importations
@@ -8,6 +9,7 @@ import pandas as pd
 import numpy as np
 import glob
 import os 
+import re
 
 # Plot
 import matplotlib
@@ -88,7 +90,26 @@ class Statistics(object):
             if self._verbose:
                 print("creating", self._StatsFolder)
             os.makedirs(self._StatsFolder)
+            
+        ## local utility ##
+    def _GridDir(self, SimNum):
+        """ Factored code to deal with grid files from the C++ side.
+        Args:
+            SimNum (int): simulation number (zero based)
+        
+        Returns:
+            GridPath (str), GridFiles (list of str): C++ output files
+               with GridFiles sorted by the trailing number in the base filename (e.g. hour)
+        """
+        def fnum(fname):
+            parts = fname.split(".")
+            assert(parts[1] == "csv")
+            return int(re.compile(r'(\d+)$').search(parts[0]).group(1))
 
+        GridPath = os.path.join(self._OutFolder, "Grids", "Grids"+str(SimNum+1))
+        GridFiles = os.listdir(GridPath)
+        GridFiles.sort(key=fnum)
+        return GridPath, GridFiles
             
     ####################################
     #                                  #
@@ -331,18 +352,22 @@ class Statistics(object):
 
         # Modify existing map to have white values
         cmap = cm.get_cmap('RdBu_r')
-        #lower = plt.cm.seismic(np.ones(100)*0.50)  # Original is ones 
-        upper = cmap(np.linspace(1 - 0.5, 1, 100))
-        colors = np.vstack((upper,))
+        lower = plt.cm.seismic(np.ones(1)*0.50)  # Original is ones 
+        upper = cmap(np.linspace(0.5, 1, 100))
+        colors = np.vstack((lower,upper))
         tmap = matplotlib.colors.LinearSegmentedColormap.from_list('terrain_map_white', colors)
 
         # Limits
         if vmax is None:
             vmax = np.max(ROSM)
 
-        # Create Heatmap
-        ax = sns.heatmap(ROSM, xticklabels=ticks, yticklabels=ticks, linewidths=lw,
-                         square=sq, cmap=tmap, vmin=vmin, vmax=vmax, annot=annot, cbar=cbarF)
+        ax = sns.heatmap(ROSM, xticklabels=ticks, yticklabels=ticks, linewidths=lw, linecolor="w",
+                         square=sq, cmap=tmap, vmin=vmin, vmax=vmax, annot=False, cbar=False)
+        sm = plt.cm.ScalarMappable(cmap=tmap)
+        sm._A = []
+        divider = make_axes_locatable(ax)
+        cax1 = divider.append_axes("right", size="5%", pad=0.15)
+        plt.colorbar(sm, cax=cax1)  
 
         # Save it
         if Path is None:
@@ -387,27 +412,52 @@ class Statistics(object):
         
     
     # ROS Matrix
-    def ROSMatrix_AVG(self, nSim): 
-        msgFileName = "MessagesFile0" if (nSim < 10) else "MessagesFile"
-        DF = pd.read_csv(os.path.join(self._MessagesPath, msgFileName), delimiter=",", header=None,)
-        DF.columns = ["i", "j", "time", "ROS"]
+    def ROSMatrix_AVG(self, nSims): 
+        # Container 
+        ROSMs = {}
 
-        # Array
-        ROSM = np.zeros(self._Rows * self._Cols)
+        # Read all files
+        for nSim in range(1, nSims + 1):
+            msgFileName = "MessagesFile0" if (nSim < 10) else "MessagesFile"
+            msgFileName = msgFileName + str(nSim) + '.csv'
+            DF = pd.read_csv(os.path.join(self._MessagesPath, msgFileName), delimiter=",", header=None,)
+            DF.columns = ["i", "j", "time", "ROS"]
 
-        # Fill
-        for j in DF["j"]:
-            ROSM[j-1] = DF[DF["j"] == j]["ROS"].values[0]
-        ROSM = ROSM.reshape((self._Rows, self._Cols))
+            # Array
+            ROSM = np.zeros(self._Rows * self._Cols)
+
+            # Fill
+            for j in DF["j"]:
+                ROSM[j-1] = DF[DF["j"] == j]["ROS"].values[0]
+            ROSM = ROSM.reshape((self._Rows, self._Cols))
+
+            # Save
+            ROSMs[nSim] = ROSM
         
+        # AVG ROS
+        AVGROSM = np.zeros((Rows, Cols))
+        for k in ROSMs.keys():
+            if k == 1:
+                AVGROSM = ROSMs[k].copy()
+            else:
+                AVGROSM += ROSMs[k]
+        AVGROSM = AVGROSM / k
+
         # Create plots folder
         PlotPath = os.path.join(self._OutFolder, "Plots", "Plots" + str(nSim))
         if os.path.isdir(PlotPath) is False:
             os.makedirs(PlotPath)
-
+        
         # Heatmap
-        self.ROSHeatmap(ROSM, Path=PlotPath, nscen=1, sq=True, namePlot="ROS_Heatmap", 
-                        Title="ROS Heatmap", cbarF=True)
+        self.ROSHeatmap(AVGROSM, 
+                        Path=PlotPath,
+                        nscen=1,
+                        sq=True,
+                        namePlot="AVG_ROS_Heatmap", 
+                        Title="AVG ROS Heatmap",
+                        cbarF=True)
+
+        
     
     # Generate G graph
     def GGraphGen(self, full=False):
@@ -797,9 +847,7 @@ class Statistics(object):
         
         # Stats per simulation
         for i in tqdm(range(self._nSims)):
-            GridPath = os.path.join(self._OutFolder, "Grids", "Grids"+str(i + 1))
-            GridFiles = os.listdir(GridPath)
-            #print("GridFiles:", GridFiles, "\nSim:", i+1)
+            GridPath, GridFiles = self._GridDir(i)
             
             # Reset container
             a = 0         
@@ -991,8 +1039,7 @@ class Statistics(object):
 
         # Stats per simulation
         for i in range(self._nSims):
-            GridPath = os.path.join(self._OutFolder, "Grids", "Grids"+str(i + 1))
-            GridFiles = os.listdir(GridPath)
+            GridPath, GridFiles = self._GridDir(i)
             #print(GridPath, GridFiles)
             if len(GridFiles) > 0: 
                 a = pd.read_csv(GridPath +"/"+ GridFiles[-1], delimiter=',', header=None).values
@@ -1089,14 +1136,12 @@ class Statistics(object):
         if self._tCorrected:
             maxStep = 0
             for i in range(self._nSims):
-                GridPath = os.path.join(self._OutFolder, "Grids", "Grids"+str(i+1))
-                GridFiles = os.listdir(GridPath)
+                GridPath, GridFiles = self._GridDir(i)
                 if len(GridFiles) > maxStep:
                     maxStep = len(GridFiles)
                         
             for i in range(self._nSims):
-                GridPath = os.path.join(self._OutFolder, "Grids", "Grids"+str(i+1))
-                GridFiles = os.listdir(GridPath)
+                GridPath, GridFiles = self._GridDir(i)
                 if len(GridFiles) < maxStep:
                     for j in range(len(GridFiles), maxStep):
                         file = 'ForestGrid{:02d}.csv'.format(j)
@@ -1110,8 +1155,7 @@ class Statistics(object):
         statDicth = {}
         statDFh = pd.DataFrame(columns=[["ID", "NonBurned", "Burned", "Harvested"]])
         for i in range(self._nSims):
-            GridPath = os.path.join(self._OutFolder, "Grids", "Grids"+str(i+1))
-            GridFiles = os.listdir(GridPath)
+            GridPath, GridFiles = self._GridDir(i)
             if len(GridFiles) > 0:
                 for j in range(len(GridFiles)):
                     ah = pd.read_csv(GridPath +"/"+ GridFiles[j], delimiter=',', header=None).values
