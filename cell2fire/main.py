@@ -11,9 +11,9 @@ warnings.filterwarnings("ignore")
 
 # Inputs and environment generator
 from cell2fire.utils.ParseInputs import ParseInputs
-#from Cell2Fire.ParseInputs import ParseInputs
 from cell2fire.Cell2FireC_class import *
 from cell2fire.utils.Stats import *
+from cell2fire.utils.Heuristics import *
 
 def main():
     # Parse inputs (args)
@@ -26,6 +26,10 @@ def main():
     if args.stats:
         print("------ Generating Statistics --------")
         env.stats()
+        
+    if args.heuristic != -1:
+        print("------ Generating outputs for heuristics --------")
+        env.heur() 
 
 if __name__ == "__main__":
     main()    

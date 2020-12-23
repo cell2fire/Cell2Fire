@@ -1,5 +1,5 @@
-EIGENDIR     = /usr/include/eigen3/
 #EIGENDIR     = /lib/eigen/
+EIGENDIR     = /usr/include/eigen3/
 CC = g++
 MPCC = g++
 OPENMP = -openmp

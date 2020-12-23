@@ -25,24 +25,19 @@ def json_loads_byteified(json_text):
 
 def _byteify(data, ignore_dicts = False):
     # if this is a unicode string, return its string representation
-    if isinstance(data, str):
-        print("str= ", data)
+    if isinstance(data, unicode):
         return data.encode('utf-8')
     # if this is a list of values, return list of byteified values
     if isinstance(data, list):
-        print("list = ", data)
         return [ _byteify(item, ignore_dicts=True) for item in data ]
     # if this is a dictionary, return dictionary of byteified keys and values
     # but only if we haven't already byteified it
     if isinstance(data, dict) and not ignore_dicts:
-        print("dic = ",data, "iftrue = ", ignore_dicts)
         return {
             _byteify(key, ignore_dicts=True): _byteify(value, ignore_dicts=True)
-            for key, value in data.items()
+            for key, value in data.iteritems()
         }
     # if it's anything else, return it in its original form
-
-    print("else = ", data)
     return data
 #================
 
@@ -257,7 +252,55 @@ NCells          int
 '''   
 # Reads the ASCII files with forest data elevation, saz, slope, and (future) curing degree and returns arrays
 # with values
-###def DataGrids(InFolder, NCells):  (moved to DataGeneratorC)
+def DataGrids(InFolder, NCells):
+    filenames = ["elevation.asc", "saz.asc", "slope.asc"]
+    Elevation =  np.full(NCells, np.nan)
+    SAZ = np.full(NCells, np.nan)
+    PS = np.full(NCells, np.nan)
+    #Curing = np.zeros([NCells])
+    
+    for name in filenames:
+        ff = os.path.join(InFolder, name)
+        if os.path.isfile(ff) == True:
+            aux = 0
+            with open(ff, "r") as f:
+                filelines = f.readlines()
+
+                line = filelines[4].replace("\n","")
+                parts = line.split()
+
+                if parts[0] != "cellsize":
+                    print ("line=",line)
+                    raise RuntimeError("Expected cellsize on line 5 of "+ ff)
+                cellsize = float(parts[1])
+
+                row = 1
+
+                # Read the ASCII file with the grid structure
+                for row in range(6, len(filelines)):
+                    line = filelines[row]
+                    line = line.replace("\n","")
+                    line = ' '.join(line.split())
+                    line = line.split(" ")
+                    #print(line)
+
+
+                    for c in line: 
+                        if name == "elevation.asc":
+                            Elevation[aux] = float(c)
+                            aux += 1
+                        if name == "saz.asc":
+                            SAZ[aux] = float(c)
+                            aux += 1
+                        if name == "slope.asc":
+                            PS[aux] = float(c)
+                            aux += 1
+                        #if name == "curing.asc":
+                        #    Curing[aux] = float(c)
+
+        else:
+            print("  No", name, "file, filling with NaN")
+    return Elevation, SAZ, PS
 
 '''
 Not needed to translate, it is the pandas version of a previous function
@@ -286,8 +329,7 @@ Returns         dict{int:int}
 Inputs:
 filename        str
 '''    
-# Reads IgnitionPoints.csv file and creates an array with them
-"""
+# Reads IgnitionPoints.csv file and creates an array with them 
 def IgnitionPoints(filename):
     #Ignitions is a dictionary with years = keys and ncell = values
     aux = 1
@@ -301,7 +343,7 @@ def IgnitionPoints(filename):
         if aux==1:
             aux+=1    
     return ignitions        
-"""    
+    
 
 '''
 Returns         dict {string:double}

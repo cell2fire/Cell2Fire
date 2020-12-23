@@ -108,6 +108,23 @@ def make_parser():
                         dest="TFraction",
                         type=float,
                         default=1.0)
+    parser.add_argument("--GPTree",
+                        help="Use the Global Propagation tree for calculating the VaR and performing the heuristic plan",
+                        dest="GPTree",
+                        default=False,
+                        action="store_true")
+    parser.add_argument("--customValue",
+                        help="Path to Heuristic/Harvesting custom value file",
+                        dest="valueFile",
+                        type=str,
+                        default=None)
+    parser.add_argument("--noEvaluation",
+                        help="Generate the treatment plans without evaluating them",
+                        dest="noEvaluation",
+                        default=False,
+                        action="store_true")
+    
+    
     
     # Genetic params
     parser.add_argument("--ngen",
@@ -232,6 +249,17 @@ def make_parser():
                         dest="BBO",
                         default=False,
                         action="store_true")
+    parser.add_argument("--fdemand",
+                        help="Finer demand/treatment fraction",
+                        dest="fdemand",
+                        default=False,
+                        action="store_true")
+    parser.add_argument("--pdfOutputs",
+                        help="Generate pdf versions of all plots",
+                        dest="pdfOutputs",
+                        default=False,
+                        action="store_true")
+    
     
     
     # Floats
