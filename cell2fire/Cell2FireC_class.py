@@ -14,12 +14,12 @@ import cell2fire.utils.DataGeneratorC as DataGenerator
 import cell2fire.utils.ReadDataPrometheus as ReadDataPrometheus
 from cell2fire.utils.ParseInputs import InitCells
 from cell2fire.utils.Stats import *
-#import cell2fire  # for path finding
-#p = str(cell2fire.__path__)
-#l = p.find("'")
-#r = p.find("'", l+1)
-#cell2fire_path = p[l+1:r]
-#print("cell2fire_path",cell2fire_path)
+import cell2fire  # for path finding
+p = str(cell2fire.__path__)
+l = p.find("'")
+r = p.find("'", l+1)
+cell2fire_path = p[l+1:r]
+print("cell2fire_path",cell2fire_path)
 
 class Cell2FireC:
     # Constructor and initial run
