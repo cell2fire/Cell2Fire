@@ -11,6 +11,7 @@ RUN conda install -c anaconda pandas
 RUN conda install -c anaconda matplotlib
 RUN conda install -c anaconda seaborn
 RUN conda install -c conda-forge tqdm
+RUN conda install -c conda-forge deap
 #RUN conda install -c conda-forge opencv
 RUN pip install opencv-python
 RUN apt update
