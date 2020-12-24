@@ -5,3 +5,4 @@ seaborn
 opencv-python
 imread
 tqdm
+deap
