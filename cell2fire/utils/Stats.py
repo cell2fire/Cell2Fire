@@ -765,7 +765,7 @@ class Statistics(object):
 
             # Simple red
             if version == 0:
-                nx.draw_networkx_edges(H, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+                nx.draw_networkx_edges(H, pos = coord_pos, node_size=0, 
                         edge_color= 'r', width=0.5, edge_cmap=plt.cm.Reds,
                         arrows=True, arrowsize=3, ax=ax, label="ROS messages")
 
@@ -779,7 +779,7 @@ class Statistics(object):
                 # Edge color = ROSs
                 if version == 1:
                     plt.title("Propagation Tree: hitting ROS [m/min]")
-                    nx.draw_networkx_edges(H, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+                    nx.draw_networkx_edges(H, pos = coord_pos,  
                         edge_color=ross, width=1.0, edge_cmap=plt.cm.Reds,
                         arrows=True, arrowsize=3, ax=ax)
                     sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=np.min(ross), vmax=np.max(ross)))                
@@ -787,7 +787,7 @@ class Statistics(object):
                 # Edge color = hit Times (normalized)
                 if version == 2:
                     plt.title("Propagation Tree: traveling times [min]")
-                    nx.draw_networkx_edges(H, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+                    nx.draw_networkx_edges(H, pos = coord_pos,
                             edge_color=times, width=1.0, edge_cmap=plt.cm.Reds,  #edge_color=times/np.max(times)
                             arrows=True, arrowsize=3, ax=ax)
                     sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=np.min(times), vmax=np.max(times)))
@@ -795,7 +795,7 @@ class Statistics(object):
                 # Edge color = Weights (Ross) and width = hit times (normalized)
                 if version == 3:
                     plt.title("Propagation Tree: ROS (c) and times (w)")
-                    nx.draw_networkx_edges(H, with_labels=False, pos = coord_pos, node_color='w', node_size=0, 
+                    nx.draw_networkx_edges(H, pos = coord_pos,
                             edge_color= ross/np.max(ross), width= times/np.max(times), edge_cmap=plt.cm.Reds,
                             arrows=True, arrowsize=3, ax=ax)
                     sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=np.min(0), vmax=np.max(1)))
