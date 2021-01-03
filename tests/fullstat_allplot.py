@@ -1,4 +1,3 @@
-# demonstrate how to hack together a test
 """
 Before you run this, run:
 
