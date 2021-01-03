@@ -1,8 +1,7 @@
-# demonstrate how to hack together a test
 """
 Before you run this, run
 
-python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40_n5cv1 --ignitions --sim-years 1 --nsims 5 --grids --finalGrid --weather rows --nweathers 129 --Fire-Period-Length 1.0 --output-messages --ROS-CV 1.0 --seed 123 --IgnitionRad 0 --stats --spreadPlots --heuristic -1
+python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../Results/Sub40_n5cv1 --ignitions --sim-years 1 --nsims 5 --grids --finalGrid --weather rows --nweathers 129 --Fire-Period-Length 1.0 --output-messages --ROS-CV 1.0 --seed 123 --IgnitionRad 0 --stats --spreadPlots --heuristic -1
 
 That will create the input files. Then we run basically the same command under the tester, but
 with --onlyProcessing to avoid calling the compiled C++ code.
@@ -28,7 +27,7 @@ data_path = os.path.join(cell2fire_path, "..","data")
 
 def _readme_list():
     datadir = os.path.abspath(os.path.join(data_path, "Sub40x40"))
-    resultsdir = os.path.abspath(os.path.join(data_path, "..", "results", "Sub40_n5cv1"))
+    resultsdir = os.path.abspath(os.path.join(data_path, "..", "Results", "Sub40_n5cv1"))
     baselist = ["--input-instance-folder", datadir,
                 "--output-folder", resultsdir,
                 "--ignitions",
@@ -66,11 +65,10 @@ class TestMain(unittest.TestCase):
         env = Cell2FireC(args)  # see main.py
         env.stats()
 
-        csv_path = os.path.join(data_path, "..", "results", "Sub40_n5cv1", "Stats", "HourlySummaryAVG.csv")
+        csv_path = os.path.join(data_path, "..", "Results", "Sub40_n5cv1", "Stats", "HourlySummaryAVG.csv")
         df = pd.read_csv(csv_path)
         self.assertAlmostEqual(df['AVGNonBurned'][6],1131.8), "TEST ERROR"
         self.assertAlmostEqual(df['AVGNonBurned'][7],1034.6), "TEST ERROR"
-
 
 
 if __name__ == "__main__":
