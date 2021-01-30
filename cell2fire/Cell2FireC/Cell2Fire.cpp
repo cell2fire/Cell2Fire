@@ -1216,7 +1216,8 @@ void Cell2Fire::Step(std::default_random_engine generator){
 	if (this->args.verbose){
 		std::cout << "********************************************" << std::endl;
 		std::cout << "Year: " << this->year << std::endl;
-		std::cout <<	"Fire Period: " <<  this->fire_period[this->year-1]  << std::endl;
+		std::cout << "Total years:" <<  this->args.TotalYears << std::endl;
+		std::cout << "Fire Period: " <<  this->fire_period[this->year-1]  << std::endl;
 		std::cout << "WeatherPeriod: " <<  this->weatherPeriod << std::endl;
 		std::cout << "MaxFirePeriods: " <<  this->args.MaxFirePeriods << std::endl;
 		printSets(this->availCells, this->nonBurnableCells, this->burningCells, this->burntCells, this->harvestCells);
@@ -1303,6 +1304,7 @@ void Cell2Fire::Step(std::default_random_engine generator){
 
 		// Next Year/Season update
 		//if(this->year < this->year += 1;
+		this->year += 1; // EXTRA
 		this->weatherPeriod = 0;
 		auxC = true;
 		

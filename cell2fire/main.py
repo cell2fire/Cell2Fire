@@ -19,6 +19,10 @@ def main():
     # Parse inputs (args)
     args = ParseInputs()
 
+    # Clean output dir if exists and not postprocessing
+    if not args.onlyProcessing and os.path.exists(args.OutFolder):
+        shutil.rmtree(args.OutFolder)
+        
     # C++ init and run
     env = Cell2FireC(args)
     
