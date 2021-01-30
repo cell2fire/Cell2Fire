@@ -72,7 +72,8 @@ class Cell2FireC:
                    '--ROS-Threshold', str(self.args.ROS_Threshold),
                    '--HFI-Threshold', str(self.args.HFI_Threshold),
                    '--bbo' if (self.args.BBO) else '',
-                   '--HarvestPlan', self.args.HCells if(self.args.HCells is not None) else '',]
+                   '--HarvestPlan', self.args.HCells if(self.args.HCells is not None) else '',
+				   '--verbose' if (self.args.verbose) else '',]
         
         # Output log
         if self.args.OutFolder is not None:
@@ -112,7 +113,8 @@ class Cell2FireC:
                    '--ROS-Threshold', str(self.args.ROS_Threshold),
                    '--HFI-Threshold', str(self.args.HFI_Threshold),
                    '--bbo' if (self.args.BBO) else '',
-                   '--HarvestPlan', HarvestPlanFile if(HarvestPlanFile is not None) else '',]
+                   '--HarvestPlan', HarvestPlanFile if(HarvestPlanFile is not None) else '',
+				   '--verbose' if (self.args.verbose) else '']
         
         # Output log
         if OutFolder is not None:
@@ -258,78 +260,81 @@ class Cell2FireC:
         print("General stats...")
         StatsPrinter.GeneralStats()
         
-        # Dummy msg if needed
-        self.DummyMsg()
+        # If messages are recorded
+        if self.args.OutMessages:
         
-        # Get Coordinates and colors
-        if self.args.spreadPlots or self.args.plots or self.args.allPlots:
-            print("Reading data...")
-            self.getData()  
-            print("Dummy if needed...")
+            # Dummy msg if needed
             self.DummyMsg()
-        
-        # Spread plots
-        if self.args.spreadPlots or self.args.allPlots:
-            # Fire Spread Graphs
-            print("Generating global fire spread evolution...")
-            totalPlots = 1
-            
-            # If multiple sims, plots including freq are useful
-            if self.args.nsims > 1:
-                totalPlots = 3
-            for v in tqdm(range(totalPlots)):
-                StatsPrinter.GlobalFireSpreadEvo(self._CoordCells, 
-                                                 onlyGraph=True,
-                                                 version=v)
 
-            # Fire Spread Graphs (individual)
-            if self.args.grids:
-                print("Generating individual Fire Spread plots...")
+            # Get Coordinates and colors
+            if self.args.spreadPlots or self.args.plots or self.args.allPlots:
+                print("Reading data...")
+                self.getData()  
+                print("Dummy if needed...")
+                self.DummyMsg()
+
+            # Spread plots
+            if self.args.spreadPlots or self.args.allPlots:
+                # Fire Spread Graphs
+                print("Generating global fire spread evolution...")
+                totalPlots = 1
+
+                # If multiple sims, plots including freq are useful
+                if self.args.nsims > 1:
+                    totalPlots = 3
+                for v in tqdm(range(totalPlots)):
+                    StatsPrinter.GlobalFireSpreadEvo(self._CoordCells, 
+                                                     onlyGraph=True,
+                                                     version=v)
+
+                # Fire Spread Graphs (individual)
+                if self.args.grids:
+                    print("Generating individual Fire Spread plots...")
+                    for n in tqdm(range(1, self.args.nsims + 1)):
+                        StatsPrinter.SimFireSpreadEvo(n, self._CoordCells, 
+                                                      self._Colors, 
+                                                      H=None, version=0,
+                                                      print_graph=True, 
+                                                      analysis_degree=False,
+                                                      onlyGraph=True)
+
+
+                # Generate Initial Forest
+                print("Generating initial forest plot...")
+                FBPlookup = os.path.join(self.args.InFolder, "fbp_lookup_table.csv")
+                if self.args.HCells is not None: 
+                    HCarray = np.loadtxt(self.args.HCells, skiprows=1, delimiter=",")[1:].astype(np.int)
+                    print("HCArray:", HCarray)
+                    print("GForestN:", self._GForestN)
+                    self._GForestN = self._GForestN.flatten()
+                    for i in HCarray:
+                        self._GForestN[i-1] = -1                    
+                        #self._GForestN[i // Shape[1] - 1, i - i // Shape[1] * i // Shape[0] - 1] = -1
+
+                    self._GForestN = self._GForestN.reshape((Shape[0], Shape[1]))
+                StatsPrinter.ForestPlot(FBPlookup, self._GForestN, 
+                                        self.args.OutFolder, namePlot="InitialForest")
+
+
+            # Individual plots 
+            if self.args.plots or self.args.allPlots:            
+                if self.args.grids:
+                    # Plotting
+                    print("Generating fire evolution plots...")
+                    StatsPrinter.plotEvo()
+
+                    # Combine them with background
+                    if self.args.combine:
+                        print("Combining Fires with background (initial forest)...")
+                        StatsPrinter.mergePlot()
+
+                print("Generating detailed individual propagation trees...")
                 for n in tqdm(range(1, self.args.nsims + 1)):
-                    StatsPrinter.SimFireSpreadEvo(n, self._CoordCells, 
-                                                  self._Colors, 
-                                                  H=None, version=0,
-                                                  print_graph=True, 
-                                                  analysis_degree=False,
-                                                  onlyGraph=True)
-                    
-            
-            # Generate Initial Forest
-            print("Generating initial forest plot...")
-            FBPlookup = os.path.join(self.args.InFolder, "fbp_lookup_table.csv")
-            if self.args.HCells is not None: 
-                HCarray = np.loadtxt(self.args.HCells, skiprows=1, delimiter=",")[1:].astype(np.int)
-                print("HCArray:", HCarray)
-                print("GForestN:", self._GForestN)
-                self._GForestN = self._GForestN.flatten()
-                for i in HCarray:
-                    self._GForestN[i-1] = -1                    
-                    #self._GForestN[i // Shape[1] - 1, i - i // Shape[1] * i // Shape[0] - 1] = -1
-            
-                self._GForestN = self._GForestN.reshape((Shape[0], Shape[1]))
-            StatsPrinter.ForestPlot(FBPlookup, self._GForestN, 
-                                    self.args.OutFolder, namePlot="InitialForest")
-
-
-        # Individual plots 
-        if self.args.plots or self.args.allPlots:            
-            if self.args.grids:
-                # Plotting
-                print("Generating fire evolution plots...")
-                StatsPrinter.plotEvo()
-                
-                # Combine them with background
-                if self.args.combine:
-                    print("Combining Fires with background (initial forest)...")
-                    StatsPrinter.mergePlot()
-
-            print("Generating detailed individual propagation trees...")
-            for n in tqdm(range(1, self.args.nsims + 1)):
-                for v in range(1,4):
-                    StatsPrinter.SimFireSpreadEvoV2(n, self._CoordCells,
-                                                    self._Colors, 
-                                                    H=None, version=v, 
-                                                    onlyGraph=True)        
+                    for v in range(1,4):
+                        StatsPrinter.SimFireSpreadEvoV2(n, self._CoordCells,
+                                                        self._Colors, 
+                                                        H=None, version=v, 
+                                                        onlyGraph=True)        
         
     
     '''
