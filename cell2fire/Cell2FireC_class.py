@@ -87,7 +87,9 @@ class Cell2FireC:
         with open(LogName, 'w') as output:
             proc = subprocess.Popen(execArray, stdout=output)
             proc.communicate()
-        proc.wait()
+        return_code = proc.wait()
+        if (return_code != 0):
+           raise RuntimeError(f'C++ returned {return_code}.\nTry looking at {LogName}.') 
         
         # End of the replications
         print("End of Cell2FireC execution...")
@@ -128,7 +130,7 @@ class Cell2FireC:
         with open(LogName, 'w') as output:
             proc = subprocess.Popen(execArray, stdout=output)
             proc.communicate()
-        proc.wait()
+        return_code = proc.wait()
         
         # End of the replications
         if HarvestPlanFile is not None:
