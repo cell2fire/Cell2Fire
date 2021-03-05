@@ -16,6 +16,7 @@ __maintainer__ = "Jaime Carrasco, Cristobal Pais, David Woodruff"
 
 // Include libraries
 #include <omp.h>
+#include <stdexcept>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -479,11 +480,17 @@ void Cell2Fire::reset(int rnumber, double rnumber2){
 	
 	if(this->args.WeatherOpt.compare("random") == 0){
 		// Random Weather 	
-		CSVWeather.fileName = this->args.InFolder + "Weathers/Weather" + std::to_string(rnumber) + ".csv" ;
-		std::cout  << "Weather file selected: " <<  CSVWeather.fileName  << std::endl;
+		this->CSVWeather.fileName = this->args.InFolder + "Weathers/Weather" + std::to_string(rnumber) + ".csv" ;
 
 		/* Weather DataFrame */
-		this->WeatherDF = this->CSVWeather.getData();
+    try {
+      this->WeatherDF = this->CSVWeather.getData();
+    } catch (std::invalid_argument& e) {
+      std::cerr << e.what() << std::endl;
+      std::abort();
+    }
+
+		std::cout  << "Weather file selected: " <<  this->CSVWeather.fileName  << std::endl;
 		
 		// Populate WDF 
 		int WPeriods = this->WeatherDF.size() - 1;  // -1 due to header
@@ -1418,7 +1425,7 @@ int main(int argc, char * argv[]){
 		rnumber2 = ndistribution(generator);
 		
 		// Reset
-		Forest.reset(rnumber, rnumber2);
+    Forest.reset(rnumber, rnumber2);
 	
 		// Time steps during horizon (or until we break it)
 		for (tstep = 0; tstep <= Forest.args.MaxFirePeriods * Forest.args.TotalYears ; tstep++){   

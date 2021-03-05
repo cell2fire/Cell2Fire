@@ -1,6 +1,7 @@
 #include "ReadCSV.h"
 #include "FBP5.0.h"
 
+#include <stdexcept>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -26,6 +27,11 @@ CSVReader::CSVReader(std::string filename, std::string delm){
 */
 std::vector<std::vector<std::string>> CSVReader::getData(){
 	std::ifstream file(this->fileName);
+  if (!file.good()) {
+    std::string error_message = this->fileName + " doesn't exist!";
+    throw std::invalid_argument(error_message); 
+  }
+
 	std::vector<std::vector<std::string> > dataList;
 	std::string line = "";
 	
@@ -523,15 +529,14 @@ void CSVReader::printWeatherDF(weatherDF wdf){
 }
 
 /*
-int main()
-{
+int main() {
 	// Creating an object of CSVWriter
-	CSVReader reader("example.csv");
+	CSVReader reader("/home/kotaro/workspace/Cell2Fire/Cell2Fire/data/Harvest40x40/Weathers/Weather947.csv");
  
 	// Get the data from CSV File
-	std::vector<std::vector<std::string> > dataList = reader.getData();
- 
-	// Print the content of row by row on screen
+  std::vector<std::vector<std::string> > dataList = reader.getData();
+
+ 	// Print the content of row by row on screen
 	for(std::vector<std::string> vec : dataList)
 	{
 		for(std::string data : vec)
@@ -541,6 +546,5 @@ int main()
 		std::cout<<std::endl;
 	}
 	return 0;
- 
 }
 */
