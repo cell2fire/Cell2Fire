@@ -14,6 +14,7 @@ import cell2fire.utils.DataGeneratorC as DataGenerator
 import cell2fire.utils.ReadDataPrometheus as ReadDataPrometheus
 from cell2fire.utils.ParseInputs import InitCells
 from cell2fire.utils.Stats import *
+from cell2fire.utils.Heuristics import *
 import cell2fire  # for path finding
 p = str(cell2fire.__path__)
 l = p.find("'")
