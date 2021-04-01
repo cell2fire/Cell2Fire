@@ -83,7 +83,7 @@ class Cell2FireC:
             LogName = os.path.join(self.args.OutFolder, "LogFile.txt")
         else:
             LogName = os.path.join(self.args.InFolder, "LogFile.txt")   
-         
+
         # Perform the call
         with open(LogName, 'w') as output:
             proc = subprocess.Popen(execArray, stdout=output)
@@ -99,7 +99,7 @@ class Cell2FireC:
     # Run C++ Sim with heuristic treatment 
     def run_Heur(self, OutFolder, HarvestPlanFile):
         # Parse args for calling C++ via subprocess        
-        execArray=[os.path.join(os.getcwd(),'Cell2FireC/Cell2Fire'), 
+        execArray=[os.path.join(cell2fire_path,'Cell2FireC/Cell2Fire'), 
                    '--input-instance-folder', self.args.InFolder,
                    '--output-folder', OutFolder if (OutFolder is not None) else '',
                    '--ignitions' if (self.args.ignitions) else '',
