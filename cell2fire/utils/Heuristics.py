@@ -265,30 +265,32 @@ class Heuristic(object):
             self._Adj = False
         else:
             self._Adj = True
-        
+
+        # Title and labels
+        if self._version == 11:
+            self.Alg = "DPV"
+        elif self._version == 9:
+            self.Alg = "DPV_Vol"
+        elif self._version == 19:
+            self.Alg = "BC"
+        elif self._version == 5:
+            self.Alg = "BP"
+        elif self._version == 10:
+            self.Alg = "DPV_NoAdj"
+        elif self._version == 18:
+            self.Alg = "BC_NoAdj"
+        elif self._version == 4:
+            self.Alg = "BP_NoAdj"
+        elif self._version == 0:
+            self.Alg = "Random_NoAdj"
+        elif self._version == 1:
+            self.Alg = "Random"
+        else:
+            self.Alg = f"algorithm_{self._version}"
     
     # Init Graph for FPV based heuristics
     def initGraph_FPV(self, VolCells, ngen=500, npop=100, tSize=3, cxpb=0.8, mutpb=0.2, indpb=0.05, 
                       GPTree=False):
-        # Title and labels
-        if self._version == 11:
-            Alg = "DPV"
-        elif self._version == 9:
-            Alg = "DPV_Vol"
-        elif self._version == 19:
-            Alg = "BC"
-        elif self._version == 5:
-            Alg = "BP"
-        elif self._version == 10:
-            Alg = "DPV_NoAdj"
-        elif self._version == 18:
-            Alg = "BC_NoAdj"
-        elif self._version == 4:
-            Alg = "BP_NoAdj"
-        elif self._version == 0:
-            Alg = "Random_NoAdj"
-        elif self._version == 1:
-            Alg = "Random"
         
         # Read txt files with messages (array with name of files) 
         msgFiles = glob.glob(self._MessagePath + '/*.csv')
@@ -312,15 +314,15 @@ class Heuristic(object):
 
         # Populate nodes fields for the general graph (no edges)
         for i in self._GGraph.nodes:
-            self._GGraph.node[i]['price'] = 1
-            self._GGraph.node[i]['vol'] = VolCells[i - 1]
-            self._GGraph.node[i]['cost'] = 0
-            self._GGraph.node[i]['profit'] = (self._GGraph.node[i]['price'] - self._GGraph.node[i]['cost']) *\
-                                              self._GGraph.node[i]['vol']
+            self._GGraph.nodes[i]['price'] = 1
+            self._GGraph.nodes[i]['vol'] = VolCells[i - 1]
+            self._GGraph.nodes[i]['cost'] = 0
+            self._GGraph.nodes[i]['profit'] = (self._GGraph.nodes[i]['price'] - self._GGraph.nodes[i]['cost']) *\
+                                              self._GGraph.nodes[i]['vol']
             if GPTree is False:
-                self._GGraph.node[i]['fpv'] = 0
+                self._GGraph.nodes[i]['fpv'] = 0
             else:
-                self._GGraph.node[i]['fpv'] = VolCells[i - 1]
+                self._GGraph.nodes[i]['fpv'] = VolCells[i - 1]
 
         # For each simulation, we create a graph with edges containing time and ROS at the moment of the message
         for k in range(1, nsim + 1):
@@ -333,8 +335,8 @@ class Heuristic(object):
 
             # Assign the profit from the main graph
             for i in self._HGraphs.nodes:
-                self._HGraphs.node[i]['profit'] = self._GGraph.node[i]['profit']
-                self._HGraphs.node[i]['fpv'] = VolCells[i - 1]
+                self._HGraphs.nodes[i]['profit'] = self._GGraph.nodes[i]['profit']
+                self._HGraphs.nodes[i]['fpv'] = VolCells[i - 1]
 
             # Tree dictionary
             Tree = dict()
@@ -342,7 +344,7 @@ class Heuristic(object):
             # Aux FPV Matrix for individual FPV values
             AuxFPVMatrix = np.zeros([self._Rows, self._Cols])
 
-            # For each node inside the simulation graphs, calculate the FPV based on the descendants
+            # For each nodes inside the simulation graphs, calculate the FPV based on the descendants
             # Call the FPV function and update the HGraph
             alpha = None
             basic = True        # Version = 8 or 9 (even are no adjacent) default
@@ -399,7 +401,7 @@ class Heuristic(object):
 
                 # Sum the FPV to the G Graph
                 for i in self._HGraphs.nodes:
-                    self._GGraph.node[i]['fpv'] += self._HGraphs.node[i]['fpv']
+                    self._GGraph.nodes[i]['fpv'] += self._HGraphs.nodes[i]['fpv']
 
                     if self._FPVGrids:
                         AuxFPVMatrix[(i-1)//self._Cols, i - self._Cols * ((i-1)//self._Cols) - 1 ] = self._HGraphs.nodes[i]['fpv']
@@ -434,9 +436,9 @@ class Heuristic(object):
         
         if self._FPVGrids:
             # Record global FPV values to matrices
-            np.savetxt(os.path.join(self._OutFolder, "Global_" + Alg + "_Matrix.csv"), 
+            np.savetxt(os.path.join(self._OutFolder, "Global_" + self.Alg + "_Matrix.csv"), 
                        self._FPVMatrix, delimiter=" ", fmt="%.f")
-            np.savetxt(os.path.join(self._OutFolder, "Global_" + Alg + "_Matrix_Normalized.csv"), 
+            np.savetxt(os.path.join(self._OutFolder, "Global_" + self.Alg + "_Matrix_Normalized.csv"), 
                        self._FPVMatrix / np.max(self._FPVMatrix), delimiter=" ", fmt="%.3f")
             np.savetxt(os.path.join(self._OutFolder, "Global_FPV_Matrix.csv"), 
                        self._FPVMatrix, delimiter=" ", fmt="%.f")
@@ -477,10 +479,10 @@ class Heuristic(object):
             
         # Else, we generate the graph from scratch 
         else:
-            # We add nodes to the node list of G
+            # We add nodes to the nodes list of G
             self._GGraph.add_nodes_from(nodes)
             for i in self._GGraph.nodes:
-                self._GGraph.node[i]['freq_burn'] = 0
+                self._GGraph.nodes[i]['freq_burn'] = 0
 
             for k in range(1, nsim + 1):
                 # Read the message files
@@ -491,7 +493,7 @@ class Heuristic(object):
 
                 self._GGraph.add_weighted_edges_from(self._HGraphs.edges(data='time'), weight='time')
                 for i in self._HGraphs.nodes:
-                    self._GGraph.node[i]['freq_burn'] = self._GGraph.node[i]['freq_burn'] + 1
+                    self._GGraph.nodes[i]['freq_burn'] = self._GGraph.nodes[i]['freq_burn'] + 1
                     
     
     # DPV calculations (all versions)
@@ -529,12 +531,12 @@ class Heuristic(object):
             BProb = np.ones(self._Rows * self._Cols)
                 
         
-        # Special Case: Betweenness centrality does not need calculations per node
+        # Special Case: Betweenness centrality does not need calculations per nodes
         if bcentrality is False:
             # Main Loop
             for i in Graph.nodes:
                 if self._verbose:
-                    print("Processing node:", i)
+                    print("Processing nodes:", i)
 
                 # Layer Decay components
                 if layerDecay:
@@ -547,7 +549,7 @@ class Heuristic(object):
                     LayersT = []
                     NodesL = {}
 
-                    # Calculate LP for the current node
+                    # Calculate LP for the current nodes
                     LP = nx.single_source_shortest_path_length(Graph, source=i, cutoff=1e7)
                     LP = np.max([i for i in LP.values()])
 
@@ -565,7 +567,7 @@ class Heuristic(object):
                         LayerT = np.empty(len(LNodes))
                         aux = 0
 
-                        # For each node, get the hitting time and then calculate the mean hit time of the layer
+                        # For each nodes, get the hitting time and then calculate the mean hit time of the layer
                         for r in LNodes:
                             LayerT[aux] = Graph.in_degree(nbunch=r, weight='time')
                             aux += 1
@@ -577,7 +579,7 @@ class Heuristic(object):
                 if hitTime:
                     # Time correction: indegree time for propagating adjusted time downstream
                     tCorrection = Graph.in_degree(nbunch=i, weight='time')
-                    #print("Time correction node", i,":", tCorrection)
+                    #print("Time correction nodes", i,":", tCorrection)
 
                 # Get sub graph starting from i
                 Trees[i] = nx.subgraph(Graph, {i} | nx.descendants(Graph, i))
@@ -586,87 +588,87 @@ class Heuristic(object):
 
                 # Trio of FPV  
                 if AvgTime * layerDecay * degreeW:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * (1 / SP[j]) * (1 / LayersT[NodesL[j]-1]) \
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * (1 / SP[j]) * (1 / LayersT[NodesL[j]-1]) \
                                                    for j in Trees[i].nodes if j != i]) \
-                                                   + Graph.node[i]['fpv']) * Graph.degree(i, weight="weight")
+                                                   + Graph.nodes[i]['fpv']) * Graph.degree(i, weight="weight")
 
                 elif hitTime * layerDecay * degreeW:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * (1 / SP[j]) *\
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * (1 / SP[j]) *\
                                                   (tFactor / ( Graph.in_degree(nbunch=j, weight='time') - tCorrection) ) \
                                                    for j in Trees[i].nodes if j != i]) + \
-                                                   Graph.node[i]['fpv']) * Graph.degree(i, weight="weight")
+                                                   Graph.nodes[i]['fpv']) * Graph.degree(i, weight="weight")
 
                 elif hitTime * AvgTime * degreeW:
-                    GraphG.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] *\
+                    GraphG.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] *\
                                                    (tFactor / ( Graph.in_degree(nbunch=j, weight='time') - tCorrection) ) *\
                                                    (1 / LayersT[NodesL[j]-1]) for j in Trees[i].nodes if j != i]) \
-                                                   + Graph.node[i]['fpv']) * Graph.degree(i, weight="weight")
+                                                   + Graph.nodes[i]['fpv']) * Graph.degree(i, weight="weight")
 
                 elif AvgTime * layerDecay * hitTime:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * (1 / SP[j]) *\
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * (1 / SP[j]) *\
                                                   (tFactor / ( Graph.in_degree(nbunch=j, weight='time') - tCorrection) ) *\
                                                   (1 / LayersT[NodesL[j]-1]) for j in Trees[i].nodes if j != i]) + \
-                                                  Graph.node[i]['fpv']) * Graph.degree(i, weight="weight")
+                                                  Graph.nodes[i]['fpv']) * Graph.degree(i, weight="weight")
 
                 ##############################################################################################################
 
                 # Pairs of FPV  
                 elif AvgTime * degreeW:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * (1 / LayersT[NodesL[j]-1]) for j in Trees[i].nodes if j != i]) \
-                                        + Graph.node[i]['fpv']) * Graph.degree(i, weight="weight")
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * (1 / LayersT[NodesL[j]-1]) for j in Trees[i].nodes if j != i]) \
+                                        + Graph.nodes[i]['fpv']) * Graph.degree(i, weight="weight")
 
                 elif layerDecay * degreeW:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * (1 / SP[j]) for j in Trees[i].nodes if j != i]) + \
-                                        Graph.node[i]['fpv']) * Graph.degree(i, weight="weight")
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * (1 / SP[j]) for j in Trees[i].nodes if j != i]) + \
+                                        Graph.nodes[i]['fpv']) * Graph.degree(i, weight="weight")
 
                 elif hitTime * degreeW:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * \
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * \
                                             (tFactor / ( Graph.in_degree(nbunch=j, weight='time') - tCorrection) ) \
                                              for j in Trees[i].nodes if j != i]) + \
-                                         Graph.node[i]['fpv']) * Graph.degree(i, weight="weight")
+                                         Graph.nodes[i]['fpv']) * Graph.degree(i, weight="weight")
 
                 elif layerDecay * AvgTime:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * (1 / SP[j]) * (1 / LayersT[NodesL[j]-1]) \
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * (1 / SP[j]) * (1 / LayersT[NodesL[j]-1]) \
                                              for j in Trees[i].nodes if j != i]) \
-                                        + Graph.node[i]['fpv'])
+                                        + Graph.nodes[i]['fpv'])
 
                 elif hitTime * AvgTime:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * \
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * \
                                             (tFactor / ( Graph.in_degree(nbunch=j, weight='time') - tCorrection) ) * \
                                             (1 / LayersT[NodesL[j]-1]) for j in Trees[i].nodes if j != i]
-                                            ) + Graph.node[i]['fpv'])
+                                            ) + Graph.nodes[i]['fpv'])
 
                 elif hitTime * layerDecay:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * \
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * \
                                             (tFactor / ( Graph.in_degree(nbunch=j, weight='time') - tCorrection) ) *\
                                             (1 / SP[j]) for j in Trees[i].nodes if j != i]
-                                           ) + Graph.node[i]['fpv'])
+                                           ) + Graph.nodes[i]['fpv'])
 
                 ##############################################################################################################
 
                 # Individual FPV approaches (5)
                 elif basic:
-                    Graph.node[i]['fpv'] = sum([Graph.node[j]['fpv'] for j in Trees[i].nodes])   
+                    Graph.nodes[i]['fpv'] = sum([Graph.nodes[j]['fpv'] for j in Trees[i].nodes])   
 
                 elif degreeW:
                     E = np.zeros(2)
                     E[0] = 1
                     E[1] = 1000
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv']*E[0] for j in Trees[i].nodes if j != i]) + Graph.node[i]['fpv']) *\
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv']*E[0] for j in Trees[i].nodes if j != i]) + Graph.nodes[i]['fpv']) *\
                                         Graph.degree(i, weight="weight")
 
                 elif AvgTime:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * (1 / LayersT[NodesL[j]-1]) for j in Trees[i].nodes if j != i]) +\
-                                        Graph.node[i]['fpv'])
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * (1 / LayersT[NodesL[j]-1]) for j in Trees[i].nodes if j != i]) +\
+                                        Graph.nodes[i]['fpv'])
 
                 elif layerDecay:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * (1 / SP[j]) for j in Trees[i].nodes if j != i]) + \
-                                        Graph.node[i]['fpv'])
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * (1 / SP[j]) for j in Trees[i].nodes if j != i]) + \
+                                        Graph.nodes[i]['fpv'])
 
                 elif hitTime:
-                    Graph.node[i]['fpv'] = (sum([Graph.node[j]['fpv'] * \
+                    Graph.nodes[i]['fpv'] = (sum([Graph.nodes[j]['fpv'] * \
                                             (tFactor / ( Graph.in_degree(nbunch=j, weight='time') - tCorrection) ) \
-                                             for j in Trees[i].nodes if j != i]) + Graph.node[i]['fpv'])
+                                             for j in Trees[i].nodes if j != i]) + Graph.nodes[i]['fpv'])
 
                 ##############################################################################################################
 
@@ -674,10 +676,10 @@ class Heuristic(object):
                 elif Old:                
                     # Root
                     if len(nx.ancestors(Graph, source=i)) == 0:
-                        Graph.node[i]['fpv'] = self.FPVsource(source=i, G=Graph) * BProb[i - 1]
+                        Graph.nodes[i]['fpv'] = self.FPVsource(source=i, G=Graph) * BProb[i - 1]
                     # No root
                     else:
-                        Graph.node[i]['fpv'] = self.FPVnode(source=i, G=Graph) * BProb[i - 1]
+                        Graph.nodes[i]['fpv'] = self.FPVnodes(source=i, G=Graph) * BProb[i - 1]
 
 
                 ##############################################################################################################
@@ -694,7 +696,7 @@ class Heuristic(object):
                                                    weight=None, endpoints=False, seed=None)
             # Fill fpv values
             for i in Graph.nodes:
-                Graph.node[i]['fpv'] = fpv_av[i]
+                Graph.nodes[i]['fpv'] = fpv_av[i]
                 
             
         
@@ -704,7 +706,7 @@ class Heuristic(object):
             print(Graph.nodes(data=True))
             
             for i in Graph.nodes:
-                print("Node", i, "FPV =", Graph.node[i]["fpv"])
+                print("Node", i, "FPV =", Graph.nodes[i]["fpv"])
                     
         
         # Return graph
@@ -721,7 +723,7 @@ class Heuristic(object):
                     for p in Paths:
                         fpv += G.nodes[p[-1]]['fpv']
         return fpv
-    def FPVnode(self, source, G):
+    def FPVnodes(self, source, G):
         fpv = 0
         for i in nx.ancestors(G, source=source):
             for j in nx.descendants(G, source=source):
@@ -1523,30 +1525,9 @@ class Heuristic(object):
         # Plt Style
         self.pltStyle()
         matplotlib.rcParams['axes.linewidth'] = 2.5
-
-
-        # Title and labels
-        if self._version == 11:
-            Alg = "DPV"
-        elif self._version == 9:
-            Alg = "DPV_Vol"
-        elif self._version == 19:
-            Alg = "BC"
-        elif self._version == 5:
-            Alg = "BP"
-        elif self._version == 10:
-            Alg = "DPV_NoAdj"
-        elif self._version == 18:
-            Alg = "BC_NoAdj"
-        elif self._version == 4:
-            Alg = "BP_NoAdj"
-        elif self._version == 0:
-            Alg = "Random_NoAdj"
-        elif self._version == 1:
-            Alg = "Random"
         
         # Title and labels
-        plt.title(Alg + " Heatmap $|R| = 100$", y=1.02)
+        plt.title(self.Alg + " Heatmap $|R| = 100$", y=1.02)
 
         # Modify existing map to have white values
         cmap = cm.get_cmap('RdBu_r')
@@ -1585,7 +1566,7 @@ class Heuristic(object):
             self.pltStyle()
 
             # Title and labels
-            plt.title(Alg + " Heatmap $|R| = 100$", y=1.02)
+            plt.title(self.Alg + " Heatmap $|R| = 100$", y=1.02)
 
 			# Plot
             ax2 = sns.heatmap(self._FPVMatrix / np.max(self._FPVMatrix), 
