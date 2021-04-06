@@ -83,7 +83,12 @@ void CSVWriter::printCSV_V2(int rows, int cols, std::vector<int> statusCells)
 		{
 			std::string toOut;
 			for (i = 0; i < cols; i ++){
+				if (i == cols - 1){
+					toOut += std::to_string(statusCells[c+r*cols + i]);
+				}
+				else{
 					toOut += std::to_string(statusCells[c+r*cols + i])  + this->delimeter;
+				}
 			}
 			ofs << toOut << "\n";
 			c+=cols;
