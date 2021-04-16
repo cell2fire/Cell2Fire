@@ -26,6 +26,8 @@ This software is for research use only. There is no warranty of any kind; there 
    rstfiles/Cellsize.rst
    rstfiles/Graphics.rst
    rstfiles/HarvestedCells.rst
+   rstfiles/HarvestPlan.rst
+   rstfiles/heuristics.rst
 
 
 
