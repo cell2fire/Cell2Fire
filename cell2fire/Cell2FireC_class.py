@@ -597,7 +597,7 @@ class Cell2FireC:
                     print("No evaluation is performed (option)")
             
             else:
-                print("\nTreat Fraction " + str(fr) + "%...")
+                print("\nTreat Fraction " + str(fr) + "...")
                 action, fitness = self._HeurObject.runHeur(self._AvailCells.copy(),      # Available cells
                                                            self._AdjCells,               # Adjacent dictionary
                                                            np.full(self._NCells, 1),     # Volume
