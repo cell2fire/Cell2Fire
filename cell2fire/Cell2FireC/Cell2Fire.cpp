@@ -248,6 +248,7 @@ Cell2Fire::Cell2Fire(arguments _args) : CSVWeather(_args.InFolder + "Weather.csv
 	// Populate WDF 
 	int WPeriods = WeatherDF.size() - 1;  // -1 due to header
 	wdf_ptr = &wdf[0];
+	std::cout << "Weather Periods: " << WPeriods << std::endl;
 	
 	// Populate the wdf objects
 	this->CSVWeather.parseWeatherDF(wdf_ptr, this->WeatherDF, WPeriods);
@@ -490,14 +491,34 @@ void Cell2Fire::reset(int rnumber, double rnumber2){
       std::abort();
     }
 
-		std::cout  << "Weather file selected: " <<  this->CSVWeather.fileName  << std::endl;
+		std::cout  << "\nWeather file selected: " <<  this->CSVWeather.fileName  << std::endl;
 		
 		// Populate WDF 
 		int WPeriods = this->WeatherDF.size() - 1;  // -1 due to header
 		wdf_ptr = &wdf[0];
+		std::cout << "Weather Periods: " << WPeriods << std::endl;
 		
 		// Populate the wdf objects
 		this->CSVWeather.parseWeatherDF(wdf_ptr, this->WeatherDF, WPeriods);
+		//DEBUGthis->CSVWeather.printData(this->WeatherDF);
+		
+		// Check maxFirePeriods and Weather File consistency (reset MaxFirePeriods and recalculate)
+		int maxFP = this->args.MinutesPerWP / this->args.FirePeriodLen * WPeriods;
+		this->args.MaxFirePeriods = 10000000;
+		//DEBUGstd::cout << "Int MaxFP: " << maxFP << std::endl;
+		//DEBUGstd::cout << "MinutesPerWP: " << this->args.MinutesPerWP << std::endl;
+		//DEBUGstd::cout << "FirePeriodLen: " << this->args.FirePeriodLen << std::endl;
+		//DEBUGstd::cout << "MaxfirePeriods: " << this->args.MaxFirePeriods << std::endl;
+		
+		if (this->args.MaxFirePeriods > maxFP) {
+			this->args.MaxFirePeriods = maxFP ;
+			if (this->args.verbose){
+					std::cout << "Maximum fire periods are set to: " << this->args.MaxFirePeriods << " based on the weather file, Fire Period Length, and Minutes per WP" << std::endl;
+			}
+		}
+		 
+		
+		
 	}
 	
 	// Random ROS-CV
@@ -1425,7 +1446,7 @@ int main(int argc, char * argv[]){
 		rnumber2 = ndistribution(generator);
 		
 		// Reset
-    Forest.reset(rnumber, rnumber2);
+		Forest.reset(rnumber, rnumber2);
 	
 		// Time steps during horizon (or until we break it)
 		for (tstep = 0; tstep <= Forest.args.MaxFirePeriods * Forest.args.TotalYears ; tstep++){   
