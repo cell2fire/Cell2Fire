@@ -54,6 +54,20 @@ Inside the individual heuristic folders, you get the outputs of simulations usin
 A Simple Experiment
 -------------------
 
-Two bash scripts - one with heuristics 2 and another with heuristics 3. We are going to see which one produces fewer burned cells in FinalStats.csv.
+We have two bash scripts - one with heuristic 2 and another with heuristic 3. We are going to see which one produces fewer burned cells in FinalStats.csv.
 
 To use this heuristics, a values file is needed. This file gives a value for each cell of the forest. It is space-delimited and specified using the --customValue option.
+
+An example can be found in `data/Sub40x40/values40x40.csv` Note: this file is space-delimited even though the file name extension is .csv. 
+
+This is a sample command to run heuristitic 2 with a custom file that has 40x40 cells.
+
+::
+
+  python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 2 --customValue="../data/Sub40x40/values40x40.csv"
+
+Another sample command to run heuristic 3 with a custom file that has 40x40 cells.
+
+::
+
+  python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 3 --customValue="../data/Sub40x40/values40x40.csv"
