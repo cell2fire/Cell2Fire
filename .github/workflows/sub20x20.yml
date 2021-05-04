@@ -2,9 +2,9 @@ name: sub20x20  # Test2_zonghan
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
