@@ -2,9 +2,9 @@ name: test_h3 # Kotaro Yama
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
