@@ -1,4 +1,4 @@
-name: test_h1 # Kotaro Yama
+name: test_h3 # Kotaro Yama
 
 on:
   push:
@@ -35,12 +35,12 @@ jobs:
       - name: create input data
         run: |
           cd cell2fire
-          python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/Sub20x20/Sub20_RW_RI_N10 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 1
+          python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 3 --customValue="../data/Sub40x40/values40x40.csv"
 
       - name: run tests
         run: |
           cd tests
-          pytest test_h1.py --cov=../cell2fire --cov=./ --cov-report=xml
+          pytest test_h3.py --cov=../cell2fire --cov=./ --cov-report=xml
           
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1

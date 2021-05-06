@@ -25,7 +25,7 @@ In parenthesis the number of the heuristic associated with the --heuristic argum
 
 *	Random (0): Selects available cells at random until the treatment fraction threshold is hit (e.g., 10% of the available cells)
 *	Random_Adj (1): Idem as above but satisfying adjacency constraints by selecting cells at random connected to the previous ones.
-*	Max_Utility (2): Given a utility map with a value for each cell (.csv file, see valueFile argument), it selects those cells that maximize the total utility.
+*	Max_Utility (2): Given a utility map with a value for each cell (.csv file, see customValue argument), it selects those cells that maximize the total utility.
 *	Max_Utility_Adj (3): Idem but satisfying adjacency constraints (greedy)
 *	Burnt_Probability (4): Selects those cells with higher burn probability based on the previous simulations.
 *	Burnt_Probability_Adj (5): Idem but satisfying adjacency constraints (greedy)
@@ -42,8 +42,32 @@ In parenthesis the number of the heuristic associated with the --heuristic argum
 *	BCentrality (18): Calculates the betweenness centrality value for each node, selecting those that maximize the total summation.
 *	BCentrality_Adj (19): Idem but satisfying adjacency constraints (greedy)
 
+Output Folders
+--------------
+
+The output folder specified by the user will have the base case without any heuristics. Some heuristics use that info (e.g., bp maps bases heurs) to calculate protection metrics.
+
+Then, the heuristic(s) are applied generating folders per heuristic (inside the Heuristic folder in the aforementioned output folder).
+
+Inside the individual heuristic folders, you get the outputs of simulations using the heuristic for different treatment/harvesting intensities.
+
 A Simple Experiment
 -------------------
 
-Two bash scripts - one with heuristics 1 and another with heuristics 6. We are going to see which one produces fewer burned cells in FinalStats.csv.
+We have two bash scripts - one with heuristic 2 and another with heuristic 3. We are going to see which one produces fewer burned cells in FinalStats.csv.
 
+To use this heuristics, a values file is needed. This file gives a value for each cell of the forest. It is space-delimited and specified using the --customValue option.
+
+An example can be found in `data/Sub40x40/values40x40.csv` Note: this file is space-delimited even though the file name extension is .csv. 
+
+This is a sample command to run heuristitic 2 with a custom file that has 40x40 cells.
+
+::
+
+  python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 2 --customValue="../data/Sub40x40/values40x40.csv"
+
+Another sample command to run heuristic 3 with a custom file that has 40x40 cells.
+
+::
+
+  python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 3 --customValue="../data/Sub40x40/values40x40.csv"
