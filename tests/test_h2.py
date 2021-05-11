@@ -66,13 +66,35 @@ class TestMain(unittest.TestCase):
         env = Cell2FireC(args)  # see main.py
         env.stats()
 
-        results_path = os.path.abspath(os.path.join("..", "results", "Sub40x40"))
+        # Testing Fraction 0.2
+        results_path = os.path.abspath(os.path.join("..", "results", "Sub40x40", "Heuristic", "Max_Utility", "Fraction0.2"))
         csv_path = os.path.join(results_path, "Stats", "FinalStats.csv")
         df = pd.read_csv(csv_path)
 
-        self.assertAlmostEqual(df['Burned'][0], 103), "TEST ERROR"
-        self.assertAlmostEqual(df['Burned'][6], 570), "TEST ERROR"
-        self.assertAlmostEqual(df['Burned'][9], 80), "TEST ERROR"
+        # Burned cells
+        self.assertAlmostEqual(df['Burned'][0], 71), "TEST ERROR"
+        self.assertAlmostEqual(df['Burned'][6], 297), "TEST ERROR"
+        self.assertAlmostEqual(df['Burned'][9], 64), "TEST ERROR"
+
+        # Harvested cells
+        self.assertAlmostEqual(df['Harvested'][0], 288), "TEST ERROR"
+        self.assertAlmostEqual(df['Harvested'][5], 288), "TEST ERROR"
+        self.assertAlmostEqual(df['Harvested'][8], 288), "TEST ERROR"
+
+        # Testing Fraction 0.85
+        results_path = os.path.abspath(os.path.join("..", "results", "Sub40x40", "Heuristic", "Max_Utility", "Fraction0.85"))
+        csv_path = os.path.join(results_path, "Stats", "FinalStats.csv")
+        df = pd.read_csv(csv_path)
+
+        # Burned cells
+        self.assertAlmostEqual(df['Burned'][0], 4), "TEST ERROR"
+        self.assertAlmostEqual(df['Burned'][6], 8), "TEST ERROR"
+        self.assertAlmostEqual(df['Burned'][9], 6), "TEST ERROR"
+
+        # Harvested cells
+        self.assertAlmostEqual(df['Harvested'][0], 1227), "TEST ERROR"
+        self.assertAlmostEqual(df['Harvested'][5], 1227), "TEST ERROR"
+        self.assertAlmostEqual(df['Harvested'][8], 1227), "TEST ERROR"
 
 
 if __name__ == "__main__":

@@ -66,13 +66,20 @@ class TestMain(unittest.TestCase):
         env = Cell2FireC(args)  # see main.py
         env.stats()
 
-        results_path = os.path.abspath(os.path.join("..", "results", "Sub40x40"))
+        # Testing Fraction0.2
+        results_path = os.path.abspath(os.path.join("..", "results", "Sub40x40", "Heuristic", "Max_Utility_Adj", "Fraction0.2"))
         csv_path = os.path.join(results_path, "Stats", "FinalStats.csv")
         df = pd.read_csv(csv_path)
 
-        self.assertAlmostEqual(df['Burned'][0], 103), "TEST ERROR"
-        self.assertAlmostEqual(df['Burned'][6], 570), "TEST ERROR"
-        self.assertAlmostEqual(df['Burned'][9], 80), "TEST ERROR"
+        # Burned cells
+        self.assertAlmostEqual(df['Burned'][0], 15), "TEST ERROR"
+        self.assertAlmostEqual(df['Burned'][6], 397), "TEST ERROR"
+        self.assertAlmostEqual(df['Burned'][9], 64), "TEST ERROR"
+
+        # Harvest cells
+        self.assertAlmostEqual(df['Harvested'][1], 288), "TEST ERROR"
+        self.assertAlmostEqual(df['Harvested'][5], 288), "TEST ERROR"
+        self.assertAlmostEqual(df['Harvested'][8], 288), "TEST ERROR"
 
 
 if __name__ == "__main__":
