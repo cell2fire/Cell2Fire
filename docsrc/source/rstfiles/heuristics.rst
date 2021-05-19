@@ -7,14 +7,54 @@ Cell2Fire includes built-in heristics to use as benchmarks.
 A Simple Example
 ----------------
 
-
-Input Command:
+First, move to the directory where "main.py" is located. From the root directory of Cell2Fire, you can cd into "cell2fire":
 
 ::
 
-    python ${C2LOC}/main.py --input-instance-folder ${C2LOC}/../data/Sub20x20/ --output-folder ${THISLOC}/results/Sub20x20/Sub20_RW_RI_N10 --sim-years 1 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 1
+    cd cell2fire
+
+
+Then, run the following command:
+
+::
+
+    python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/Sub20x20/Sub20_RW_RI_N10 --sim-years 1 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 1
 
 Output:
+
+::
+
+    cell2fire_path ~/workspace/Cell2Fire/Cell2Fire/cell2fire
+    End of Cell2FireC execution...
+    ------ Generating Statistics --------
+    General stats...
+    ------ Generating outputs for heuristics --------
+    Reading data...
+    Using custom value function ( from file ../data/Sub40x40/values40x40.csv )
+    ------ Running Heuristic: Max_Utility ------
+    Total Available cells: 1444
+    Running the AS-IS forest (no heuristic applied)
+    End of Cell2FireC execution...
+
+    Treat Fraction 0.05...
+    Adjacent Constraint: False
+    Demand satisfied: True
+    Total fitness (FPV): 92733.0
+    Running the instance with the heuristic...
+    End of Cell2FireC with Harvesting Plan execution...
+    Generating stats from heuristic...
+    General stats...
+
+    Treat Fraction 0.1...
+    Adjacent Constraint: False
+    Demand satisfied: True
+    Total fitness (FPV): 177698.0
+    Running the instance with the heuristic...
+    End of Cell2FireC with Harvesting Plan execution...
+    Generating stats from heuristic...
+    General stats...
+
+    ....
 
 A List of Heuristics
 --------------------
@@ -45,29 +85,16 @@ In parenthesis the number of the heuristic associated with the --heuristic argum
 Output Folders
 --------------
 
-The output folder specified by the user will have the base case without any heuristics. Some heuristics use that info (e.g., bp maps bases heurs) to calculate protection metrics.
+The output directory, specified by the user when executing the command, will have the base case without any heuristics. Some heuristics use that (e.g., bp maps bases heurs) to calculate protection metrics.
 
-Then, the heuristic(s) are applied generating folders per heuristic (inside the Heuristic folder in the aforementioned output folder).
+Then, the heuristic(s) are applied and generates a directory per heuristic in the user-specified output folder.
 
-Inside the individual heuristic folders, you get the outputs of simulations using the heuristic for different treatment/harvesting intensities.
+To access the heuristic results, move to the Heuristic folder. Inside, there is a folder that has the name of the heuristic applied (refer to the list of heuristics in the previous section). For example, if you apply heuristic 2, the name of that directory will be "Max_Utility". Inside that directory, you can find directories that contain the results created by the heuristic - named as FractionX, where X is the treatment/harvesting intensity.
 
-A Simple Experiment
--------------------
-
-We have two bash scripts - one with heuristic 2 and another with heuristic 3. We are going to see which one produces fewer burned cells in FinalStats.csv.
-
-To use this heuristics, a values file is needed. This file gives a value for each cell of the forest. It is space-delimited and specified using the --customValue option.
-
-An example can be found in `data/Sub40x40/values40x40.csv` Note: this file is space-delimited even though the file name extension is .csv. 
-
-This is a sample command to run heuristitic 2 with a custom file that has 40x40 cells.
+For instance, if you run the following command:
 
 ::
 
-  python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 2 --customValue="../data/Sub40x40/values40x40.csv"
+  python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40_H2 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 2 --customValue="../data/Sub40x40/values40x40.csv"
 
-Another sample command to run heuristic 3 with a custom file that has 40x40 cells.
-
-::
-
-  python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../results/Sub40x40 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 3 --customValue="../data/Sub40x40/values40x40.csv"
+The results of Heuristic 2 is stored in "results/Sub40x40_H2/Heuristic/Max_Utility".
