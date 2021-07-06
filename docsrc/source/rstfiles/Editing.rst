@@ -2,8 +2,8 @@
 Editing Weather 
 ===============
 
-One of the benifits of this simulator is the ability to able to modify inputs to create different enviorments.
-To modify inputs for the delme63 example, you will cd to
+One of the benefits of this simulator is the ability to able to modify inputs to create different enviornments.
+To modify inputs for the delme63 example, you will cd to:
 
 .. code-block:: html
    :linenos:
@@ -32,8 +32,8 @@ It is recommended to use the equations found in *Equations for the Canadian Fore
 Temperature & Humidity
 ----------------------
 
-One of the inputs that could be manipulated is the temperature humidity of the enviorment. Predicting the different outcomes that could occur depending heat and humidity of the region. This gives detailed distinction of how a fire would propagate in hot and humid area (example: Norther California), 
-or in a area that is generally colder and with higher amounts of precipitation(example: Calgary, Canada). Temperature is mesured in Celcius while relative humidity is 
+One of the inputs that could be manipulated is the temperature humidity of the enviornment. Predicting the different outcomes that could occur depending on the heat and humidity of the region. This gives detailed distinction of how a fire would propagate in hot and humid area (example: Northern California), 
+or in a area that is generally colder and with higher amounts of precipitation (example: Calgary, Canada). Temperature is measured in Celcius while relative humidity is 
 measured as a percentage. Temperature affects the ignition of fires. Warmer temperatures allow for fuels to ignite and burn faster, adding to the rate at which a wildfire spreads.
 When the humidity is low, meaning that there is a low amount of water vapor in the air, wildfires are more likely to start. 
 The higher the humidity, the less likely the fuel is to dry and ignite.
@@ -41,7 +41,7 @@ The higher the humidity, the less likely the fuel is to dry and ignite.
 Wind Speed and Direction
 ------------------------
 
-Wind influences heavily how effective fires are and how fast they spread through the forest. A stronger signifies a more intense fire causing a wild fire to spread faster. By defult currently we have that the fire 
+Wind influences heavily how effective fires are and how fast they spread through the forest. A stronger wind signifies a more intense fire causing a wild fire to spread faster. By defult currently we have that the fire 
 starts from the bottom left cell. How Wind direction works and is measured as a degree of where the wind is coming from. For example if a wind is coming from east to west it would coming from 0 degrees but wind coming from West to East would be from 180 degrees. Another quick example
 would be if you want to input wind coming from NW direction then it would be between 90 and 180 degrees.
 
@@ -105,7 +105,7 @@ Build Up Index
 The BUI is a weighted combination of the DMC and DC to indicate the total amount of fuel available for combustion by a moving flame front. The Duff Moisture Code (DMC) indicates the moisture content of loosely-compacted organic layers of moderate depth
 while the Drought Code(DC) indicates moisture, content in deep, compact organic layers. The BUI scale starts at zero and is open ended, a rating above 34 is demeed high and after 77 it is considered extreme.
 
-Editing the BUI input would change how much fuel is their is for the fire to spread from the inital cell to the next. The Following test has a low BUI value
+Editing the BUI input would change how much fuel is their is for the fire to spread from the inital cell to the next. The Following test has a low BUI value.
 
 .. image:: ../image/Fire01.jpg
    :width: 23%
@@ -136,15 +136,15 @@ The ISI combines the FFMC and wind speed to indicate the expected rate of fire s
 Generally, a 13 km/h increase in wind speed will double the ISI value. 
 The ISI is accepted as a good indicator of fire spread in open light fuel stands with wind speeds up to 40 km/h.
 
-To explain how ISI works we will have to tests one with low winds and high a FFMC value 
+To explain how ISI works we will have to tests one with low winds and high a FFMC value. 
 
-For Test 1 we have :
+For Test 1 we have:
 
 * Wind speed 4 km/h
 * FFMC 95
 * ISI is calculated to be 35.9
 
-we get the following plots
+we get the following plots:
 
 .. image:: ../image/ISI1.png
   :width: 23%
@@ -155,13 +155,13 @@ we get the following plots
 
 with these values it will take up until the 4th hour to be able to burn all of the cells. 
 
-But knowing that a 13 km/h will double the ISI value test 2 will have values :
+But knowing that a 13 km/h will double the ISI value test 2 will have values:
 
 * Wind speed 17 km/h
 * FFMC 95
 * ISI is calculated to be 71.8
 
-these inputs resulted in the following graphs :
+these inputs resulted in the following graphs:
 
 .. image:: ../image/ISI5.png
   :width: 23%
@@ -170,7 +170,7 @@ these inputs resulted in the following graphs :
 .. image:: ../image/ISI4.png
    :width: 23%
 
-The first image is at the end of the 1st hour and the final image is at the end of the 3rd hour so we are able to see that increasing the ISI will make the fire spread faster
+The first image is at the end of the 1st hour and the final image is at the end of the 3rd hour so we are able to see that increasing the ISI will make the fire spread faster.
 
 
 
