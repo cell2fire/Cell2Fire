@@ -10,3 +10,11 @@ Cell2Fire.egg-info/requires.txt
 Cell2Fire.egg-info/PKG-INFO
 Cell2Fire.egg-info/dependency_links.txt
 data/Sub20x20/Weathers/.DS_Store
+
+# macOS custom file that stores attributes of its folder
+.DS_Store
+
+# Vim temporary files
+*~
+*.swp
+*.swo
