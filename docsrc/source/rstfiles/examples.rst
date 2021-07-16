@@ -2,7 +2,7 @@
 Examples
 ========
 
-At present, this example assumes you are running on a Unix.
+At present, this example assumes you are running on a Unix operating system.
 
 In the contributed folder there is a folder labeled delme63.
 This example uses a 9 cell forest where you are able to change weather, wind speed, etc.  This will provide you results and plots hourly of the fire propagation.
