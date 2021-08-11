@@ -32,8 +32,7 @@ It is recommended to use the equations found in *Equations for the Canadian Fore
 Temperature & Humidity
 ----------------------
 
-One of the inputs that could be manipulated is the temperature humidity of the enviornment. Predicting the different outcomes that could occur depending on the heat and humidity of the region. This gives detailed distinction of how a fire would propagate in hot and humid area (example: Northern California), 
-or in a area that is generally colder and with higher amounts of precipitation (example: Calgary, Canada). Temperature is measured in Celcius while relative humidity is 
+One of the inputs that could be manipulated is the temperature humidity of the enviornment. Predicting the different outcomes that could occur depending on the heat and humidity of the region. This gives detailed distinction of how a fire would propagate in hot and humid weather in when it is  colder and with higher amounts of precipitation. Temperature is measured in Celcius while relative humidity is 
 measured as a percentage. Temperature affects the ignition of fires. Warmer temperatures allow for fuels to ignite and burn faster, adding to the rate at which a wildfire spreads.
 When the humidity is low, meaning that there is a low amount of water vapor in the air, wildfires are more likely to start. 
 The higher the humidity, the less likely the fuel is to dry and ignite.
