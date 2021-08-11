@@ -31,7 +31,13 @@ in the following file location.
 
 * In the python program we need to specify the location of the images which would
 be converted to gif. Once we mention the **.png** files that need to be converted
-we store the output in in the desirsered loction to be used as an output. 
+we run the **gif.py** file to get a gif formed by the **.png** files we just choose. 
+The output will be shown as **gen_output.gif** and can be accessed through the following path: 
+.. code-block:: html
+   :linenos:
+
+   Cell2Fire/results/Sub40x40/Plots/Plots1
+ 
 
 This gif.py file can also be used to convert other outputs to the **.gif** format.
 
