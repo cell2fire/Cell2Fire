@@ -295,13 +295,7 @@ class Statistics(object):
 
         # Create Heatmap
         ax = sns.heatmap(WeightedScar, xticklabels=ticks, yticklabels=ticks, linewidths=0.0, linecolor="w",
-                         square=sq, cmap=tmap, vmin=0.0, vmax=1, annot=False, cbar=False)#cbarF)
-        
-        sm = plt.cm.ScalarMappable(cmap=tmap)#, norm=plt.Normalize(vmin=np.min(0), vmax=np.max(1)))
-        sm._A = []
-        divider = make_axes_locatable(ax)
-        cax1 = divider.append_axes("right", size="5%", pad=0.15)
-        plt.colorbar(sm, cax=cax1)  
+                         square=sq, cmap=tmap, vmin=0.0, vmax=1, annot=False, cbar=False)
 
         # Save it
         if Path is None:
@@ -313,10 +307,10 @@ class Statistics(object):
             spine.set_visible(True)
 
         plt.savefig(os.path.join(Path, namePlot + ".png"), dpi=200, bbox_inches='tight', 
-                    pad_inches=0, transparent=transparent)
+                    pad_inches=1, transparent=transparent)
         if self._pdfOutputs:
             plt.savefig(os.path.join(Path, namePlot + ".pdf"), dpi=200, bbox_inches='tight', 
-                    pad_inches=0, transparent=transparent)
+                    pad_inches=1, transparent=transparent)
         
         
         plt.close("all")
@@ -878,7 +872,7 @@ class Statistics(object):
                 
                 num = str(j+1).zfill(2)
                 self.BPHeatmap(a, Path=PlotPath, nscen=1, sq=True, namePlot="Fire" + num, 
-                               Title="Fire Period " + str(j + 1), cbarF=False, ticks=False,
+                               Title="Fire Period " + str(j + 1), cbarF=True, ticks=False,
                                transparent=True)
             
     
