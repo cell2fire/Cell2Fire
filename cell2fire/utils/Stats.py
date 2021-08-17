@@ -259,6 +259,7 @@ class Statistics(object):
         plt.close("all")
 
     # Burnt Probability Heatmap
+    #   cbarF seems to indicate no legend when true.
     def BPHeatmap(self, WeightedScar, Path=None, nscen=10, sq=False, namePlot="BP_HeatMap", 
                   Title=None, cbarF=True, ticks=100, transparent=False):
         # Figure size
@@ -297,11 +298,13 @@ class Statistics(object):
         ax = sns.heatmap(WeightedScar, xticklabels=ticks, yticklabels=ticks, linewidths=0.0, linecolor="w",
                          square=sq, cmap=tmap, vmin=0.0, vmax=1, annot=False, cbar=False)#cbarF)
         
-        sm = plt.cm.ScalarMappable(cmap=tmap)#, norm=plt.Normalize(vmin=np.min(0), vmax=np.max(1)))
-        sm._A = []
-        divider = make_axes_locatable(ax)
-        cax1 = divider.append_axes("right", size="5%", pad=0.15)
-        plt.colorbar(sm, cax=cax1)  
+        # If cbarF is false, we want the legend
+        if cbarF == False:
+            sm = plt.cm.ScalarMappable(cmap=tmap)#, norm=plt.Normalize(vmin=np.min(0), vmax=np.max(1)))
+            sm._A = []
+            divider = make_axes_locatable(ax)
+            cax1 = divider.append_axes("right", size="5%", pad=0.15)
+            plt.colorbar(sm, cax=cax1)
 
         # Save it
         if Path is None:
@@ -878,7 +881,7 @@ class Statistics(object):
                 
                 num = str(j+1).zfill(2)
                 self.BPHeatmap(a, Path=PlotPath, nscen=1, sq=True, namePlot="Fire" + num, 
-                               Title="Fire Period " + str(j + 1), cbarF=False, ticks=False,
+                               Title="Burned Cells Fire Period " + str(j + 1), cbarF=True, ticks=False,
                                transparent=True)
             
     
@@ -1118,7 +1121,7 @@ class Statistics(object):
             if self._Rows > 100 and self._Rows <= 1000:
                 ticks = 100 
             #print("Ticks", ticks)
-            self.BPHeatmap(WeightedScar, Path=self._StatsFolder, nscen=self._nSims, sq=True, ticks=ticks)
+            self.BPHeatmap(WeightedScar, Path=self._StatsFolder, nscen=self._nSims, sq=True, ticks=ticks, cbarF=False)
             
             # Save BP Matrix
             np.savetxt(os.path.join(self._StatsFolder, "BProb.csv"), WeightedScar, 
