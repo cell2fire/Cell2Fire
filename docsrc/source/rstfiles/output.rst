@@ -1,5 +1,5 @@
 ===================================
-How to Get Output Figures in Readme
+How to Get the Output Figures That Are in Readme
 ===================================
 
 To get the images displayed in `Readme.md <https://github.com/cell2fire/Cell2Fire#output-examples>`__ on the GitHub page, first follow the instructions in :ref:`How to Run Simulator` on the previous page to run the fist command listed. After this is done, the four images displayed below  
