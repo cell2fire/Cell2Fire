@@ -30,16 +30,14 @@ through the python file.
 Here are the specific steps to gain a gif file:
 
 1. cd to a plot sets we want to get a gif image.
-   Take Plots1 as an example:
-
+Take Plots1 as an example:
 .. code-block:: html
    :linenos:
 
    cd Cell2Fire/results/Sub40x40/Plots/Plots1
 
 2. run  **gif.py** file for the plot set we choose.
-   run the command like:
-
+run the command like:
 .. code-block:: html
    :linenos:
 
