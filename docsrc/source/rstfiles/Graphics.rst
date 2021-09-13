@@ -1,45 +1,61 @@
 =====================================
-Create Graphics for Forest Fire Model
+Create GIF file for Forest Fire Model
 =====================================
 
-Once we have run our Cell2Fire using docker image we create various outputs in
-the form of **.png** which are saved in the contributed folder.
-As the outputs are based on same geographical location with change in time being
-the only difference, therefore we can easily showcase these images in the form of clips.
-This would make it simpler to analyze the spread of fire and the magnitude of
-its extent.
+We can gain short movie of files plots and observe the trends of the images. 
+After running the simulator of the Cell2Fire project, we obtain several plots as outputs
+shown in the **Plots** repository. We can cd to the following location to verify that:
 
-To convert the images in the form of **.gif** files we have to follow these steps:
+.. code-block:: html
+   :linenos:
+
+   cd Cell2Fire/results/Sub40x40/Plots
+
+or we can just check that in the folder, like what it shows:
+
+.. image:: ../image/gifgenerate/cell2firegeneratinggif.png
+   :width: 40%
+
+
+Here are the specific steps of how to generating **gif** files from the outputs. 
+
+
+Steps to convert images to the form of **.gif** files:
 ----------------------------------------------------------------------------------
 
-* We need to download **Pillow** to convert .png files to .gif.
-Open the bash window and download using the command
+The gif file can be gained when we run the **gif.py** file, and what we need to do is
+to set severial pictures that we want to combined as a short "movie"to be runned
+through the python file.
+
+Here are the specific steps to gain a gif file:
+
+1. cd to a plot sets we want to get a gif image.
+   Take Plots1 as an example:
 
 .. code-block:: html
    :linenos:
 
-   pip install Pillow
+   cd Cell2Fire/results/Sub40x40/Plots/Plots1
 
-
-* Once we have installed the pillow package we could open our code block gif.py
-in the following file location.
+2. run  **gif.py** file for the plot set we choose.
+   run the command like:
 
 .. code-block:: html
    :linenos:
 
-   mydirectory/Cell2Fire/docsrc/source/gif.py
+   python gif.py
 
-* In the python program we need to specify the location of the images which would
-be converted to gif. Once we mention the **.png** files that need to be converted
-we run the **gif.py** file to get a gif formed by the **.png** files we just choose. 
-The output will be shown as **gen_output.gif** and can be accessed through the following path: 
+3. The output will be shown as **gen_output.gif** and can be accessed through the following path:
 .. code-block:: html
    :linenos:
 
    Cell2Fire/results/Sub40x40/Plots/Plots1
- 
 
-This gif.py file can also be used to convert other outputs to the **.gif** format.
+We can check that in the folder and open it.
 
+.. image:: ../image/gifgenerate/gifoutput.png
+   :width: 40%
+
+The **gif** image can be gained.
 
 
