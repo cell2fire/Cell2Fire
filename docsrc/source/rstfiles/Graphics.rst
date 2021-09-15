@@ -1,23 +1,19 @@
 =====================================
-Create GIF file for Forest Fire Model
+Create GIF image for Forest Fire Model
 =====================================
 
 We can gain short movie of files plots and observe the trends of the images. 
 After running the simulator of the Cell2Fire project, we obtain several plots as outputs
 shown in the **Plots** repository. We can cd to the following location to verify that:
-
 .. code-block:: html
    :linenos:
 
    cd Cell2Fire/results/Sub40x40/Plots
 
-or we can just check that in the folder, like what it shows:
-
-.. image:: ../image/gifgenerate/cell2firegeneratinggif.png
-   :width: 40%
+or we can just check that in the folder locally.
 
 
-Here are the specific steps of how to generating **gif** files from the outputs. 
+Here are the specific steps about how to generating **gif** files from the outputs. 
 
 
 Steps to convert images to the form of **.gif** files:
@@ -51,7 +47,7 @@ run the command like:
 
 We can check that in the folder and open it.
 
-.. image:: ../image/gifgenerate/gifoutput.png
+.. image:: ../image/gifgenerate/gifpicture.png
    :width: 40%
 
 The **gif** image can be gained.
