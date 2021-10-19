@@ -20,7 +20,7 @@ Steps to convert images to the form of **.gif** files:
 ----------------------------------------------------------------------------------
 
 The gif file can be gained when we run the **gif.py** file, and what we need to do is
-to set severial pictures that we want to combined as a short "movie"to be runned
+to set severial pictures that we want to combined as a short "movie"to be run
 through the python file.
 
 Here are the specific steps to gain a gif file:
