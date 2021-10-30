@@ -13,7 +13,7 @@ in the **Plots** directory. We can cd to the following location to verify that:
 or we can just check that in the folder locally.
 
 
-Here are the specific steps about how to generating **gif** files from the outputs. 
+Here are the specific steps about how to generate a **gif** file from the outputs. 
 
 
 Steps to convert images to the form of **.gif** files:
