@@ -2,9 +2,9 @@
 Create GIF image for Forest Fire Model
 =====================================
 
-We can gain short movie of files plots and observe the trends of the images. 
+We can create a short movie of files plots and observe the trends of the images. 
 After running the simulator of the Cell2Fire project, we obtain several plots as outputs
-shown in the **Plots** repository. We can cd to the following location to verify that:
+in the **Plots** directory. We can cd to the following location to verify that:
 .. code-block:: html
    :linenos:
 
@@ -19,13 +19,11 @@ Here are the specific steps about how to generating **gif** files from the outpu
 Steps to convert images to the form of **.gif** files:
 ----------------------------------------------------------------------------------
 
-The gif file can be gained when we run the **gif.py** file, and what we need to do is
-to set severial pictures that we want to combined as a short "movie"to be run
-through the python file.
+The gif file can be created when we run the **gif.py** file, which combines several .png files into a short "movie".
 
-Here are the specific steps to gain a gif file:
+Here are the specific steps to create the gif file:
 
-1. cd to a plot sets we want to get a gif image.
+1. cd to a plot dirctory that contains the png files that we want to use to create the gif file.
 Take Plots1 as an example:
 .. code-block:: html
    :linenos:
@@ -50,6 +48,6 @@ We can check that in the folder and open it.
 .. image:: ../image/gifgenerate/gifpicture.png
    :width: 40%
 
-The **gif** image can be gained.
+The **gif** file can be opened to see the animation.
 
 
