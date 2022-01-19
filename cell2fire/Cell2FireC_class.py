@@ -20,7 +20,6 @@ p = str(cell2fire.__path__)
 l = p.find("'")
 r = p.find("'", l+1)
 cell2fire_path = p[l+1:r]
-print("cell2fire_path",cell2fire_path)
 
 class Cell2FireC:
     # Constructor and initial run
