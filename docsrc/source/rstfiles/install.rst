@@ -33,3 +33,10 @@ and edit Makefile to have the correct path to Eigen. Then,
       pip install -r requirements.txt
       python setup.py develop
 
+Parallel Version
+----------------
+
+To install the parallel version, make use of the files in
+``Cell2Fire/cell2fire/Cell2FireC/parallel_code``. (You will
+need to copy files to the appropriate places; this is
+not a task for beginners).
