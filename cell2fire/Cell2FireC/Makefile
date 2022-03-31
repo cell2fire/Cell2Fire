@@ -9,15 +9,18 @@ LIBS = -m64 -fPIC -fno-strict-aliasing -fexceptions -DNDEBUG -DIL_STD -lm -lpthr
 TARGETS = Cell2Fire
 all:	$(TARGETS)
 
-OS = 0 # 0 if Ubuntu, 1 if Mac
-PARALLEL = 0 # 0 if serial, 1 if parallel
+# if not Ubuntu, then OSX is assumed.
+OS = Ubuntu
+
+# Mode is Parallel if it is not Serial
+MODE=Serial
 PARALLEL_DIR = parallel_code/Cell2FireParallel/Cell2FireC_Parallel
 
 Cell2Fire: Cell2Fire.o CellsFBP.o FBPfunc5_NoDebug.o SpottingFBP.o ReadCSV.o ReadArgs.o Lightning.o WriteCSV.o Ellipse.o
-ifeq ($(PARALLEL), 0)
+ifeq ($(MODE), Serial)
 		$(CC) -o $@ $(LIBS) Cell2Fire.o CellsFBP.o FBPfunc5_NoDebug.o SpottingFBP.o ReadCSV.o ReadArgs.o Lightning.o WriteCSV.o Ellipse.o
 else
-ifeq ($(OS), 0)
+ifeq ($(OS), Ubuntu)
 	$(CC) -o $@ $(LIBS) -fopenmp Cell2Fire.o CellsFBP.o FBPfunc5_NoDebug.o SpottingFBP.o ReadCSV.o ReadArgs.o Lightning.o WriteCSV.o Ellipse.o
 else
 	$(CC) -o $@ $(LIBS) -Xclang -fopenmp -lomp Cell2Fire.o CellsFBP.o FBPfunc5_NoDebug.o SpottingFBP.o ReadCSV.o ReadArgs.o Lightning.o WriteCSV.o Ellipse.o
@@ -25,10 +28,10 @@ endif
 endif
 
 Cell2Fire.o: Cell2Fire.cpp CellsFBP.o FBPfunc5_NoDebug.o SpottingFBP.o ReadCSV.o ReadArgs.o WriteCSV.o
-ifeq ($(PARALLEL), 0)
+ifeq ($(MODE), Serial)
 	$(CC) -c $(CFLAGS) Cell2Fire.cpp
 else
-ifeq ($(OS), 0)
+ifeq ($(OS), Ubuntu)
 	$(CC) -c $(CFLAGS) -fopenmp Cell2Fire.cpp
 else
 	$(CC) -c $(CFLAGS) -Xclang -fopenmp -lomp Cell2Fire.cpp
@@ -48,7 +51,7 @@ ReadCSV.o: ReadCSV.cpp ReadCSV.h FBPfunc5_NoDebug.o
 	$(CC) -c $(CFLAGS) ReadCSV.cpp
 
 READARGS = ReadArgs
-ifeq ($(PARALLEL), 1)
+ifneq ($(MODE), Serial)
 	READARGS = $(PARALLEL_DIR)/ReadArgs
 endif
 
