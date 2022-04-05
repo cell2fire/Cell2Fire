@@ -17,6 +17,16 @@ MODE=Serial
 PARALLEL_DIR = parallel_code/Cell2FireParallel/Cell2FireC_Parallel
 
 Cell2Fire: Cell2Fire.o CellsFBP.o FBPfunc5_NoDebug.o SpottingFBP.o ReadCSV.o ReadArgs.o Lightning.o WriteCSV.o Ellipse.o
+
+# This will cause 'Extraneous text after `ifneq' directive'
+ifneq ($(OS), Ubuntu) && ($(OS), OSX))
+$(info OS must be either Ubuntu or OSX)
+endif
+
+ifneq ($(MODE), Serial) && ($(MODE), Parallel))
+$(info MODE must be either Serial or Parallel)
+endif
+
 ifeq ($(MODE), Serial)
 		$(CC) -o $@ $(LIBS) Cell2Fire.o CellsFBP.o FBPfunc5_NoDebug.o SpottingFBP.o ReadCSV.o ReadArgs.o Lightning.o WriteCSV.o Ellipse.o
 else
