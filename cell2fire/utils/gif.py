@@ -9,7 +9,7 @@ import os
 #print(sys.argv[1],sys.argv[2])
 
 if len(sys.argv) != 3:
-   print("location of pictures is needed, type the commendline in the form of: python -m cell2fire.utils.gif.py 'locationpath' 'outputpath'")
+   print("location of pictures is needed, type the commandline in the form of: python -m cell2fire.utils.gif.py 'locationpath' 'outputpath'")
    quit()
 	
 imageInput = sys.argv[1]+"/Fire??.png"
