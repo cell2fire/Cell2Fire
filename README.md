@@ -21,6 +21,19 @@ Work in progress documentation is available at
 original draft of a paper on
 [arXiv](https://arxiv.org/abs/1905.09317v1).
 
+# Citation
+
+@ARTICLE{Cell2Fire,
+AUTHOR={Pais, Cristobal and Carrasco, Jaime and Martell, David L. and Weintraub, Andres and Woodruff, David L.},
+TITLE={Cell2Fire: A Cell-Based Forest Fire Growth Model to Support Strategic Landscape Management Planning},  
+JOURNAL={Frontiers in Forests and Global Change},
+VOLUME={4},
+YEAR={2021},
+URL={https://www.frontiersin.org/articles/10.3389/ffgc.2021.692706},
+DOI={10.3389/ffgc.2021.692706},
+ISSN={2624-893X}
+}
+   
 # Requirements
 - g++
 - Boost (C++)
