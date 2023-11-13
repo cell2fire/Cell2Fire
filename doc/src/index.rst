@@ -29,13 +29,4 @@ This software is for research use only. There is no warranty of any kind; there 
    rstfiles/HarvestedCells.rst
    rstfiles/HarvestPlan.rst
    rstfiles/heuristics.rst
-   rstfiles/Pariticpate.rst
-
-
-
-   
-
-   
-
-   
-
+   rstfiles/Particpate.rst
