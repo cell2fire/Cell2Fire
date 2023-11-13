@@ -3,7 +3,7 @@ Cell2Fire: A Cell Based Forest Fire Growth Model C++/Python
 .. image:: /image/LOGO.png
    :width: 35%
 
-Cell2Fire is a new cell-based forest and wildland landscape fire spread simulator.
+Cell2Fire is a cell-based forest and wildland landscape fire spread simulator.
 
 Disclaimer
 ----------
@@ -11,8 +11,8 @@ This software is for research use only. There is no warranty of any kind; there 
 
 .. toctree::
    :maxdepth: 2
-   
-   
+
+
    rstfiles/WhyCell2Fire.rst
    rstfiles/intro.rst
    rstfiles/requirements.rst
