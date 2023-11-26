@@ -22,7 +22,7 @@ and runs ``test_20x20.py`` to complete the test.
    As of late 2023 the C++ code is tested by the Python tests, but
    there are no direct unit tests of that code. Furthermore, the
    extant Python tests rely on the github yml drivers to run
-   Cell2Fire once to avoid the ned to call the C++ code
+   Cell2Fire once to avoid the need to call the C++ code
    from within the Python ``unittest`` framework (using
    the Cell2Fire ``--onlyProcessing`` option.)
    
