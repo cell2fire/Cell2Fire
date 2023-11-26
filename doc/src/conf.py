@@ -40,46 +40,25 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+source_suffix = '.rst'
+
+# The root toctree document.
+root_doc = 'index'
+
+# General information about the project.
+project = u'Cell2Fire'
+
+# The root toctree document.
+root_doc = 'index'
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-#####import sphinx_rtd_theme
 
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+html_theme ='sphinx_rtd_theme'
 
-if not on_rtd:  # only import and set the theme if we're building docs locally
-    import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-    # Override default css to get a larger width for local build
-    def setup(app):
-        app.add_css_file('theme_overrides.css')
-    html_context = {
-        'css_files': [
-            '_static/theme_overrides.css',
-        ],
-    }
-else:
-    html_context = {
-        'css_files': [
-            'https://media.readthedocs.org/css/sphinx_rtd_theme.css',
-            'https://media.readthedocs.org/css/readthedocs-doc-embed.css',
-            '_static/theme_overrides.css',
-        ],
-    }
-
-
-#extensions = [
- #   ...
-  #  'sphinx_rtd_theme',
-#]
-
-#####html_theme ='sphinx_rtd_theme'
-
-master_doc = "index"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -87,3 +66,36 @@ master_doc = "index"
 html_static_path = ['_static']
 
 
+# -- Options for HTMLHelp output ------------------------------------------
+
+# Output file base name for HTML help builder.
+htmlhelp_basename = 'cell2fire'
+
+
+# -- Options for LaTeX output ---------------------------------------------
+
+latex_elements = {
+    # The paper size ('letterpaper' or 'a4paper').
+    #
+    # 'papersize': 'letterpaper',
+
+    # The font size ('10pt', '11pt' or '12pt').
+    #
+    # 'pointsize': '10pt',
+
+    # Additional stuff for the LaTeX preamble.
+    #
+    # 'preamble': '',
+
+    # Latex figure (float) alignment
+    #
+    # 'figure_align': 'htbp',
+}
+
+# Grouping the document tree into LaTeX files. List of tuples
+# (source start file, target name, title,
+#  author, documentclass [howto, manual, or own class]).
+latex_documents = [
+    (root_doc, 'cell2fire.tex', 'Cell2Fire Documentation',
+     'cell2fire', 'manual'),
+]
