@@ -1,5 +1,5 @@
 # coding: utf-8
-__version__ = "2.0"
+__version__ = "2.1"
 __author__ = "Cristobal Pais"
 __maintainer__ = "Jaime Carrasco, Cristobal Pais, David Woodruff"
 __status__ = "Alpha Operational"
@@ -7,7 +7,7 @@ __status__ = "Alpha Operational"
 # Importations
 # import sys
 import os
-import imread
+import cv2
 
 #Visual importations
 from matplotlib.pylab import *
@@ -686,14 +686,14 @@ class Plot:
     '''
     # Mixes the evolution plots with the base forest (initial state for saving memory/time)
     def Mix(self,Folder,filen,Sim):
-        img = imread(os.path.join(Folder, "ForestInitial.png"))
+        img = cv2.imread(os.path.join(Folder, "ForestInitial.png"))
         fstr = str(filen).zfill(4)
         
         #Path and name of the file
         PathFile = os.path.join(Folder, "Plots", "Plots"+str(Sim), "forest" + fstr + ".png")
         
         # Reads the basic forest
-        img2 = imread(PathFile)
+        img2 = cv2.imread(PathFile)
         
         # Over plot
         gca().set_axis_off()
@@ -710,7 +710,7 @@ class Plot:
     
     def MultiFireMix(self,Folder,nSims,mode="Scale",probs=[]):
             # Read initial forest status
-            imgForest = imread(os.path.join(Folder, "ForestInitial.png"))
+            imgForest = cv2.imread(os.path.join(Folder, "ForestInitial.png"))
             #fstr = str(filen).zfill(4)
             
             # If no probs provided, alpha = 0.25 by default (otherwise, transparency is proportional to the fire probability)
@@ -730,7 +730,7 @@ class Plot:
             imgArray = []
         
             for i in range(nSims):
-                imgArray.append(imread(PathFile[i]))
+                imgArray.append(cv2.imread(PathFile[i]))
                 #print(imgArray[i].shape)
             
             # Summation mode: sum the pixels values for highlighting the intersections of fires (more intense than Scale)

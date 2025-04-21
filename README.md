@@ -38,14 +38,14 @@ ISSN={2624-893X}
 - g++
 - Boost (C++)
 - Eigen (C++)
-- Python 3.6
+- Python >3.6; you might need 3.12
 - numpy
 - pandas
 - matplotlib
 - seaborn
 - tqdm
 - opencv
-- imread
+- imageio (replaced imread, April 2026)
 - networkx (for stats module)
 
 # Installation
@@ -56,7 +56,7 @@ Installation may require some familiarity with C++, make, and Python.
 - make
 - cd ../..
 - pip install -r requirements.txt  # might not do anything
-- python setup.py develop
+- pip install -e .
 
 # Usage
 In order to run the simulator (after installation and cd to  Cell2Fire/cell2fire), the following command can be used:
