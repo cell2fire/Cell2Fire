@@ -15,6 +15,7 @@ jobs:
   build:
     name: sub20x20
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v3
       - uses: conda-incubator/setup-miniconda@v2
@@ -50,14 +51,15 @@ jobs:
         run: |
            cd cell2fire
            python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/Sub20x20 --ignitions --sim-years 1 --nsims 5 --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.0 --seed 123 --stats --allPlots --IgnitionRad 5 --grids --combine
-
+      - name: Install pytest
+        run: pip install pytest
       - name: run tests
         run: |
           cd tests
           pytest test_20x20.py --cov=../cell2fire --cov=./ --cov-report=xml
           
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           file: ./tests/coverage.xml
           flags: unittests
