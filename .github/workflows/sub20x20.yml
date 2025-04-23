@@ -23,6 +23,8 @@ jobs:
           python-version: 3.12
           auto-activate-base: false
 
+      - name: Install Boost
+        run: sudo apt-get update && sudo apt-get install -y libboost-all-dev
       - name: make C++
         run: |
           cd cell2fire/Cell2FireC
