@@ -308,7 +308,7 @@ class Cell2FireC:
                 print("Generating initial forest plot...")
                 FBPlookup = os.path.join(self.args.InFolder, "fbp_lookup_table.csv")
                 if self.args.HCells is not None: 
-                    HCarray = np.loadtxt(self.args.HCells, skiprows=1, delimiter=",")[1:].astype(np.int)
+                    HCarray = np.loadtxt(self.args.HCells, skiprows=1, delimiter=",")[1:].astype(int)
                     print("HCArray:", HCarray)
                     print("GForestN:", self._GForestN)
                     self._GForestN = self._GForestN.flatten()
@@ -414,7 +414,7 @@ class Cell2FireC:
             print("Generating initial forest plot...")
             FBPlookup = os.path.join(self.args.InFolder, "fbp_lookup_table.csv")
             if HCells is not None: 
-                HCarray = np.loadtxt(HCells, skiprows=1, delimiter=",")[1:].astype(np.int)
+                HCarray = np.loadtxt(HCells, skiprows=1, delimiter=",")[1:].astype(int)
                 self._GForestN = self._GForestN.flatten()
                 for i in HCarray:
                     self._GForestN[i-1] = -1                    
@@ -622,7 +622,7 @@ class Cell2FireC:
 
                 # Create the aux DF for saving the harvested cells in different files depending on the treated fraction %
                 np.savetxt(os.path.join(csvPath, SelHeur + "_" +str(fr) + ".csv"), 
-                           np.asarray([1] + actions).reshape(1, len(actions) + 1).astype(np.int), 
+                           np.asarray([1] + actions).reshape(1, len(actions) + 1).astype(int), 
                            delimiter=",", fmt="%d", header="Year,HCells", comments='')
                 step += 1
                 

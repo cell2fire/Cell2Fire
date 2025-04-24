@@ -67,7 +67,7 @@ class GenHeur(object):
         Given an individual, check the number of adjacent components (in matricial form) 
         """
         def adjConstraint(individual):
-            structure = np.ones((3, 3), dtype=np.int)
+            structure = np.ones((3, 3), dtype=int)
             labeled, ncomponents = label(individual, structure)
             return ncomponents
         """
@@ -917,8 +917,8 @@ class Heuristic(object):
                 
                 # Update auxiliary sets
                 toHarvestCells = set(idx[:Demand])
-                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                 
                 if self._verbose:
                     print("Initial values")
@@ -1034,8 +1034,8 @@ class Heuristic(object):
                 
                 # Update auxiliary sets
                 toHarvestCells = set(idx[:Demand])
-                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                 
                 if self._verbose:
                     print("Initial values")
@@ -1156,8 +1156,8 @@ class Heuristic(object):
 
                 # Update auxiliary sets
                 toHarvestCells = set(idx[:Demand])
-                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                 AvailCells -= set(idx[:Demand])
 
                 # Information
@@ -1348,8 +1348,8 @@ class Heuristic(object):
 
                     # Update auxiliary sets
                     toHarvestCells = set(idx[:Demand])
-                    TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                    TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                    TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                    TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                     AvailCells -= set(idx[:Demand])
 
                     if self._verbose:
@@ -1387,8 +1387,8 @@ class Heuristic(object):
 
                 # Update auxiliary sets
                 toHarvestCells = set(idx[:Demand])
-                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                 AvailCells -= set(idx[:Demand])
 
                 # Information
