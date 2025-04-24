@@ -56,13 +56,5 @@ jobs:
       - name: run tests
         run: |
           cd tests
-          pytest test_20x20.py --cov=../cell2fire --cov=./ --cov-report=xml
-          
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./tests/coverage.xml
-          flags: unittests
-          ###env_vars: OS,PYTHON
-          name: codecov-umbrella
-          fail_ci_if_error: false
+          pytest test_20x20.py
+
