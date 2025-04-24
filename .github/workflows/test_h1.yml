@@ -1,30 +1,45 @@
 name: test_h1 # Kotaro Yama
+# dropped the Docker container use (DLW April 2025)
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+
+defaults:
+  run:
+    shell: bash -l {0}
 
 jobs:
   build:
-
+    name: test_h1
     runs-on: ubuntu-latest
-    container:
-        image: dlwoodruff/c2fcondatest:latest
-        env:
-          PATH: /opt/conda/bin:/opt/conda/condabin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
+    timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: test_env
+          python-version: 3.12
+          auto-activate-base: false
+
+      - name: Install Boost
+        run: sudo apt-get update && sudo apt-get install -y libboost-all-dev
+      - name: Install Eigen
+        run: sudo apt-get update && sudo apt-get install -y libeigen3-dev
 
       - name: make C++
         run: |
           cd cell2fire/Cell2FireC
           make
+      - name: install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install flake8
       - name: setup the program
         run: |
-          python setup.py develop
+          pip install -e .
   
       - name: Lint with flake8
         run: |
@@ -37,17 +52,10 @@ jobs:
           cd cell2fire
           python main.py --input-instance-folder ../data/Sub20x20/ --output-folder ../results/Sub20x20/Sub20_RW_RI_N10 --sim-years 2 --nsims 10 --finalGrid --weather random --nweathers 100 --Fire-Period-Length 1.0 --ROS-CV 0.0 --seed 123 --IgnitionRad 0 --stats --output-messages --ROS-Threshold 0 --HFI-Threshold 0 --heuristic 1
 
+      - name: Install pytest
+        run: pip install pytest
       - name: run tests
         run: |
           cd tests
-          pytest test_h1.py --cov=../cell2fire --cov=./ --cov-report=xml
-          
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          file: ./tests/coverage.xml
-          flags: unittests
-          ###env_vars: OS,PYTHON
-          name: codecov-umbrella
-          fail_ci_if_error: false
+          pytest test_h1.py
 

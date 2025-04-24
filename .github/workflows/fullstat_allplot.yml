@@ -13,7 +13,7 @@ defaults:
 
 jobs:
   build:
-    name: sub20x20
+    name: fullStatAllPlot
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -52,6 +52,8 @@ jobs:
         run: |
            cd cell2fire
            python main.py --input-instance-folder ../data/dogrib/ --output-folder ../results/dogrib_n100cv05 --ignitions --sim-years 1 --nsims 3 --grids --finalGrid --weather rows --nweathers 1 --Fire-Period-Length 1.0 --output-messages --ROS-CV 0.5 --seed 123 --IgnitionRad 0 --stats --allPlots
+      - name: Install pytest
+        run: pip install pytest
 
       - name: run tests
         run: |

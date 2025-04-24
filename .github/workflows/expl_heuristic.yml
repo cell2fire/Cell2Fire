@@ -14,7 +14,7 @@ defaults:
 
 jobs:
   build:
-    name: sub20x20
+    name: expl_heuristic
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -52,6 +52,8 @@ jobs:
         run: |
           cd cell2fire
           python main.py --input-instance-folder ../data/Sub40x40/ --output-folder ../Results/Sub40_n5cv1 --ignitions --sim-years 1 --nsims 5 --grids --finalGrid --weather rows --nweathers 129 --Fire-Period-Length 1.0 --output-messages --ROS-CV 1.0 --seed 123 --IgnitionRad 0 --stats --spreadPlots --heuristic -1
+      - name: Install pytest
+        run: pip install pytest
 
       - name: run tests
         run: |
