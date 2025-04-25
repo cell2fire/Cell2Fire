@@ -1557,8 +1557,6 @@ class Heuristic(object):
 			
             # Save
             # savefig calls used to have figsize=(200, 200),  (april 2025)
-            plt.figure(figsize=(200,200))
-            
             plt.savefig(os.path.join(self._OutFolder, "Global_FPV_Graph_Normalized_v" + str(self._version)+  ".png"),
                     dpi=200,
                     bbox_inches='tight', transparent=False)
@@ -1587,8 +1585,9 @@ class Heuristic(object):
             plt.colorbar(sm, cax=cax)  
             
             # Save it to Heuristic folder
+            # removed figsize=(200, 200), April 2025
             plt.savefig(os.path.join(self._OutFolder, "Global_FPV_Graph_v" + str(self._version)+  ".png"),
-                        dpi=200,  figsize=(200, 200), 
+                        dpi=200,  
                         bbox_inches='tight', transparent=False)
             plt.close("all")
     
@@ -1638,9 +1637,10 @@ class Heuristic(object):
                              vmin=0, vmax=np.max((FPVMatrix))) 
 
         # Save it to plots folder
+        # removed figsize=(200, 200) from savefig April 2025 
         plt.savefig(os.path.join(self._OutFolder, "Plots", "Plots" + str(nSim), 
                                  "FPV_Graph" + str(nSim) + ".png"),
-                    dpi=200,  figsize=(200, 200), 
+                    dpi=200,  
                     bbox_inches='tight', transparent=False)
         plt.close("all")
         

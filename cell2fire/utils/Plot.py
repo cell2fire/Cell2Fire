@@ -300,7 +300,8 @@ class Plot:
         PathFile = os.path.join(Folder,"forest"+fstr+".png")
         
         #Save the file
-        plt.savefig(PathFile, dpi=200, figsize=(200, 200), bbox_inches='tight', transparent=True)
+        # removed figsize=(200, 200), April 2025
+        plt.savefig(PathFile, dpi=200,  bbox_inches='tight', transparent=True)
         plt.close("all")
         
         if showtrue == True:
@@ -486,7 +487,9 @@ class Plot:
         PathFile = os.path.join(Folder,"forest"+fstr+".png")
         
         #Save the file
-        plt.savefig(PathFile, dpi=200, figsize=(200, 200), bbox_inches='tight', transparent=True)
+        # removed figsize=(200, 200), April 2025
+        
+        plt.savefig(PathFile, dpi=200, bbox_inches='tight', transparent=True)
         plt.close("all")
         
         if showtrue == True:
@@ -670,7 +673,8 @@ class Plot:
         PathFile = os.path.join(Folder,"forest"+fstr+".png")
                
         #Save the file
-        plt.savefig(PathFile, dpi=200, figsize=(200, 200), bbox_inches='tight', transparent=True)
+        # removed figsize=(200, 200), April 2025        
+        plt.savefig(PathFile, dpi=200, bbox_inches='tight', transparent=True)
         plt.close("all")
         
         if showtrue == True:

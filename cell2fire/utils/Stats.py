@@ -604,7 +604,6 @@ class Statistics(object):
                 cax1 = divider.append_axes("right", size="5%", pad=0.15)
                 plt.colorbar(sm, cax=cax1)
             # both savefig calls used to have figsize=(200, 200),  (april 2025)
-            plt.figure(figsize=(200,200))
             plt.savefig(os.path.join(self._StatsFolder, "SpreadTree_FreqGraph_" + outname + ".png"), 
                         dpi=200,
                         bbox_inches='tight', transparent=False)
@@ -639,7 +638,7 @@ class Statistics(object):
         # We generate the plot
         if print_graph:
 
-            # plt.figure(figsize = (15, 9)) 
+            plt.figure(figsize = (15, 9)) # ??? consider removing (April 2025)
 
             # Font sizes
             plt.rcParams['font.size'] = 16
@@ -683,7 +682,6 @@ class Statistics(object):
             if os.path.isdir(PlotPath) is False:
                 os.makedirs(PlotPath)
             # both savefig calls used to have figsize=(200, 200), (April 2025)
-            plt.figure(figsize=(200,200))
             plt.savefig(os.path.join(PlotPath, "PropagationTree" + str(nSim) +".png"), 
                         dpi=200, edgecolor='b', 
                         bbox_inches='tight', transparent=False)
@@ -747,7 +745,7 @@ class Statistics(object):
                                        node_shape='s',
                                        node_color = Colors)
 
-            # plt.figure(figsize = (15, 9)) 
+            plt.figure(figsize = (15, 9)) # consider removing (April 2025)
 
             # Font sizes
             plt.rcParams['font.size'] = 16
@@ -827,7 +825,6 @@ class Statistics(object):
             cax1 = divider.append_axes("right", size="5%", pad=0.05)
             plt.colorbar(sm, cax=cax1)
             # both savefig calls used to have figsize=(200, 200), (April 2025)            
-            plt.figure(figsize=(200,200))
             plt.savefig(os.path.join(PlotPath, "FireSpreadTree" + str(nSim) + "_" + str(version) + ".png"),
                         dpi=200,
                         bbox_inches='tight', transparent=False)
