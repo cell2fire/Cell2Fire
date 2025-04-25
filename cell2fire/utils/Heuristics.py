@@ -28,7 +28,7 @@ import random
 
 # Genetic algorithm 
 from deap import algorithms, base, creator, tools
-from scipy.ndimage.measurements import label
+from scipy.ndimage import label
 
 # Genetic selection object 
 class GenHeur(object):
@@ -1556,8 +1556,11 @@ class Heuristic(object):
             for _, spine in ax.spines.items():spine.set_visible(True)
 			
             # Save
+            # savefig calls used to have figsize=(200, 200),  (april 2025)
+            plt.figure(figsize=(200,200))
+            
             plt.savefig(os.path.join(self._OutFolder, "Global_FPV_Graph_Normalized_v" + str(self._version)+  ".png"),
-                    dpi=200,  figsize=(200, 200), 
+                    dpi=200,
                     bbox_inches='tight', transparent=False)
             plt.close("all")
             
