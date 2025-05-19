@@ -165,7 +165,7 @@ class Statistics(object):
         plt.title(title)
 
         #sns.set(style="darkgrid", font_scale=1.5)
-        ax = sns.boxplot(x=xx, y=yy, data=Data, linewidth=2.5, palette=pal).set(xlabel=xlab,ylabel=ylab)    
+        ax = sns.boxplot(x=xx, y=yy, hue=xx, data=Data, linewidth=2.5, palette=pal, legend=False).set(xlabel=xlab, ylabel=ylab)
         if swarm:
             ax = sns.swarmplot(x=xx, y=yy, data=Data, linewidth=2.5, palette=pal).set(xlabel=xlab,ylabel=ylab)   
 
@@ -288,7 +288,7 @@ class Statistics(object):
             plt.title(Title)
 
         # Modify existing map to have white values
-        cmap = cm.get_cmap('RdBu_r')
+        cmap = matplotlib.colormaps['RdBu_r']
         lower = plt.cm.seismic(np.ones(1)*0.50)  # Original is ones 
         upper = cmap(np.linspace(0.5, 1, 100))
         colors = np.vstack((lower,upper))
@@ -603,13 +603,13 @@ class Statistics(object):
                 divider = make_axes_locatable(ax)
                 cax1 = divider.append_axes("right", size="5%", pad=0.15)
                 plt.colorbar(sm, cax=cax1)
-                
+            # both savefig calls used to have figsize=(200, 200),  (april 2025)
             plt.savefig(os.path.join(self._StatsFolder, "SpreadTree_FreqGraph_" + outname + ".png"), 
-                        dpi=200, figsize=(200, 200), 
+                        dpi=200,
                         bbox_inches='tight', transparent=False)
             if self._pdfOutputs:
                 plt.savefig(os.path.join(self._StatsFolder, "SpreadTree_FreqGraph_" + outname + ".pdf"), 
-                            dpi=200, figsize=(200, 200), 
+                            dpi=200, 
                             bbox_inches='tight', transparent=False)
             plt.close("all")
 
@@ -638,7 +638,7 @@ class Statistics(object):
         # We generate the plot
         if print_graph:
 
-            # plt.figure(figsize = (15, 9)) 
+            plt.figure(figsize = (15, 9)) # ??? consider removing (April 2025)
 
             # Font sizes
             plt.rcParams['font.size'] = 16
@@ -681,14 +681,14 @@ class Statistics(object):
             PlotPath = os.path.join(self._OutFolder, "Plots", "Plots" + str(nSim))
             if os.path.isdir(PlotPath) is False:
                 os.makedirs(PlotPath)
-            
+            # both savefig calls used to have figsize=(200, 200), (April 2025)
             plt.savefig(os.path.join(PlotPath, "PropagationTree" + str(nSim) +".png"), 
-                        dpi=200, figsize=(200, 200), edgecolor='b', 
+                        dpi=200, edgecolor='b', 
                         bbox_inches='tight', transparent=False)
             
             if self._pdfOutputs:
                 plt.savefig(os.path.join(PlotPath, "PropagationTree" + str(nSim) +".pdf"), 
-                            dpi=200, figsize=(200, 200), edgecolor='b', 
+                            dpi=200, edgecolor='b', 
                             bbox_inches='tight', transparent=False)
             
 
@@ -745,7 +745,7 @@ class Statistics(object):
                                        node_shape='s',
                                        node_color = Colors)
 
-            # plt.figure(figsize = (15, 9)) 
+            plt.figure(figsize = (15, 9)) # consider removing (April 2025)
 
             # Font sizes
             plt.rcParams['font.size'] = 16
@@ -823,14 +823,15 @@ class Statistics(object):
             #ax.set_aspect('auto')
             divider = make_axes_locatable(ax)
             cax1 = divider.append_axes("right", size="5%", pad=0.05)
-            plt.colorbar(sm, cax=cax1) 
+            plt.colorbar(sm, cax=cax1)
+            # both savefig calls used to have figsize=(200, 200), (April 2025)            
             plt.savefig(os.path.join(PlotPath, "FireSpreadTree" + str(nSim) + "_" + str(version) + ".png"),
-                        dpi=200,  figsize=(200, 200), 
+                        dpi=200,
                         bbox_inches='tight', transparent=False)
             
             if self._pdfOutputs:
                 plt.savefig(os.path.join(PlotPath, "FireSpreadTree" + str(nSim) + "_" + str(version) + ".pdf"),
-                            dpi=200,  figsize=(200, 200), 
+                            dpi=200,
                             bbox_inches='tight', transparent=False)
             plt.close("all")
         
@@ -1201,11 +1202,11 @@ class Statistics(object):
                 print("Hourly Stats:\n",Ah)
 
             # Hourly Summary
-            SummaryDF = Ah[["NonBurned", "Burned", "Harvested", "Hour"]].groupby('Hour')["NonBurned", "Burned", "Harvested"].mean()
+            SummaryDF = Ah[["NonBurned", "Burned", "Harvested", "Hour"]].groupby('Hour')[["NonBurned", "Burned", "Harvested"]].mean()
             SummaryDF.rename(columns={"NonBurned":"AVGNonBurned", "Burned":"AVGBurned", "Harvested":"AVGHarvested"}, inplace=True)
-            SummaryDF[["STDBurned", "STDHarvested"]] = Ah[["NonBurned", "Burned", "Harvested", "Hour"]].groupby('Hour')["Burned","Harvested"].std()[["Burned","Harvested"]]
-            SummaryDF[["MaxNonBurned", "MaxBurned"]] = Ah[["NonBurned", "Burned", "Harvested", "Hour"]].groupby('Hour')["NonBurned", "Burned"].max()[["NonBurned", "Burned"]]
-            SummaryDF[["MinNonBurned", "MinBurned"]] = Ah[["NonBurned", "Burned", "Harvested", "Hour"]].groupby('Hour')["NonBurned", "Burned"].min()[["NonBurned", "Burned"]]
+            SummaryDF[["STDBurned", "STDHarvested"]] = Ah[["NonBurned", "Burned", "Harvested", "Hour"]].groupby('Hour')[["Burned","Harvested"]].std()[["Burned","Harvested"]]
+            SummaryDF[["MaxNonBurned", "MaxBurned"]] = Ah[["NonBurned", "Burned", "Harvested", "Hour"]].groupby('Hour')[["NonBurned", "Burned"]].max()[["NonBurned", "Burned"]]
+            SummaryDF[["MinNonBurned", "MinBurned"]] = Ah[["NonBurned", "Burned", "Harvested", "Hour"]].groupby('Hour')[["NonBurned", "Burned"]].min()[["NonBurned", "Burned"]]
             Aux = (SummaryDF["AVGNonBurned"] + SummaryDF["AVGBurned"] + SummaryDF["AVGHarvested"])
             SummaryDF["%AVGNonBurned"], SummaryDF["%AVGBurned"], SummaryDF["%AVGHarvested"] = SummaryDF["AVGNonBurned"] / Aux, SummaryDF["AVGBurned"] / Aux, SummaryDF["AVGHarvested"] / Aux
             SummaryDF.reset_index(inplace=True)

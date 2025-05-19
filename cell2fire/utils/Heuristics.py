@@ -28,7 +28,7 @@ import random
 
 # Genetic algorithm 
 from deap import algorithms, base, creator, tools
-from scipy.ndimage.measurements import label
+from scipy.ndimage import label
 
 # Genetic selection object 
 class GenHeur(object):
@@ -67,7 +67,7 @@ class GenHeur(object):
         Given an individual, check the number of adjacent components (in matricial form) 
         """
         def adjConstraint(individual):
-            structure = np.ones((3, 3), dtype=np.int)
+            structure = np.ones((3, 3), dtype=int)
             labeled, ncomponents = label(individual, structure)
             return ncomponents
         """
@@ -917,8 +917,8 @@ class Heuristic(object):
                 
                 # Update auxiliary sets
                 toHarvestCells = set(idx[:Demand])
-                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                 
                 if self._verbose:
                     print("Initial values")
@@ -1034,8 +1034,8 @@ class Heuristic(object):
                 
                 # Update auxiliary sets
                 toHarvestCells = set(idx[:Demand])
-                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                 
                 if self._verbose:
                     print("Initial values")
@@ -1156,8 +1156,8 @@ class Heuristic(object):
 
                 # Update auxiliary sets
                 toHarvestCells = set(idx[:Demand])
-                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                 AvailCells -= set(idx[:Demand])
 
                 # Information
@@ -1348,8 +1348,8 @@ class Heuristic(object):
 
                     # Update auxiliary sets
                     toHarvestCells = set(idx[:Demand])
-                    TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                    TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                    TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                    TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                     AvailCells -= set(idx[:Demand])
 
                     if self._verbose:
@@ -1387,8 +1387,8 @@ class Heuristic(object):
 
                 # Update auxiliary sets
                 toHarvestCells = set(idx[:Demand])
-                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(np.int) - 1]
-                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(np.int) - 1]
+                TotalProduction += VolCells[np.asarray(idx[:Demand]).astype(int) - 1]
+                TotalUtility += Utility[np.asarray(idx[:Demand]).astype(int) - 1]
                 AvailCells -= set(idx[:Demand])
 
                 # Information
@@ -1556,8 +1556,9 @@ class Heuristic(object):
             for _, spine in ax.spines.items():spine.set_visible(True)
 			
             # Save
+            # savefig calls used to have figsize=(200, 200),  (april 2025)
             plt.savefig(os.path.join(self._OutFolder, "Global_FPV_Graph_Normalized_v" + str(self._version)+  ".png"),
-                    dpi=200,  figsize=(200, 200), 
+                    dpi=200,
                     bbox_inches='tight', transparent=False)
             plt.close("all")
             
@@ -1584,8 +1585,9 @@ class Heuristic(object):
             plt.colorbar(sm, cax=cax)  
             
             # Save it to Heuristic folder
+            # removed figsize=(200, 200), April 2025
             plt.savefig(os.path.join(self._OutFolder, "Global_FPV_Graph_v" + str(self._version)+  ".png"),
-                        dpi=200,  figsize=(200, 200), 
+                        dpi=200,  
                         bbox_inches='tight', transparent=False)
             plt.close("all")
     
@@ -1635,9 +1637,10 @@ class Heuristic(object):
                              vmin=0, vmax=np.max((FPVMatrix))) 
 
         # Save it to plots folder
+        # removed figsize=(200, 200) from savefig April 2025 
         plt.savefig(os.path.join(self._OutFolder, "Plots", "Plots" + str(nSim), 
                                  "FPV_Graph" + str(nSim) + ".png"),
-                    dpi=200,  figsize=(200, 200), 
+                    dpi=200,  
                     bbox_inches='tight', transparent=False)
         plt.close("all")
         
