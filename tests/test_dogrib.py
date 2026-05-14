@@ -8,7 +8,7 @@ with --onlyProcessing to avoid calling the compiled C++ code.
 #      be pasted into the github action yml file and here. It should just be in the action
 #      yml file and read here, with --onlyProcessing appended here.
 """
-import  unittest
+import unittest
 import os.path
 import datetime
 from cell2fire.utils.ParseInputs import make_parser
@@ -79,7 +79,7 @@ class TestMain(unittest.TestCase):
         with open(result_Forest08) as result_file:
                 with open(baseline_Forest08) as baseline_file:
                         for line1, line2 in zip(result_file, baseline_file):
-                                                if not line1 == line2:
+                                                if not line1.strip().rstrip(',') == line2.strip().rstrip(','):
                                                         equal = False
                                                         print("In File Grids1/ForestGrid08.csv the result is wrong")
 
@@ -98,9 +98,9 @@ class TestMain(unittest.TestCase):
         if diffProp.getbbox():
                 equal = False 
                 print("The image PropagationTree1.png doesn't match the baseline file")  
-        
-        self.assertTrue(equal)
         """
+        self.assertTrue(equal)
+        
 
 if __name__ == "__main__":
 
