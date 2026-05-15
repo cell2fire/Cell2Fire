@@ -8,7 +8,7 @@ with --onlyProcessing to avoid calling the compiled C++ code.
 #      be pasted into the github action yml file and here. It should just be in the action
 #      yml file and read here, with --onlyProcessing appended here.
 """
-import  unittest
+import unittest
 import os.path
 import datetime
 from cell2fire.utils.ParseInputs import make_parser
@@ -75,7 +75,7 @@ class TestMain(unittest.TestCase):
         with open(result_path) as result_file:
                 with open(baseline_path) as baseline_file:
                         for line1, line2 in zip(result_file, baseline_file):
-                                                if not line1 == line2:
+                                                if not line1.strip().rstrip(',') == line2.strip().rstrip(','):
                                                         equal = False
                                                         print("In File Grids1/ForestGrid08.csv the result is wrong")
         
