@@ -65,10 +65,15 @@ class TestMain(unittest.TestCase):
 
         csv_path = os.path.join(data_path, "..", "results", "Sub40x40", "Messages", "MessagesFile01.csv")
         df = pd.read_csv(csv_path, names = ["node1", "node2", "time", "ros"])
-        self.assertAlmostEqual(df['node1'][10],935,0), "TEST ERROR"
-        self.assertAlmostEqual(df['node2'][10],896,0), "TEST ERROR"
-        self.assertAlmostEqual(df['time'][10], 139, 0), "TEST ERROR"
-        self.assertAlmostEqual(df['node2'][10], 14.1367, 2), "TEST ERROR"
+        # MessagesFile is the fire-propagation forest: exactly one parent edge per burned,
+        # non-ignition cell, with rows sorted by destination (node2) so the file is
+        # deterministic. See Cell2Fire::buildMessageTree in Cell2Fire.cpp.
+        self.assertEqual(df['node2'].nunique(), len(df))         # one parent per destination
+        self.assertEqual(list(df['node2']), sorted(df['node2'])) # deterministic ordering
+        self.assertAlmostEqual(df['node1'][10], 456, 0), "TEST ERROR"
+        self.assertAlmostEqual(df['node2'][10], 417, 0), "TEST ERROR"
+        self.assertAlmostEqual(df['time'][10], 402, 0), "TEST ERROR"
+        self.assertAlmostEqual(df['ros'][10], 27.2931, 2), "TEST ERROR"
 
 if __name__ == "__main__":
 
