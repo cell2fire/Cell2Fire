@@ -354,7 +354,8 @@ class Statistics(object):
             plt.title(Title)
 
         # Modify existing map to have white values
-        cmap = cm.get_cmap('RdBu_r')
+        # matplotlib.cm.get_cmap was removed in matplotlib 3.9; use the registry.
+        cmap = matplotlib.colormaps['RdBu_r']
         lower = plt.cm.seismic(np.ones(1)*0.50)  # Original is ones 
         upper = cmap(np.linspace(0.5, 1, 100))
         colors = np.vstack((lower,upper))

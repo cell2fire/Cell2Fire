@@ -234,6 +234,7 @@ Cell2Fire::Cell2Fire(arguments _args) : CSVWeather(_args.InFolder + "Weather.csv
 	this->nonBurnableCells.clear();
 	this->burningCells.clear();
 	this->burntCells.clear();
+	this->ignitionCells.clear();
 	this->harvestCells.clear();
 	for (i=0; i < this->statusCells.size(); i++){
 		if(this->statusCells[i] < 3) this->availCells.insert (i+1);
@@ -535,6 +536,7 @@ void Cell2Fire::reset(int rnumber, double rnumber2){
 	this->nonBurnableCells.clear();
 	this->burningCells.clear();
 	this->burntCells.clear();
+	this->ignitionCells.clear();
 	this->harvestCells.clear();
 	
 	// Harvest Cells
@@ -697,6 +699,7 @@ bool Cell2Fire::RunIgnition(std::default_random_engine generator){
 		this->nIgnitions++;
 		this->burningCells.insert(newId);
 		this->burntCells.insert(newId);
+		this->ignitionCells.insert(newId);   // forest root: excluded as a message destination
 		this->availCells.erase(newId);
 		
 		// Print sets information
@@ -1049,6 +1052,63 @@ void Cell2Fire::GetMessages(std::unordered_map<int, std::vector<int>> sendMessag
 }
 
 
+/*
+ * Reduce the raw FSCell event buffer to the fire-propagation forest written to MessagesFileNN.csv.
+ *
+ * FSCell is an append-only stream of (source, destination, period, ROS) reach-to-center events.
+ * A destination may appear several times (several sources reaching it in one period, or repeated
+ * reaches across periods) and may even name a cell that never actually burned. The MessagesFile is
+ * meant to be a spanning forest rooted at the ignition cells, with exactly one parent edge per
+ * burned, non-ignition cell, so we select a single representative edge per burned destination.
+ *
+ * Selection rule (per destination): earliest fire period; ties broken by highest realized ROS, then
+ * by lowest source id. Output rows are sorted by destination id so the file is deterministic.
+ */
+std::vector<double> Cell2Fire::buildMessageTree(){
+	// destination -> winning edge {source, destination, period, ros}
+	std::unordered_map<int, std::vector<double>> best;
+
+	for (size_t i = 0; i + 3 < this->FSCell.size(); i += 4){
+		double src    = this->FSCell[i];
+		int    dst    = (int) this->FSCell[i + 1];
+		double period = this->FSCell[i + 2];
+		double ros    = this->FSCell[i + 3];
+
+		// Keep only edges into cells that actually burned, and never into an ignition root.
+		if (this->burntCells.find(dst) == this->burntCells.end()) continue;
+		if (this->ignitionCells.find(dst) != this->ignitionCells.end()) continue;
+
+		auto it = best.find(dst);
+		if (it == best.end()){
+			best[dst] = {src, (double) dst, period, ros};
+			continue;
+		}
+
+		double bSrc = it->second[0], bPeriod = it->second[2], bRos = it->second[3];
+		bool better = (period < bPeriod)
+		           || (period == bPeriod && ros > bRos)
+		           || (period == bPeriod && ros == bRos && src < bSrc);
+		if (better){
+			it->second = {src, (double) dst, period, ros};
+		}
+	}
+
+	// Emit rows ordered by destination id for a reproducible file.
+	std::vector<int> dsts;
+	dsts.reserve(best.size());
+	for (auto & kv : best) dsts.push_back(kv.first);
+	std::sort(dsts.begin(), dsts.end());
+
+	std::vector<double> tree;
+	tree.reserve(dsts.size() * 4);
+	for (int d : dsts){
+		std::vector<double> & e = best[d];
+		tree.insert(tree.end(), e.begin(), e.end());
+	}
+	return tree;
+}
+
+
 // Display results
 void Cell2Fire::Results(){
 	/*****************************************************************************
@@ -1151,7 +1211,9 @@ void Cell2Fire::Results(){
 			std::cout  << "We are generating the network messages to a csv file " << messagesName << std::endl;
 		}
 		CSVWriter CSVPloter(messagesName, ",");
-		CSVPloter.printCSVDouble_V2(this->burntCells.size() - this->nIgnitions, 4, this->FSCell);
+		// Serialize one canonical parent edge per burned, non-ignition cell (see buildMessageTree).
+		std::vector<double> messageTree = this->buildMessageTree();
+		CSVPloter.printCSVDouble_V2(messageTree.size() / 4, 4, messageTree);
 	}
 
 	

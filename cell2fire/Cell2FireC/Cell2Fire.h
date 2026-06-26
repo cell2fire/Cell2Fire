@@ -88,6 +88,7 @@ class Cell2Fire {
 		 std::unordered_set<int> nonBurnableCells; 	
 		 std::unordered_set<int> burningCells;
 		 std::unordered_set<int> burntCells;
+		 std::unordered_set<int> ignitionCells;   // roots of the propagation forest (no parent edge)
 		 std::unordered_set<int> harvestCells;
 		 
 		 // Cells Dictionary
@@ -102,6 +103,7 @@ class Cell2Fire {
 		bool RunIgnition(std::default_random_engine generator);
 		std::unordered_map<int, std::vector<int>> SendMessages();
 		void GetMessages(std::unordered_map<int, std::vector<int>> sendMessageList);
+		std::vector<double> buildMessageTree();
 		void Results();
 		void outputGrid();
 		void updateWeather();

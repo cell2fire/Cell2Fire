@@ -1530,7 +1530,8 @@ class Heuristic(object):
         plt.title(self.Alg + " Heatmap $|R| = 100$", y=1.02)
 
         # Modify existing map to have white values
-        cmap = cm.get_cmap('RdBu_r')
+        # matplotlib.cm.get_cmap was removed in matplotlib 3.9; use the registry.
+        cmap = matplotlib.colormaps['RdBu_r']
         lower = plt.cm.seismic(np.ones(2)*0.50)  # Original is ones 
         range = cmap(np.linspace(0.5, np.max((self._FPVMatrix / np.max(self._FPVMatrix))), 100))
         colors = np.vstack((lower,range))
@@ -1616,7 +1617,8 @@ class Heuristic(object):
         plt.title("FPV Heatmap")
 
         # Modify existing map to have white values
-        cmap = cm.get_cmap('RdBu_r')
+        # matplotlib.cm.get_cmap was removed in matplotlib 3.9; use the registry.
+        cmap = matplotlib.colormaps['RdBu_r']
         lower = plt.cm.seismic(np.ones(100)*0.50)
         upper = cmap(np.linspace(1-0.5, 1, 90))
         colors = np.vstack((lower, upper))
